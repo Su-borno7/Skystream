@@ -17,10 +17,12 @@ val javaTarget = JvmTarget.fromTarget(libs.versions.jvmTarget.get())
 
 abstract class GenerateGitHashTask : DefaultTask() {
 
+    @get:Optional
     @get:InputFile
     @get:PathSensitive(PathSensitivity.RELATIVE)
     abstract val headFile: RegularFileProperty
 
+    @get:Optional
     @get:InputDirectory
     @get:PathSensitive(PathSensitivity.RELATIVE)
     abstract val headsDir: DirectoryProperty
@@ -53,7 +55,13 @@ abstract class GenerateGitHashTask : DefaultTask() {
 }
 
 val generateGitHash = tasks.register<GenerateGitHashTask>("generateGitHash") {
-    val gitDir = layout.projectDirectory.dir("../.git")
+    // Upstream expected a checkout where .git sits next to the project (mono-layout:
+    // the repo root is two levels up from android/app). Probe, then fall back to a
+    // dummy directory; the task itself already tolerates a missing HEAD.
+    val gitDir = listOf("../../.git", "../.git")
+        .map { layout.projectDirectory.dir(it) }
+        .firstOrNull { it.asFile.exists() }
+        ?: layout.projectDirectory.dir(".")
 
     headFile.set(gitDir.file("HEAD"))
     headsDir.set(gitDir.dir("refs/heads"))
