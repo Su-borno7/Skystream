@@ -223,7 +223,7 @@ class PluginHost(private val cacheDir: File) {
         val current = loaded
         if (current.isNotEmpty()) {
             val toRemove = current.flatMap { it.providers }.toSet()
-            APIHolder.allProviders.withLock { removeAll(toRemove) }
+            APIHolder.allProviders.withLock { APIHolder.allProviders.removeAll(toRemove) }
             for (loadedPlugin in current) {
                 try {
                     loadedPlugin.plugin.beforeUnload()
