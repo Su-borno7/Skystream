@@ -75,13 +75,37 @@ jobs:
             sleep 1
           done
           PORT=$(grep -oP 'SKYSTREAM_PORT=\K[0-9]+' /tmp/bridge-smoke.log | head -1)
+          if [ -z "$PORT" ]; then
+            echo "bridge never reported SKYSTREAM_PORT; smoke log follows:"
+            tail -30 /tmp/bridge-smoke.log
+            tail -25 /tmp/bridge-smoke.log | sed 's/%/%25/g' | cut -c1-500 | while IFS= read -r line; do printf '::error::smoke: %s\n' "$line"; done
+            exit 1
+          fi
           echo "bridge reported port $PORT"
-          curl -fsS "http://127.0.0.1:$PORT/health" | tee /tmp/bridge-health.json
-          grep -q '"ok"[[:space:]]*:[[:space:]]*true' /tmp/bridge-health.json
-          curl -fsS "http://127.0.0.1:$PORT/providers" | tee /tmp/bridge-providers.json
-          grep -q '"providers"' /tmp/bridge-providers.json
+          if ! curl -fsS "http://127.0.0.1:$PORT/health" | tee /tmp/bridge-health.json; then
+            echo "health request failed; smoke log follows:"
+            tail -30 /tmp/bridge-smoke.log
+            tail -25 /tmp/bridge-smoke.log | sed 's/%/%25/g' | cut -c1-500 | while IFS= read -r line; do printf '::error::smoke: %s\n' "$line"; done
+            exit 1
+          fi
+          grep -q '"ok"[[:space:]]*:[[:space:]]*true' /tmp/bridge-health.json || { echo "health not ok"; cat /tmp/bridge-health.json; tail -15 /tmp/bridge-smoke.log | while IFS= read -r line; do printf '::error::smoke: %s\n' "$line"; done; exit 1; }
+          if ! curl -fsS "http://127.0.0.1:$PORT/providers" | tee /tmp/bridge-providers.json; then
+            echo "providers request failed; smoke log follows:"
+            tail -30 /tmp/bridge-smoke.log
+            tail -25 /tmp/bridge-smoke.log | sed 's/%/%25/g' | cut -c1-500 | while IFS= read -r line; do printf '::error::smoke: %s\n' "$line"; done
+            exit 1
+          fi
+          grep -q '"providers"' /tmp/bridge-providers.json || { echo "providers missing"; cat /tmp/bridge-providers.json; exit 1; }
           kill "$BRIDGE_PID" || true
           echo "bridge smoke test passed"
+
+      - name: Annotate smoke log on failure
+        if: failure()
+        run: |
+          if [ -f /tmp/bridge-smoke.log ]; then
+            tail -25 /tmp/bridge-smoke.log | sed 's/%/%25/g' | cut -c1-500 | while IFS= read -r line; do printf '::error::smoke: %s\n' "$line"; done
+          fi
+          exit 0
 
       - name: Upload bridge distribution
         uses: actions/upload-artifact@v4
