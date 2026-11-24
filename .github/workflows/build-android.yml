@@ -57,14 +57,12 @@ jobs:
         run: |
           LOG="$RUNNER_TEMP/android-build.log"
           if [ -f "$LOG" ]; then
-            # Kotlin compiler diagnostics (e.g. 'e: file:///...kt:12:5 message')
-            grep -E '^e: |^w: .*\.kt[: ][0-9]+|error:' "$LOG" | head -40 | while IFS= read -r line || [ -n "$line" ]; do
+            # Universal: dump the tail of the log — the failure summary is always there.
+            tail -n 60 "$LOG" | while IFS= read -r line || [ -n "$line" ]; do
               printf '::error::%s\n' "$(printf '%s' "$line" | sed 's/%/%25/g' | cut -c1-2000)"
             done
-            sed -n '/What went wrong/,+8p' "$LOG" | head -60 | while IFS= read -r line || [ -n "$line" ]; do
-              printf '::error::%s\n' "$(printf '%s' "$line" | sed 's/%/%25/g' | cut -c1-2000)"
-            done
-            grep -E '^\* (Exception|What went wrong)|FAILURE|Execution failed' "$LOG" | head -20 | while IFS= read -r line || [ -n "$line" ]; do
+            # Kotlin compiler diagnostics, in case the tail window misses them.
+            grep -E '^e: ' "$LOG" | head -40 | while IFS= read -r line || [ -n "$line" ]; do
               printf '::error::%s\n' "$(printf '%s' "$line" | sed 's/%/%25/g' | cut -c1-2000)"
             done
           fi
