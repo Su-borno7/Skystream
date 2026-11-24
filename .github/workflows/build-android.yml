@@ -50,6 +50,22 @@ jobs:
           set -o pipefail
           ./gradlew :app:assembleStableRelease --stacktrace 2>&1 | tee "$RUNNER_TEMP/android-build.log"
 
+      # The sandbox this repo is developed in cannot read GitHub logs directly;
+      # surface the Gradle failure summary as workflow annotations instead.
+      - name: Annotate failures from log
+        if: failure()
+        run: |
+          LOG="$RUNNER_TEMP/android-build.log"
+          if [ -f "$LOG" ]; then
+            sed -n '/What went wrong/,+8p' "$LOG" | head -60 | while IFS= read -r line || [ -n "$line" ]; do
+              printf '::error::%s\n' "$(printf '%s' "$line" | sed 's/%/%25/g' | cut -c1-2000)"
+            done
+            grep -E '^\* (Exception|What went wrong)|FAILURE|Execution failed|error:' "$LOG" | head -20 | while IFS= read -r line || [ -n "$line" ]; do
+              printf '::error::%s\n' "$(printf '%s' "$line" | sed 's/%/%25/g' | cut -c1-2000)"
+            done
+          fi
+          exit 0
+
       - name: Upload build log on failure
         if: failure()
         uses: actions/upload-artifact@v4
