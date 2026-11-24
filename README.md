@@ -37,6 +37,10 @@ CloudStream. See [NOTICE.md](NOTICE.md) for attribution and licensing.
   restarting the app.
 - No telemetry. State is stored locally in the OS config directory.
 
+See **[docs/FEATURES.md](docs/FEATURES.md)** for the full, per-app feature list —
+including the desktop player, downloads, settings, the JVM bridge and its limitations,
+and the deliberately-missing list.
+
 ## Skystream for PC (desktop + bridge)
 
 ### Run from source
