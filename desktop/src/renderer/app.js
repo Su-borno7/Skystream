@@ -1589,7 +1589,7 @@ async function renderSettings() {
 
   // ── Appearance ────────────────────────────────────────────────────────────
   const appearance = settingsCard('Appearance', 'Theme, accent and motion');
-  appearance.appendChild(settingRow('Theme', 'Dark suits late-night, light suits daylight', (() => {
+  appearance.appendChild(settingRow('Theme', 'Dark suits late-night, light suits daylight, Glass is Shiopa-style frost', (() => {
     const seg = el('div', 'segmented');
     for (const [value, label] of [['dark', 'Dark'], ['amoled', 'AMOLED'], ['light', 'Light'], ['glass', 'Glass']]) {
       const b = el('button', settings.theme === value ? 'active' : '', label);
