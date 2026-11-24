@@ -27,6 +27,13 @@
     <color name="whiteText">#FFF</color>
     <color name="blackText">#000</color>
     <color name="skyContrast">#06202F</color>
+    <!-- Glass theme (frosted deep-space glassmorphism) -->
+    <color name="glassBlackBg">#F0121A28</color>
+    <color name="glassGrayBg">#F01A2333</color>
+    <color name="glassIconGrayBg">#F01C2634</color>
+    <color name="glassBoxItemBg">#F01F2A3C</color>
+    <color name="glassTextColor">#EDF2FB</color>
+    <color name="glassGrayTextColor">#A8B7CE</color>
 
     <color name="progressBackgroundColor">#1AFFFFFF</color>
 

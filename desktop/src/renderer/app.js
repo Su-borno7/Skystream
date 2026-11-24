@@ -1591,7 +1591,7 @@ async function renderSettings() {
   const appearance = settingsCard('Appearance', 'Theme, accent and motion');
   appearance.appendChild(settingRow('Theme', 'Dark suits late-night, light suits daylight', (() => {
     const seg = el('div', 'segmented');
-    for (const [value, label] of [['dark', 'Dark'], ['amoled', 'AMOLED'], ['light', 'Light']]) {
+    for (const [value, label] of [['dark', 'Dark'], ['amoled', 'AMOLED'], ['light', 'Light'], ['glass', 'Glass']]) {
       const b = el('button', settings.theme === value ? 'active' : '', label);
       b.onclick = async () => { await patchSettings({ theme: value }); renderSettings(); };
       seg.appendChild(b);

@@ -48,7 +48,7 @@ function createWindow() {
     height: 900,
     minWidth: 960,
     minHeight: 640,
-    backgroundColor: '#0B0D10',
+    backgroundColor: '#0C1016',
     frame: false,
     title: 'Skystream',
     show: false,

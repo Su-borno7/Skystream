@@ -129,6 +129,21 @@
         <item name="textColor">?attr/textColor</item>
     </style>
 
+    <!-- Frosted glass look: translucent deep-space surfaces over a glowing gradient backdrop -->
+    <style name="GlassMode">
+        <item name="android:windowBackground">@drawable/glass_background</item>
+        <item name="primaryGrayBackground">@color/glassGrayBg</item>
+        <item name="primaryBlackBackground">@color/glassBlackBg</item>
+        <item name="iconGrayBackground">@color/glassIconGrayBg</item>
+        <item name="boxItemBackground">@color/glassBoxItemBg</item>
+        <item name="textColor">@color/glassTextColor</item>
+        <item name="grayTextColor">@color/glassGrayTextColor</item>
+        <item name="iconColor">@color/glassGrayTextColor</item>
+        <item name="white">@color/white</item>
+        <item name="black">@color/black</item>
+        <item name="colorOnPrimary">@color/skyContrast</item>
+    </style>
+
     <style name="AmoledMode">
         <item name="primaryGrayBackground">@color/black</item>
         <item name="primaryBlackBackground">@color/black</item>

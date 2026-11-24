@@ -59,6 +59,30 @@
   --shadow: 0 12px 40px rgba(20, 28, 46, 0.18);
 }
 
+/* ═══════════ Glass — frosted deep-space glassmorphism (optional) ═══════════ */
+[data-theme="glass"] {
+  --bg: #0D141F;
+  --bg-elev: rgba(22, 31, 46, 0.66);
+  --surface: rgba(29, 39, 55, 0.55);
+  --surface-2: rgba(38, 50, 70, 0.55);
+  --surface-3: rgba(49, 64, 88, 0.6);
+  --border: rgba(160, 198, 233, 0.22);
+  --border-soft: rgba(160, 198, 233, 0.12);
+  --text: #EDF2FB;
+  --text-muted: #A8B7CE;
+  --text-faint: #6E7E97;
+  --accent: #38BDF8;
+  --accent-hover: #56CDFC;
+  --accent-soft: rgba(56, 189, 248, 0.22);
+  --accent-contrast: #06202F;
+  --danger: #F2555A;
+  --ok: #34D399;
+  --warn: #FBBF24;
+  --radius: 16px;
+  --radius-sm: 12px;
+  --shadow: 0 18px 48px rgba(2, 6, 14, 0.55);
+}
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { height: 100%; }
 body {
@@ -441,3 +465,52 @@ input, select, textarea { font-family: inherit; }
   transition-duration: 0.01ms !important;
   scroll-behavior: auto !important;
 }
+
+
+/* ═══════════ Skystream — interface polish ═══════════ */
+.tb-name {
+  background: linear-gradient(135deg, var(--text) 25%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.poster-card { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06); }
+.poster-card:hover {
+  box-shadow: 0 0 0 1px var(--accent-soft), 0 18px 48px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  border-color: var(--accent-soft);
+}
+
+/* ═══════════ Glass — backdrop & translucency ═══════════ */
+[data-theme="glass"] body {
+  background:
+    radial-gradient(1100px 700px at 85% -10%, rgba(56, 189, 248, 0.26), transparent 60%),
+    radial-gradient(900px 700px at -10% 108%, rgba(139, 92, 246, 0.26), transparent 60%),
+    linear-gradient(160deg, #141D2C 0%, #090D14 100%);
+}
+[data-theme="glass"] .content { background: transparent; }
+[data-theme="glass"] .titlebar {
+  background: rgba(13, 20, 31, 0.55);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border-bottom: 1px solid var(--border-soft);
+}
+[data-theme="glass"] .sidebar {
+  background: rgba(13, 20, 31, 0.5);
+  backdrop-filter: blur(22px) saturate(1.4);
+  -webkit-backdrop-filter: blur(22px) saturate(1.4);
+  border-right: 1px solid var(--border-soft);
+}
+[data-theme="glass"] .poster-card,
+[data-theme="glass"] .download-row,
+[data-theme="glass"] .detail-panel,
+[data-theme="glass"] .episode-btn,
+[data-theme="glass"] .source-item {
+  border: 1px solid var(--border-soft);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+[data-theme="glass"] .poster-card:hover {
+  border-color: rgba(56, 189, 248, 0.4);
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.28), 0 24px 56px rgba(2, 6, 14, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.09);
+}
+[data-theme="glass"] ::selection { background: rgba(56, 189, 248, 0.35); }

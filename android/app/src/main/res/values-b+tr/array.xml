@@ -250,6 +250,7 @@
         <item>Dracula</item>
         <item>Lavanta Rüyası</item>
         <item>Sessiz Mavi</item>
+        <item>Glass</item>
     </string-array>
     <string-array name="themes_names_values">
         <item>AmoledLight</item>
@@ -261,6 +262,7 @@
         <item>Dracula</item>
         <item>Lavender</item>
         <item>SilentBlue</item>
+        <item>Glass</item>
     </string-array>
 
     <string-array name="extension_statuses">
