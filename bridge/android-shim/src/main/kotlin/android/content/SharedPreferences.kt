@@ -4,6 +4,10 @@ import java.io.File
 
 interface SharedPreferences {
     fun getAll(): Map<String, *>
+
+    /** Kotlin extension analogue: `prefs.all` (android.content.SharedPreferences.all KTX). */
+    val all: Map<String, *>
+        get() = getAll()
     fun getString(key: String?, defValue: String?): String?
     fun getStringSet(key: String?, defValues: MutableSet<String>?): MutableSet<String>?
     fun getInt(key: String?, defValue: Int): Int

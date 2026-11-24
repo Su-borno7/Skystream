@@ -7,8 +7,9 @@ open class LruCache<K, V>(maxSize: Int) {
 
     private val map = object : LinkedHashMap<K, V>(0, 0.75f, true) {
         override fun removeEldestEntry(eldest: MutableMap.MutableEntry<K, V>): Boolean {
-            val over = size > limit
-            if (over) size -= safeSizeOf(eldest.key, eldest.value)
+            val outer = this@LruCache
+            val over = outer.size > outer.limit
+            if (over) outer.size -= outer.safeSizeOf(eldest.key, eldest.value)
             return over
         }
     }

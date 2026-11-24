@@ -1,8 +1,11 @@
+@file:OptIn(com.lagradost.cloudstream3.InternalAPI::class)
+
 package com.lagradost.cloudstream3.utils
 
 import android.content.Context
 import android.content.SharedPreferences
 import com.lagradost.cloudstream3.CloudStreamApp
+import com.lagradost.cloudstream3.utils.AppUtils.toJsonLiteral
 
 const val PREFERENCES_NAME = "rebuild_preference"
 
@@ -48,7 +51,7 @@ object DataStore {
     fun <T> Context.setKey(path: String, value: T) {
         try {
             getSharedPrefs().edit()
-                .putString(path, value?.let { com.lagradost.cloudstream3.utils.AppUtils.toJsonLiteral(it) })
+                .putString(path, value?.let { it.toJsonLiteral() })
                 .apply()
         } catch (e: Exception) {
             com.lagradost.cloudstream3.mvvm.logError(e)

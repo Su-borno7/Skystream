@@ -9,6 +9,8 @@ desktop/*.log
 out/
 dist/
 build/
+# Desktop packaging icons must stay in git
+!desktop/build/
 *.apk
 *.aab
 *.keystore.local
