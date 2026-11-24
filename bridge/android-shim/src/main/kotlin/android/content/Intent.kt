@@ -14,8 +14,6 @@ open class Intent @JvmOverloads constructor(
     fun setFlags(flags: Int): Intent = apply { this.flags = flags }
     fun addFlags(flags: Int): Intent = apply { this.flags = this.flags or flags }
     fun setData(uri: android.net.Uri?): Intent = apply { this.data = uri }
-    fun getAction(): String? = action
-    fun getData(): android.net.Uri? = data
     fun setPackage(packageName: String?): Intent = this
     fun putExtra(name: String, value: String?): Intent = apply { extras[name] = value }
     fun putExtra(name: String, value: Int): Intent = apply { extras[name] = value }

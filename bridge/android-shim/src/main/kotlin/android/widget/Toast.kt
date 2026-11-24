@@ -24,8 +24,6 @@ open class Toast(context: Context?) {
     fun setMargin(horizontalMargin: Float, verticalMargin: Float) {}
     fun setText(resId: Int) {}
     fun setText(s: CharSequence?) { this.text = s ?: "" }
-    fun getView(): Any? = view
-    fun setView(view: Any?) { this.view = view }
     fun show() { println("I/Toast: $text") }
     fun cancel() {}
 }

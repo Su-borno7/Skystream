@@ -3,11 +3,8 @@ package android.content
 import java.io.File
 
 interface SharedPreferences {
-    fun getAll(): Map<String, *>
-
-    /** Kotlin extension analogue: `prefs.all` (android.content.SharedPreferences.all KTX). */
+    /** Kotlin extension analogue: `prefs.all` (android.content.SharedPreferences.all KTX); emits getAll() at bytecode level. */
     val all: Map<String, *>
-        get() = getAll()
     fun getString(key: String?, defValue: String?): String?
     fun getStringSet(key: String?, defValues: MutableSet<String>?): MutableSet<String>?
     fun getInt(key: String?, defValue: Int): Int
@@ -62,7 +59,8 @@ class FileSharedPreferences(private val dir: File, fileName: String) : SharedPre
     }
 
     @Synchronized
-    override fun getAll(): Map<String, *> = LinkedHashMap(values)
+    override val all: Map<String, *>
+        get() = LinkedHashMap(values)
 
     @Synchronized
     override fun getString(key: String?, defValue: String?): String? = values[key] as? String ?: defValue

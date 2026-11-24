@@ -36,7 +36,6 @@ class Matrix {
 
 open class Paint {
     var alpha: Int = 255
-    open fun setAlpha(a: Int) { alpha = a }
     open fun setColor(color: Int) {}
     open fun setStyle(style: Style?) {}
     open fun setStrokeWidth(width: Float) {}

@@ -7,10 +7,6 @@ open class View(context: android.content.Context? = null) {
     var isFocusable: Boolean = true
 
     open fun findViewById(id: Int): View? = null
-    open fun setVisibility(visibility: Int) { this.visibility = visibility }
-    open fun getVisibility(): Int = visibility
-    open fun setTag(tag: Any?) { this.tag = tag }
-    open fun getTag(): Any? = tag
     open fun post(action: Runnable): Boolean { action.run(); return true }
     open fun postDelayed(action: Runnable, delayMillis: Long): Boolean { action.run(); return true }
 
