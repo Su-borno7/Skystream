@@ -55,31 +55,21 @@ jobs:
       - name: Annotate failures from log
         if: failure()
         run: |
+          # Diagnostics in this file almost always sit right before the failing
+          # task's exception block. Print ONLY that window (annotations are capped).
           LOG="$RUNNER_TEMP/android-build.log"
           if [ -f "$LOG" ]; then
-            # Universal: dump the tail of the log — the failure summary is always there.
-            grep -E 'What went wrong|Execution failed|Caused by|FAILURE:|Exception' "$LOG" | head -30 | while IFS= read -r line || [ -n "$line" ]; do
-              printf '::error::%s\n' "$(printf '%s' "$line" | sed 's/%/%25/g' | cut -c1-2000)"
-            done
-            tail -n 40 "$LOG" | while IFS= read -r line || [ -n "$line" ]; do
-              printf '::error::%s\n' "$(printf '%s' "$line" | sed 's/%/%25/g' | cut -c1-2000)"
-            done
-            # Kotlin compiler diagnostics, in case the tail window misses them.
-            # Print the region around the first 'Execution failed for task' line —
-            # compiler diagnostics (if any) sit just before it.
             FIRST=$(grep -n 'Execution failed for task' "$LOG" | head -1 | cut -d: -f1)
             if [ -n "$FIRST" ]; then
-              START=$((FIRST > 150 ? FIRST - 150 : 1))
-              sed -n "${START},$((FIRST + 15))p" "$LOG" | while IFS= read -r line || [ -n "$line" ]; do
+              START=$((FIRST > 60 ? FIRST - 60 : 1))
+              sed -n "${START},$((FIRST))p" "$LOG" | tail -45 | while IFS= read -r line || [ -n "$line" ]; do
+                printf '::error::%s\n' "$(printf '%s' "$line" | sed 's/%/%25/g' | cut -c1-2000)"
+              done
+            else
+              tail -25 "$LOG" | while IFS= read -r line || [ -n "$line" ]; do
                 printf '::error::%s\n' "$(printf '%s' "$line" | sed 's/%/%25/g' | cut -c1-2000)"
               done
             fi
-            grep -E 'e: file:///' "$LOG" | head -40 | while IFS= read -r line || [ -n "$line" ]; do
-              printf '::error::%s\n' "$(printf '%s' "$line" | sed 's/%/%25/g' | cut -c1-2000)"
-            done
-            grep -niE 'error' "$LOG" | grep -v 'Process completed' | head -30 | while IFS= read -r line || [ -n "$line" ]; do
-              printf '::error::%s\n' "$(printf '%s' "$line" | sed 's/%/%25/g' | cut -c1-2000)"
-            done
           fi
           exit 0
 
