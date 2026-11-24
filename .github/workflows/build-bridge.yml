@@ -50,8 +50,9 @@ jobs:
           LOG="$RUNNER_TEMP/bridge-build.log"
           if [ ! -f "$LOG" ]; then echo "::error::log missing"; exit 0; fi
           {
-            grep -m1 -A12 'What went wrong' "$LOG"
-            grep -E '^e: ' "$LOG" | head -10
+            grep -m1 -A3 'A failure occurred' "$LOG"
+            grep -m1 -B1 -A8 'Caused by' "$LOG"
+            grep -m1 -A6 'CompilationErrorException' "$LOG"
           } | sed 's/%/%25/g' | cut -c1-1000 | while IFS= read -r line; do printf '::error::%s\n' "$line"; done
           exit 0
 
