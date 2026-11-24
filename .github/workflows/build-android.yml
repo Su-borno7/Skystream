@@ -27,13 +27,8 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Ensure Android SDK 37 platform
-        run: |
-          set -e
-          SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
-          yes | "$SDKMANAGER" --licenses >/dev/null || true
-          "$SDKMANAGER" "platforms;android-37"
-
+      # No manual SDK step: GitHub's ubuntu-latest image ships the Android SDK
+      # (same setup upstream CloudStream CI relies on).
       - name: Setup Gradle (with cache)
         uses: gradle/actions/setup-gradle@v5
 
@@ -51,7 +46,17 @@ jobs:
 
       - name: Assemble stable release APK
         working-directory: android
-        run: ./gradlew :app:assembleStableRelease --stacktrace
+        run: |
+          set -o pipefail
+          ./gradlew :app:assembleStableRelease --stacktrace 2>&1 | tee "$RUNNER_TEMP/android-build.log"
+
+      - name: Upload build log on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-build-log
+          path: ${{ runner.temp }}/android-build.log
+          if-no-files-found: ignore
 
       - name: Locate APK
         id: apk

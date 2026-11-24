@@ -1,0 +1,165 @@
+{
+  "note": "Community CloudStream repositories, collected from recloudstream/cs-repos. Skystream does not host, provide or endorse any of these repositories, their extensions, or their content. Extensions are installed only on explicit user action.",
+  "sources": [
+    {
+      "url": "https://raw.githubusercontent.com/recloudstream/extensions/master/repo.json",
+      "verified": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/self-similarity/MegaRepo/builds/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/CranberrySoup/AniyomiCompatExtension/master/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Gian-Fr/ItalianProvider/builds/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/CakesTwix/cloudstream-extensions-uk/master/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/techtanic/SkillShare-Repo/builds/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/SaurabhKaperwan/CSX/builds/CS.json",
+      "verified": false
+    },
+    {
+      "url": "https://git.disroot.org/ayza/FStream/raw/branch/main/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/phisher98/cloudstream-extensions-phisher/refs/heads/builds/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/refs/heads/builds/CNC.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Luna712/Luna712-CloudStream-Extensions/master/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/redowan99/Redowan-CloudStream/master/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Abodabodd/re-3arabi/refs/heads/main/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/doGior/doGiorsHadEnough/refs/heads/builds/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/DieGon7771/ItaliaInStreaming/builds/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://gitlab.com/tearrs/cloudstream-vietnamese/-/raw/main/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Bnyro/GermanProviders/refs/heads/master/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/TeKuma25/IndoStream/builds/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/refs/heads/main/builds/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Kraptor123/cs-Karma/refs/heads/master/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/redblacker8/storm-ext/refs/heads/builds/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/rockhero1234/cinephile/refs/heads/builds/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/med1245/cartoonyrepo/builds/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Reflex755/ReflexRepo/refs/heads/builds/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/KSHITIJ8473/raghav/builds/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mouradchaouche/cloudstream-frenchrepo/main/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/yorik100/Cloudstream/refs/heads/builds/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/RVRBEAST76/allforu-repo/builds/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/errorcode26/Ayu-CloudStream-Games/builds/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/FlummoxGamer/FLUMMOX-Repo/builds/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Faisal0786/Desi/main/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://cs.eclipsia.dpdns.org/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://github.com/aslafy-z/cloudstream-plugins/releases/download/catalog-stable/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/sagemoon1996/cloudstream-repo/builds/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/dipender98/Indflix/main/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/F0Rextasy/bigbullapp-cs/master/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Mamun015/mamun015-cloudstream-bdix/master/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/kotlinsyd/plaviohd/builds/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/sealinwater/north/builds/repo.json",
+      "verified": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/animesfhd/cloudstream-extensions/main/builds/repo.json",
+      "verified": false
+    }
+  ]
+}
