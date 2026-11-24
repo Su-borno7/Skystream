@@ -40,6 +40,9 @@
         <item name="android:textColor">?attr/textColor</item>
         <item name="android:textColorSecondary">?attr/grayTextColor</item>
 
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Skystream.Small</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Skystream.Medium</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Skystream.Large</item>
         <item name="android:textColorHint">?attr/grayTextColor</item>
         <item name="android:editTextColor">?attr/textColor</item>
         <item name="android:colorForeground">?attr/textColor</item>
@@ -1129,5 +1132,21 @@
         <item name="android:layout_width">@dimen/download_header_progress_size</item>
         <item name="android:layout_height">@dimen/download_header_progress_size</item>
         <item name="android:background">@color/playIconBackground</item>
+    </style>
+
+    <!-- Skystream: rounder, softer component geometry (distinct from stock Material3) -->
+    <style name="ShapeAppearance.Skystream.Small" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">14dp</item>
+    </style>
+
+    <style name="ShapeAppearance.Skystream.Medium" parent="ShapeAppearance.Material3.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">20dp</item>
+    </style>
+
+    <style name="ShapeAppearance.Skystream.Large" parent="ShapeAppearance.Material3.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">28dp</item>
     </style>
 </resources>
