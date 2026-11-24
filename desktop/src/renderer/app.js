@@ -64,6 +64,7 @@ async function loadSettings() {
 function applySettings(s) {
   if (!s) return;
   document.documentElement.dataset.theme = s.theme || 'dark';
+  document.documentElement.dataset.reduceMotion = s.reduceMotion ? 'true' : 'false';
   document.documentElement.style.setProperty('--accent', s.accent || '#3D50FA');
   document.documentElement.style.setProperty('--accent-hover', shadeAccent(s.accent || '#3D50FA'));
 }
@@ -180,7 +181,7 @@ function updateBridgeBar() {
     text.textContent = `Bridge connected — ${state.providers.length} provider${state.providers.length === 1 ? '' : 's'} loaded from ${new Set(state.providers.map((p) => p.internalName)).size} extension(s)`;
   } else {
     dot.className = 'bridge-dot err';
-    text.textContent = 'Bridge offline — extension content is unavailable. Check that a JRE is bundled or install Java 17+.';
+    text.textContent = 'Bridge offline — extension content is unavailable. Check that a JRE is bundled or install Java 21+.';
   }
 }
 async function mediaUrl(url, headers) {
@@ -227,9 +228,7 @@ function posterCardNode(item, provider) {
   return card;
 }
 
-function skeletonCard() {
-  return el('div', 'skeleton');
-}
+
 
 async function continueWatchingEntries() {
   const library = await api.library.list();
@@ -357,7 +356,10 @@ function renderHomeSections(body, provider, lists) {
 /* ═══════════ SEARCH screen ═══════════ */
 function scopeKey() { return 'skystream.search.scope'; }
 function loadScope() {
-  try { return new Set(JSON.parse(localStorage.getItem(scopeKey()) || '[]')); } catch { return new Set(); }
+  try {
+    const raw = localStorage.getItem(scopeKey());
+    return raw === null ? null : new Set(JSON.parse(raw));
+  } catch { return null; }
 }
 function saveScope(set) {
   try { localStorage.setItem(scopeKey(), JSON.stringify([...set])); } catch { /* ignore */ }
@@ -368,8 +370,8 @@ async function renderSearchScope() {
   wrap.innerHTML = '';
   const all = state.providers;
   if (!all.length) return;
-  const stored = loadScope();
-  const effective = stored.size ? stored : new Set(all.map((p) => p.internalName));
+  const stored = loadScope(); // null = never stored → default to all providers
+  const effective = stored ? stored : new Set(all.map((p) => p.internalName));
   state.searchProviders = new Set(effective);
   const allOn = all.length > 0 && all.every((p) => effective.has(p.internalName));
   const allChip = el('button', `chip${allOn ? ' on' : ''}`, 'All providers');
@@ -427,7 +429,6 @@ async function runSearch(reset) {
     state.searchPage = 1;
     state.searchDone.clear();
     resultsGrid.innerHTML = '';
-    for (let i = 0; i < 12; i += 1) resultsGrid.appendChild(skeletonCard());
     await api.history.add(query);
   }
 
@@ -438,12 +439,8 @@ async function runSearch(reset) {
     return;
   }
 
-  const seen = new Set();
-  for (const card of $$('.poster-card, .skeleton', resultsGrid)) seen.add(card);
-
   let resolved = 0; let total = 0; let errors = 0;
   let appendedAny = !reset;
-  if (reset) resultsGrid.innerHTML = '';
 
   const hasNextByProvider = new Map();
   await Promise.all(targets.map(async (provider) => {
@@ -935,7 +932,9 @@ async function attachSource(link) {
   }
   $('#pc-engine').textContent = engine;
 
-  const saved = await api.progress.get(player.progressKey);
+  const saved = state.settings?.rememberPosition === false
+    ? null
+    : await api.progress.get(player.progressKey);
   const resume = saved && saved.positionMs > 20000 ? saved.positionMs / 1000 : 0;
   if (resume > 0 || (state.settings?.skipIntroSeconds > 0 && player.episode)) {
     const kick = () => {
@@ -1009,7 +1008,11 @@ function togglePlay() { if (video.paused) video.play(); else video.pause(); }
 
 video.addEventListener('play', () => { setPlayIcon(true); pokeHud(); });
 video.addEventListener('pause', () => { setPlayIcon(false); clearTimeout(player.hideTimer); overlay.classList.remove('hud-hidden'); saveProgressNow(); });
-video.addEventListener('ended', () => { setPlayIcon(false); saveProgressNow(); });
+video.addEventListener('ended', () => {
+  setPlayIcon(false);
+  saveProgressNow();
+  if (state.settings?.autoplayNext && player.episode) playNextEpisode(true);
+});
 video.addEventListener('timeupdate', () => {
   const dur = Number.isFinite(video.duration) ? video.duration : 0;
   $('#pc-time').textContent = `${fmtTime(video.currentTime)} / ${fmtTime(dur)}`;
@@ -1049,12 +1052,12 @@ seekEl.addEventListener('keydown', (e) => {
   else if (e.key === 'ArrowRight') { video.currentTime = Math.min(video.duration || 0, video.currentTime + step); e.preventDefault(); }
 });
 
-/* next episode helper (keyboard shortcut) */
-async function playNextEpisode() {
-  if (!player.episodeList.length || !player.episode) { toast('No episode list for this title.', 'info'); return; }
+/* next episode helper (keyboard shortcut + autoplay on ended) */
+async function playNextEpisode(fromAuto = false) {
+  if (!player.episodeList.length || !player.episode) { if (!fromAuto) toast('No episode list for this title.', 'info'); return; }
   const idx = player.episodeList.findIndex((e) => (e.season ?? 1) === (player.episode.season ?? 1) && e.episode === player.episode.episode);
   const next = player.episodeList[idx + 1];
-  if (!next) { toast('This is the latest episode.', 'info'); return; }
+  if (!next) { if (!fromAuto) toast('This is the latest episode.', 'info'); return; }
   saveProgressNow();
   const d = await api.bridge.load(player.provider, player.detailUrl).catch(() => null);
   await playEpisode(player.provider, player.detailUrl, d || { name: player.title, posterUrl: null, episodes: { None: player.episodeList } }, next, null);

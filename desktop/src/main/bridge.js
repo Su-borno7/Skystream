@@ -90,7 +90,7 @@ class Bridge {
       const java = this.findJava();
       const libDir = this.findBridgeLib();
       if (!java) {
-        this.lastError = 'No Java runtime found. Install Java 17+ or use an official Skystream build (bundles Java).';
+        this.lastError = 'No Java runtime found (this build bundles one — it may be missing or corrupt). Otherwise install Java 21+.';
         this._log('bridge: ' + this.lastError);
         return resolve(false);
       }

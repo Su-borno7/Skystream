@@ -41,8 +41,8 @@ CloudStream. See [NOTICE.md](NOTICE.md) for attribution and licensing.
 
 ### Run from source
 
-Requirements: Node.js 20+ and Java 17+ on your `PATH` (or `JAVA_HOME` set). Official
-release builds bundle everything.
+Requirements: Node.js 20+ and Java 21+ on your `PATH` (or `JAVA_HOME` set) for the
+bridge. Official release builds bundle a Temurin JRE 21, so no Java install is needed.
 
 ```bash
 cd desktop
@@ -78,20 +78,26 @@ cd bridge
 ./fetch-upstream.sh                    # one-time: downloads upstream CloudStream sources
 ./gradlew :app:installDist             # produces bridge/app/build/install/skystream-bridge
 
+mkdir -p ../desktop/build/jre          # optional but recommended: a Temurin 21 JRE in
+# ../desktop/build/jre makes electron-builder bundle it (see the Release workflow);
+# skip it and the app falls back to system Java 21+ at runtime.
+
 cd ../desktop
 npm ci
 npx electron-builder --linux AppImage  # or: --win nsis
 ```
 
-`desktop/package.json → build.extraResources` bundles the bridge install into the app's
-`resources/` directory. The **Release Desktop** workflow
+`desktop/package.json → build.extraResources` bundles the bridge install and the JRE
+into the app's `resources/` directory (`resources/bridge`, `resources/jre`). The **Release Desktop** workflow
 (`.github/workflows/release-desktop.yml`, triggered by `desktop-v*` tags) builds the
 bridge, packages Linux (AppImage) and Windows (NSIS) installers on GitHub Actions, and
 publishes them to a GitHub release. macOS builds are unsigned — package locally with
 `npm run dist:mac` if you need one.
 
-Note: the release packages bundle the **bridge** but still require Java 17+ at runtime
-(system `java`). A future release will bundle a minimal JRE via `jlink`.
+The release packages bundle **both** the bridge and a Temurin JRE 21 (downloaded by the
+Release workflow from Adoptium), so the installers work out of the box — no system Java
+required. Local `electron-builder` runs without `desktop/build/jre` fall back to a system
+Java 21+ at runtime.
 
 ## Skystream for Android
 

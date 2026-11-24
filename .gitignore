@@ -11,6 +11,8 @@ dist/
 build/
 # Desktop packaging icons must stay in git
 !desktop/build/
+# JRE downloaded by CI for packaging (never committed)
+desktop/build/jre/
 *.apk
 *.aab
 *.keystore.local

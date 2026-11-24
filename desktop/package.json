@@ -43,6 +43,10 @@
       {
         "from": "../bridge/app/build/install/skystream-bridge",
         "to": "bridge"
+      },
+      {
+        "from": "build/jre",
+        "to": "jre"
       }
     ],
     "asar": true,

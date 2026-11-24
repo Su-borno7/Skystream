@@ -214,6 +214,15 @@ function registerIpc() {
 
 // ---------------------------------------------------------------- lifecycle
 
+// Hardware acceleration must be disabled before the app is ready; read the
+// setting straight from the store (it is populated synchronously by AppState).
+try {
+  const earlyState = new AppState(app.getPath('userData'));
+  if (earlyState.getSettings().hardwareAcceleration === false) {
+    app.disableHardwareAcceleration();
+  }
+} catch { /* unreadable settings — keep default acceleration */ }
+
 app.whenReady().then(async () => {
   state = new AppState(getUserData());
 

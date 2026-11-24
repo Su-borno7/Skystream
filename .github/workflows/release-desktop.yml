@@ -92,6 +92,24 @@ jobs:
           name: skystream-bridge-dist
           path: bridge/app/build/install/skystream-bridge
 
+      - name: Bundle Temurin JRE 21
+        shell: bash
+        run: |
+          set -e
+          OS="linux"
+          if [ "${{ matrix.name }}" = "windows" ]; then OS="windows"; fi
+          mkdir -p desktop/build/jre
+          echo "Downloading Temurin 21 JRE for $OS/x64…"
+          curl -sL --retry 3 --retry-delay 5 \
+            "https://api.adoptium.net/v3/binary/latest/21/ga/${OS}/x64/jre/hotspot/normal/eclipse" \
+            -o "$RUNNER_TEMP/jre-archive"
+          tar -xf "$RUNNER_TEMP/jre-archive" -C desktop/build/jre --strip-components=1
+          if [ "$OS" = "windows" ]; then
+            "desktop/build/jre/bin/java.exe" -version
+          else
+            "desktop/build/jre/bin/java" -version
+          fi
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
