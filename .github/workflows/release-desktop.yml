@@ -95,19 +95,27 @@ jobs:
       - name: Bundle Temurin JRE 21
         shell: bash
         run: |
-          set -e
+          set -o pipefail
           OS="linux"
           if [ "${{ matrix.name }}" = "windows" ]; then OS="windows"; fi
           mkdir -p desktop/build/jre
-          echo "Downloading Temurin 21 JRE for $OS/x64…"
-          curl -sL --retry 3 --retry-delay 5 \
-            "https://api.adoptium.net/v3/binary/latest/21/ga/${OS}/x64/jre/hotspot/normal/eclipse" \
-            -o "$RUNNER_TEMP/jre-archive"
-          tar -xf "$RUNNER_TEMP/jre-archive" -C desktop/build/jre --strip-components=1
-          if [ "$OS" = "windows" ]; then
-            "desktop/build/jre/bin/java.exe" -version
-          else
-            "desktop/build/jre/bin/java" -version
+          URL="https://api.adoptium.net/v3/binary/latest/21/ga/${OS}/x64/jre/hotspot/normal/eclipse"
+          echo "Downloading Temurin 21 JRE for $OS/x64 from $URL"
+          HTTP=$(curl -fSL --retry 3 --retry-delay 5 -w "%{http_code}" "$URL" -o "$RUNNER_TEMP/jre-archive" 2>"$RUNNER_TEMP/jre-curl.err") || {
+            echo "::error::JRE download failed (curl exit $?, http $HTTP): $(cat "$RUNNER_TEMP/jre-curl.err" | tail -3)"
+            exit 1
+          }
+          echo "downloaded: http=$HTTP size=$(wc -c < "$RUNNER_TEMP/jre-archive") bytes"
+          head -c 100 "$RUNNER_TEMP/jre-archive" | od -c | head -3
+          if ! tar -xf "$RUNNER_TEMP/jre-archive" -C desktop/build/jre --strip-components=1 2>"$RUNNER_TEMP/jre-tar.err"; then
+            echo "::error::JRE extraction failed: $(cat "$RUNNER_TEMP/jre-tar.err" | tail -5)"
+            exit 1
+          fi
+          if [ "$OS" = "windows" ]; then JAVA_BIN="desktop/build/jre/bin/java.exe"; else JAVA_BIN="desktop/build/jre/bin/java"; fi
+          if ! "$JAVA_BIN" -version 2>"$RUNNER_TEMP/jre-java.err"; then
+            echo "::error::bundled java failed to run: $(cat "$RUNNER_TEMP/jre-java.err" | tail -5); tree:"
+            find desktop/build/jre -maxdepth 2 | head -20 | while IFS= read -r l; do printf '::error::tree: %s\n' "$l"; done
+            exit 1
           fi
 
       - name: Set up Node.js
@@ -125,12 +133,32 @@ jobs:
         working-directory: desktop
         run: npm test
 
+      - name: Install libfuse2 (AppImage runtime dependency)
+        if: matrix.name == 'linux'
+        run: |
+          sudo apt-get update && sudo apt-get install -y libfuse2 || echo "libfuse2 unavailable; continuing"
+
       - name: Package (electron-builder)
         working-directory: desktop
-        run: npx electron-builder ${{ matrix.builderArgs }} --publish never
+        run: |
+          set -o pipefail
+          npx electron-builder ${{ matrix.builderArgs }} --publish never 2>&1 | tee "$RUNNER_TEMP/electron-builder.log"
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
           GH_TOKEN: ${{ github.token }}
+
+      - name: Annotate packaging failure
+        if: failure()
+        run: |
+          if [ -f "$RUNNER_TEMP/electron-builder.log" ]; then
+            grep -n -iE 'error|⨯|failed' "$RUNNER_TEMP/electron-builder.log" | tail -12 | while IFS= read -r line || [ -n "$line" ]; do
+              printf '::error::pkg: %s\n' "$(printf '%s' "$line" | sed 's/%/%25/g' | cut -c1-1500)"
+            done
+            tail -18 "$RUNNER_TEMP/electron-builder.log" | while IFS= read -r line || [ -n "$line" ]; do
+              printf '::error::tail: %s\n' "$(printf '%s' "$line" | sed 's/%/%25/g' | cut -c1-1500)"
+            done
+          fi
+          exit 0
 
       - name: Upload package artifact
         uses: actions/upload-artifact@v4
