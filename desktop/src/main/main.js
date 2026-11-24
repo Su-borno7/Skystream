@@ -91,12 +91,22 @@ function registerIpc() {
     userData: getUserData(),
     pluginsDir: getPluginsDir(),
     downloadDir: getDownloadDir(),
+    electron: process.versions.electron,
+    chromium: process.versions.chrome,
+    node: process.versions.node,
     bridge: bridge.status(),
   }));
 
   ipcMain.handle('app:openExternal', (_event, url) => {
     if (typeof url === 'string' && /^https?:\/\//i.test(url)) return shell.openExternal(url);
     return Promise.resolve();
+  });
+
+  ipcMain.handle('app:openPath', async (_event, target) => {
+    if (typeof target !== 'string' || !target) return 'Invalid path';
+    const resolved = path.resolve(target);
+    if (!fs.existsSync(resolved)) return 'Path does not exist';
+    return shell.openPath(resolved); // '' on success, error message on failure
   });
 
   ipcMain.handle('app:showItemInFolder', (_event, target) => {

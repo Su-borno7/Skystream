@@ -16,6 +16,7 @@ contextBridge.exposeInMainWorld('skystream', {
   appInfo: () => invoke('app:info'),
   openExternal: (url) => invoke('app:openExternal', url),
   showItemInFolder: (target) => invoke('app:showItemInFolder', target),
+  openPath: (target) => invoke('app:openPath', target),
   pickDownloadDir: () => invoke('app:pickDownloadDir'),
 
   window: {

@@ -56,6 +56,8 @@ const DEFAULT_SETTINGS = {
   reduceMotion: false,
   subtitleSize: 100, // percent
   subtitleColor: '#FFFFFF',
+  jsdelivrProxy: false,
+  checkUpdatesOnLaunch: false,
 };
 
 class AppState {
