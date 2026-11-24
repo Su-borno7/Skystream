@@ -3,7 +3,7 @@ package com.lagradost.cloudstream4.theme
 import androidx.compose.ui.graphics.Color
 
 enum class CloudStreamPrimaryColor(val color: Color) {
-    NORMAL(Color(0xFF3D50FA)),
+    NORMAL(Color(0xFF38BDF8)),
     BLUE(Color(0xFF5664B7)),
     PURPLE(Color(0xFF6200EA)),
     GREEN(Color(0xFF00BFA5)),
@@ -23,37 +23,37 @@ enum class CloudStreamPrimaryColor(val color: Color) {
     DANDELION_YELLOW(Color(0xFFF5BB00)),
     COOL_BLUE(Color(0xFF408CAC)),
     LAVENDER(Color(0xFF6F55AF)),
-    DYNAMIC(Color(0xFF3D50FA)),
-    DYNAMIC_TWO(Color(0xFF3D50FA)),
+    DYNAMIC(Color(0xFF38BDF8)),
+    DYNAMIC_TWO(Color(0xFF38BDF8)),
 }
 
 
 internal object CloudStreamPalette {
     // Default dark (AppTheme / Black)
-    val Primary = Color(0xFF3D50FA)
-    val PrimaryDark = Color(0xFF3700B3)
+    val Primary = Color(0xFF38BDF8)
+    val PrimaryDark = Color(0xFF0B0E14)
     val Ongoing = Color(0xFFF53B66)
 
-    val DarkPrimaryGrayBg = Color(0xFF2B2C30)
-    val DarkBlackBg = Color(0xFF111111)
-    val DarkIconGrayBg = Color(0xFF1C1C20)
-    val DarkBoxItemBg = Color(0xFF161616)
-    val DarkText = Color(0xFFE9EAEE)
-    val DarkGrayText = Color(0xFF9BA0A4)
-    val DarkIcon = Color(0xFF9BA0A6)
+    val DarkPrimaryGrayBg = Color(0xFF161C26)
+    val DarkBlackBg = Color(0xFF0C1016)
+    val DarkIconGrayBg = Color(0xFF111722)
+    val DarkBoxItemBg = Color(0xFF121924)
+    val DarkText = Color(0xFFEAEEF6)
+    val DarkGrayText = Color(0xFF8996AB)
+    val DarkIcon = Color(0xFF8B96A9)
 
     // Amoled
     val AmoledBlack = Color(0xFF000000)
     val AmoledNearBlack = Color(0xFF121212)
 
     // Light
-    val LightPrimaryGrayBg = Color(0xFFF1F1F1)
+    val LightPrimaryGrayBg = Color(0xFFEDF0F7)
     val LightBlackBg = Color(0xFFFFFFFF)
-    val LightIconGrayBg = Color(0xFFEEEEEE)
-    val LightBoxItemBg = Color(0xFFEEEEEE)
-    val LightText = Color(0xFF202125)
-    val LightGrayText = Color(0xFF5F6267)
-    val LightIcon = Color(0xFF5F6267)
+    val LightIconGrayBg = Color(0xFFE2E6EF)
+    val LightBoxItemBg = Color(0xFFE2E6EF)
+    val LightText = Color(0xFF161C26)
+    val LightGrayText = Color(0xFF5A6478)
+    val LightIcon = Color(0xFF5A6478)
 
     // Dracula
     val DraculaPrimaryGrayBg = Color(0xFF414450)

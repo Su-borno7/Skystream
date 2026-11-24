@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3D50FA</color>
+    <color name="colorPrimary">#38BDF8</color>
     <color name="colorPrimarySecond">@color/colorPrimary</color>
     <color name="colorSearch">#1D2530</color> <!--#3444D1 @color/itemBackground-->
     <color name="colorOngoing">#F53B66</color> <!--FF8181-->
@@ -26,13 +26,14 @@
 
     <color name="whiteText">#FFF</color>
     <color name="blackText">#000</color>
+    <color name="skyContrast">#06202F</color>
 
     <color name="progressBackgroundColor">#1AFFFFFF</color>
 
-    <color name="dubColorText">#121950</color> <!--3b65f5 f18c82 8294F1-->
+    <color name="dubColorText">#06202F</color>
     <color name="amoledModeLight">#101318</color>
 
-    <color name="dubColorBg">#3B65F5</color>
+    <color name="dubColorBg">#38BDF8</color>
     <color name="subColorText">#571711</color> <!--F53B66 FA3D79-->
     <color name="subColorBg">#F53B66</color>
     <color name="typeColorText">#BEC8FF</color>

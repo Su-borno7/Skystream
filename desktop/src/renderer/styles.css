@@ -1,48 +1,62 @@
+/* ═══════════ Skystream — bundled typeface: Inter (OFL-1.1, see fonts/INTER-LICENSE.txt) ═══════════ */
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/Inter-Regular.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: italic; font-weight: 400; font-display: swap; src: url("fonts/Inter-Italic.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 500; font-display: swap; src: url("fonts/Inter-Medium.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 600; font-display: swap; src: url("fonts/Inter-SemiBold.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 700; font-display: swap; src: url("fonts/Inter-Bold.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: italic; font-weight: 700; font-display: swap; src: url("fonts/Inter-BoldItalic.woff2") format("woff2"); }
+
 /* ═══════════ Skystream — design system ═══════════ */
 :root {
-  --accent: #3D50FA;
-  --accent-hover: #4E5EFB;
-  --accent-soft: rgba(61, 80, 250, 0.16);
-  --bg: #0B0D10;
-  --bg-elev: #12151A;
-  --surface: #161A21;
-  --surface-2: #1C212B;
-  --surface-3: #232A37;
-  --border: #232833;
-  --border-soft: #1C2129;
-  --text: #E8EAED;
-  --text-muted: #9AA3AF;
-  --text-faint: #6B7480;
+  --accent: #38BDF8;
+  --accent-hover: #56CDFC;
+  --accent-soft: rgba(56, 189, 248, 0.16);
+  --accent-contrast: #06202F;
+  --bg: #0C1016;
+  --bg-elev: #121924;
+  --surface: #161C26;
+  --surface-2: #1D2530;
+  --surface-3: #242E3D;
+  --border: #26303F;
+  --border-soft: #1B2230;
+  --text: #EAEEF6;
+  --text-muted: #8996AB;
+  --text-faint: #5F6B7E;
   --danger: #F2555A;
   --ok: #34D399;
   --warn: #FBBF24;
-  --radius: 12px;
-  --radius-sm: 8px;
-  --shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
-  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, "Helvetica Neue", Arial, sans-serif;
+  --radius: 14px;
+  --radius-sm: 10px;
+  --shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+  --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 [data-theme="amoled"] {
   --bg: #000000;
-  --bg-elev: #0A0A0C;
-  --surface: #101012;
-  --surface-2: #17171A;
-  --surface-3: #1E1E22;
-  --border: #1F1F24;
-  --border-soft: #17171A;
+  --bg-elev: #090D13;
+  --surface: #0F151D;
+  --surface-2: #151D28;
+  --surface-3: #1D2735;
+  --border: #1E2836;
+  --border-soft: #141A25;
+  --accent-soft: rgba(56, 189, 248, 0.18);
+  --accent-contrast: #06202F;
 }
 [data-theme="light"] {
-  --bg: #F3F4F7;
+  --bg: #EDF0F7;
   --bg-elev: #FFFFFF;
   --surface: #FFFFFF;
-  --surface-2: #F0F1F5;
-  --surface-3: #E4E6EC;
-  --border: #DFE2E9;
-  --border-soft: #ECEEF3;
-  --text: #17181C;
-  --text-muted: #5B6470;
-  --text-faint: #8B939F;
-  --accent-soft: rgba(61, 80, 250, 0.12);
-  --shadow: 0 12px 40px rgba(20, 24, 40, 0.18);
+  --surface-2: #E2E6EF;
+  --surface-3: #D3D9E6;
+  --border: #D3D9E6;
+  --border-soft: #E2E6EF;
+  --text: #161C26;
+  --text-muted: #5A6478;
+  --text-faint: #8B93A6;
+  --accent: #0284C7;
+  --accent-hover: #0369A1;
+  --accent-soft: rgba(2, 132, 199, 0.14);
+  --accent-contrast: #FFFFFF;
+  --shadow: 0 12px 40px rgba(20, 28, 46, 0.18);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -121,7 +135,7 @@ input, select, textarea { font-family: inherit; }
   white-space: nowrap;
 }
 .btn:active { transform: scale(.97); }
-.btn-accent { background: var(--accent); color: #fff; }
+.btn-accent { background: var(--accent); color: var(--accent-contrast, #fff); }
 .btn-accent:hover { background: var(--accent-hover); }
 .btn-ghost { background: var(--surface-2); color: var(--text); border-color: var(--border); }
 .btn-ghost:hover { background: var(--surface-3); }
@@ -223,7 +237,7 @@ input, select, textarea { font-family: inherit; }
 .detail-poster { width: 168px; aspect-ratio: 2/3; border-radius: var(--radius); object-fit: cover; border: 1px solid var(--border); box-shadow: var(--shadow); background: var(--surface-2); flex-shrink: 0; }
 .detail-info { min-width: 0; max-width: 820px; }
 .detail-kicker { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
-.badge { font-size: 9.5px; font-weight: 800; letter-spacing: .9px; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; background: var(--accent); color: #fff; }
+.badge { font-size: 9.5px; font-weight: 800; letter-spacing: .9px; text-transform: uppercase; padding: 3px 9px; border-radius: 6px; background: var(--accent); color: var(--accent-contrast, #fff); }
 .badge.ghost { background: var(--surface-2); color: var(--text-muted); border: 1px solid var(--border); }
 .detail-title { font-size: 30px; font-weight: 800; letter-spacing: -0.5px; line-height: 1.15; margin-bottom: 10px; }
 .detail-meta { display: flex; gap: 14px; align-items: center; color: var(--text-muted); font-size: 12.5px; margin-bottom: 12px; flex-wrap: wrap; }
@@ -349,7 +363,7 @@ input, select, textarea { font-family: inherit; }
 .swatch.active { border-color: var(--text); }
 .segmented { display: flex; background: var(--surface-2); border-radius: 8px; padding: 3px; gap: 2px; }
 .segmented button { padding: 6px 14px; font-size: 12px; font-weight: 600; border-radius: 6px; color: var(--text-muted); }
-.segmented button.active { background: var(--accent); color: #fff; }
+.segmented button.active { background: var(--accent); color: var(--accent-contrast, #fff); }
 .path-box { font-size: 11px; color: var(--text-muted); background: var(--surface-2); border-radius: 8px; padding: 10px 12px; word-break: break-all; user-select: text; margin: 8px 0 10px; }
 .number-input { width: 84px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 6px 10px; font-size: 12px; outline: none; user-select: text; }
 .range { width: 160px; accent-color: var(--accent); }

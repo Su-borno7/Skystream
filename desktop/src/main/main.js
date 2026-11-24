@@ -16,7 +16,7 @@ const { Bridge } = require('./bridge');
 const { MediaProxy } = require('./proxy');
 const { DownloadManager } = require('./downloads');
 
-const ACCENT = '#3D50FA';
+const ACCENT = '#38BDF8';
 
 let state = null;
 let extensions = null;

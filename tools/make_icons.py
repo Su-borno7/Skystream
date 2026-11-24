@@ -8,7 +8,7 @@ SS = 4  # supersample factor
 def lerp(a, b, t):
     return tuple(int(round(a[i] + (b[i] - a[i]) * t)) for i in range(3))
 
-BLUE   = (0x3D, 0x50, 0xFA)   # #3D50FA (CloudStream-style accent)
+BLUE   = (0x38, 0xBD, 0xF8)   # #38BDF8 (Skystream accent)
 VIOLET = (0x8B, 0x5C, 0xF6)   # #8B5CF6
 BG_TOP = (0x06, 0x07, 0x14)
 BG_BOT = (0x14, 0x17, 0x33)

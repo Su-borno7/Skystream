@@ -54,7 +54,7 @@ const state = {
 };
 
 /* ═══════════ settings ═══════════ */
-const ACCENTS = ['#3D50FA', '#7C3AED', '#0EA5E9', '#10B981', '#F59E0B', '#EF4444', '#EC4899', '#14B8A6'];
+const ACCENTS = ['#38BDF8', '#7C3AED', '#0EA5E9', '#10B981', '#F59E0B', '#EF4444', '#EC4899', '#14B8A6'];
 const SUBTITLE_COLORS = ['#FFFFFF', '#FBBF24', '#34D399', '#67E8F9'];
 
 async function loadSettings() {
@@ -65,8 +65,8 @@ function applySettings(s) {
   if (!s) return;
   document.documentElement.dataset.theme = s.theme || 'dark';
   document.documentElement.dataset.reduceMotion = s.reduceMotion ? 'true' : 'false';
-  document.documentElement.style.setProperty('--accent', s.accent || '#3D50FA');
-  document.documentElement.style.setProperty('--accent-hover', shadeAccent(s.accent || '#3D50FA'));
+  document.documentElement.style.setProperty('--accent', s.accent || '#38BDF8');
+  document.documentElement.style.setProperty('--accent-hover', shadeAccent(s.accent || '#38BDF8'));
 }
 function shadeAccent(hex) {
   // lighten toward white by ~12%

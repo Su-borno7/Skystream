@@ -17,6 +17,7 @@ Modifications made by the Skystream project (see `android/`):
 - Version reset to 1.0.0; the in-repo public keystore signs release APKs (reproducible-build model).
 - 53 localized `strings.xml` files updated to the Skystream name.
 - The upstream `desktopApp` skeleton and F-Droid/fastlane metadata were removed (Skystream ships a separate PC app).
+- Bundled fonts: Skystream replaces the default app typeface with **Inter** (SIL Open Font License 1.1, © The Inter Project Authors — see `android/THIRD-PARTY-LICENSES.txt`; the desktop app bundles it under `desktop/src/renderer/fonts/` with its license in `INTER-LICENSE.txt`). Other fonts in `android/app/src/main/res/font/` remain under their original licenses.
 
 Everything else is unchanged from upstream CloudStream at the time the fork was taken
 (upstream commit `1a36edb…` is the unrelated initial commit of this repo; the fork base
