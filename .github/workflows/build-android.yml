@@ -48,7 +48,7 @@ jobs:
         working-directory: android
         run: |
           set -o pipefail
-          ./gradlew :app:assembleStableRelease --stacktrace 2>&1 | tee "$RUNNER_TEMP/android-build.log"
+          ./gradlew :app:assembleStableRelease --stacktrace -Pkotlin.compiler.execution.strategy=in-process 2>&1 | tee "$RUNNER_TEMP/android-build.log"
 
       # The sandbox this repo is developed in cannot read GitHub logs directly;
       # surface the Gradle failure summary as workflow annotations instead.
@@ -65,7 +65,10 @@ jobs:
               printf '::error::%s\n' "$(printf '%s' "$line" | sed 's/%/%25/g' | cut -c1-2000)"
             done
             # Kotlin compiler diagnostics, in case the tail window misses them.
-            grep -E '^e: ' "$LOG" | head -40 | while IFS= read -r line || [ -n "$line" ]; do
+            grep -E 'e: file:///' "$LOG" | head -40 | while IFS= read -r line || [ -n "$line" ]; do
+              printf '::error::%s\n' "$(printf '%s' "$line" | sed 's/%/%25/g' | cut -c1-2000)"
+            done
+            grep -niE 'error' "$LOG" | grep -v 'Process completed' | head -30 | while IFS= read -r line || [ -n "$line" ]; do
               printf '::error::%s\n' "$(printf '%s' "$line" | sed 's/%/%25/g' | cut -c1-2000)"
             done
           fi
