@@ -58,7 +58,7 @@ class FileSharedPreferences(private val dir: File, fileName: String) : SharedPre
         }
     }
 
-    @Synchronized
+    @get:Synchronized
     override val all: Map<String, *>
         get() = LinkedHashMap(values)
 
