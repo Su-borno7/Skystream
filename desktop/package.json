@@ -57,7 +57,8 @@
         "AppImage"
       ],
       "category": "AudioVideo",
-      "executableName": "skystream"
+      "executableName": "skystream",
+      "syncDesktopName": true
     },
     "win": {
       "target": [
@@ -77,5 +78,10 @@
       ],
       "category": "public.app-category.video"
     }
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Su-borno7/Skystream.git"
+  },
+  "desktopName": "Skystream"
 }
