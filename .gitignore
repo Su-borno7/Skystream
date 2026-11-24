@@ -1,0 +1,32 @@
+# Node / Electron
+node_modules/
+desktop/node_modules/
+desktop/dist/
+desktop/out/
+desktop/*.log
+
+# Build outputs
+out/
+dist/
+build/
+*.apk
+*.aab
+*.keystore.local
+
+# Gradle
+.gradle/
+android/.gradle/
+android/**/build/
+local.properties
+
+# Upstream checkouts fetched by CI (never committed)
+bridge/upstream/
+upstream/
+
+# Python
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
+Thumbs.db

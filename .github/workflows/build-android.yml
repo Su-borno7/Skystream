@@ -1,0 +1,67 @@
+name: Build Android (Skystream)
+
+on:
+  push:
+    branches: [main, 'arena/**']
+    paths:
+      - 'android/**'
+      - '.github/workflows/build-android.yml'
+  pull_request:
+    paths:
+      - 'android/**'
+      - '.github/workflows/build-android.yml'
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Skystream APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Ensure Android SDK 37 platform
+        run: |
+          set -e
+          yes | sdkmanager --licenses >/dev/null || true
+          sdkmanager "platforms;android-37" || sdkmanager --list_installed
+
+      - name: Setup Gradle (with cache)
+        uses: gradle/actions/setup-gradle@v5
+
+      - name: Load public keystore credentials
+        working-directory: android
+        run: |
+          echo "SKYSTREAM_KEYSTORE=$GITHUB_WORKSPACE/android/keystore/skystream-release.keystore" >> "$GITHUB_ENV"
+          echo "SKYSTREAM_KEYSTORE_PASSWORD=$(cat keystore/PASSWORD.txt)" >> "$GITHUB_ENV"
+          echo "SKYSTREAM_KEY_PASSWORD=$(cat keystore/PASSWORD.txt)" >> "$GITHUB_ENV"
+          echo "SKYSTREAM_KEY_ALIAS=skystream" >> "$GITHUB_ENV"
+
+      - name: Make gradlew executable
+        working-directory: android
+        run: chmod +x gradlew
+
+      - name: Assemble stable release APK
+        working-directory: android
+        run: ./gradlew :app:assembleStableRelease --stacktrace
+
+      - name: Locate APK
+        id: apk
+        run: |
+          APK=$(find android/app/build/outputs/apk -name '*.apk' | head -n1)
+          echo "apk=$APK" >> "$GITHUB_OUTPUT"
+          ls -la "$APK"
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: skystream-android-apk
+          path: ${{ steps.apk.outputs.apk }}
+          if-no-files-found: error
