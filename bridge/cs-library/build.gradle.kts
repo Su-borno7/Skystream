@@ -57,11 +57,11 @@ kotlin {
         jvmMain {
             kotlin.srcDir(upstream.resolve("jvmMain/kotlin"))
             kotlin.srcDir("src/jvmShim/kotlin")
-            // jvmCommonMain minus the NewPipe-based YouTube extractor (via jitpack only).
             kotlin.srcDir(upstream.resolve("jvmCommonMain/kotlin"))
-            kotlin.exclude("**/YoutubeExtractor.jvmCommon.kt")
             dependencies {
                 api("org.jetbrains.kotlin:kotlin-reflect:2.4.0")
+                // NewPipe extractor used by the JVM/Android YouTube provider (resolved via jitpack, same as upstream).
+                api("com.github.teamnewpipe:NewPipeExtractor:v0.26.3")
             }
         }
     }

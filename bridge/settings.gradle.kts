@@ -15,6 +15,7 @@ dependencyResolutionManagement {
         maven("https://maven-central.storage-download.googleapis.com/maven2/")
         mavenCentral()
         google()
+        maven("https://jitpack.io")
     }
 }
 
