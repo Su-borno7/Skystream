@@ -143,11 +143,13 @@ jobs:
 
       - name: Install libfuse2 (AppImage runtime dependency)
         if: matrix.name == 'linux'
+        shell: bash
         run: |
           sudo apt-get update && sudo apt-get install -y libfuse2 || echo "libfuse2 unavailable; continuing"
 
       - name: Package (electron-builder)
         working-directory: desktop
+        shell: bash
         run: |
           set -o pipefail
           npx electron-builder ${{ matrix.builderArgs }} --publish never 2>&1 | tee "$RUNNER_TEMP/electron-builder.log"
@@ -157,6 +159,7 @@ jobs:
 
       - name: Annotate packaging failure
         if: failure()
+        shell: bash
         run: |
           LOG="$RUNNER_TEMP/electron-builder.log"
           if [ ! -f "$LOG" ]; then printf '::error::pkg: NO LOG FILE at %s\n' "$LOG"; exit 0; fi
