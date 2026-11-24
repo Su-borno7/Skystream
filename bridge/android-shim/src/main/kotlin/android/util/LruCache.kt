@@ -2,12 +2,12 @@ package android.util
 
 /** android.util.LruCache backed by a LinkedHashMap with access order. */
 open class LruCache<K, V>(maxSize: Int) {
-    private val maxSize = maxOf(1, maxSize)
+    private val limit = maxOf(1, maxSize)
     private var size = 0
 
     private val map = object : LinkedHashMap<K, V>(0, 0.75f, true) {
         override fun removeEldestEntry(eldest: MutableMap.MutableEntry<K, V>): Boolean {
-            val over = size > this@LruCache.maxSize
+            val over = size > limit
             if (over) size -= safeSizeOf(eldest.key, eldest.value)
             return over
         }
@@ -19,7 +19,7 @@ open class LruCache<K, V>(maxSize: Int) {
     private fun safeSizeOf(key: K, value: V): Int = try { sizeOf(key, value) } catch (_: Throwable) { 1 }
 
     @Synchronized
-    open fun maxSize(): Int = maxSize
+    open fun maxSize(): Int = limit
 
     @Synchronized
     open fun size(): Int = size
@@ -35,7 +35,7 @@ open class LruCache<K, V>(maxSize: Int) {
         val previous = map.put(key, value)
         size += safeSizeOf(key, value)
         if (previous != null) size -= safeSizeOf(key, previous)
-        trimToSize(maxSize)
+        trimToSize(limit)
         return previous
     }
 

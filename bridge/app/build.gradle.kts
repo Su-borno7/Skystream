@@ -24,7 +24,7 @@ dependencies {
 
 application {
     applicationName = "skystream-bridge"
-    mainClass.set("com.skystream.bridge.BridgeKt")
+    mainClass.set("com.skystream.bridge.Main")
     applicationDefaultJvmArgs = listOf(
         "-XX:+UnlockDiagnosticVMOptions",
         "-XX:-BytecodeVerificationRemote",

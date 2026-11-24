@@ -7,7 +7,7 @@ class Uri private constructor(private val uri: java.net.URI?) {
         fun parse(s: String?): Uri = Uri(try {
             if (s.isNullOrBlank()) null else java.net.URI(s)
         } catch (_: Throwable) {
-            try { java.net.URI(s.replace(" ", "%20")) } catch (_: Throwable) { null }
+            try { s?.let { java.net.URI(it.replace(" ", "%20")) } } catch (_: Throwable) { null }
         })
 
         @JvmStatic
@@ -75,7 +75,7 @@ class Uri private constructor(private val uri: java.net.URI?) {
             ?: emptySet()
 
     fun buildUpon(): Builder = Builder(toString())
-    fun toString(): String = uri?.toString() ?: ""
+    override fun toString(): String = uri?.toString() ?: ""
     fun equals(other: Uri?): Boolean = other != null && other.toString() == toString()
     override fun hashCode(): Int = toString().hashCode()
 }

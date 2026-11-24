@@ -1,3 +1,5 @@
+@file:OptIn(com.lagradost.cloudstream3.InternalAPI::class)
+
 package com.lagradost.cloudstream3
 
 import android.app.Application
@@ -84,7 +86,8 @@ open class CloudStreamApp : Application() {
         internal fun <T> Context.getKeyCompat(path: String): T? {
             return try {
                 val json = getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE).getString(path, null) ?: return null
-                parseJson<T>(json)
+                @Suppress("UNCHECKED_CAST")
+                parseJson<Any>(json) as T
             } catch (_: Throwable) {
                 null
             }
