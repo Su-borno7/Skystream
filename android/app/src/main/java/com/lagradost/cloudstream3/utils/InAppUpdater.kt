@@ -104,14 +104,14 @@ object InAppUpdater {
             app.get(url, headers = headers).text
         ).toList()
 
-        val versionRegex = Regex("""(.*?((\d+)\.(\d+)\.(\d+))\.apk)""")
-        val versionRegexLocal = Regex("""(.*?((\d+)\.(\d+)\.(\d+)).*)""")
+        val versionRegex = Regex("""(\d+)\.(\d+)\.(\d+)""")
+        val versionRegexLocal = versionRegex
         val foundList = response.filter { rel ->
             !rel.prerelease
         }.sortedWith(compareBy { release ->
             release.assets.firstOrNull { it.contentType == "application/vnd.android.package-archive" }?.name?.let { it1 ->
                 versionRegex.find(it1)?.groupValues?.let {
-                    it[3].toInt() * 100_000_000 + it[4].toInt() * 10_000 + it[5].toInt()
+                    it[1].toInt() * 100_000_000 + it[2].toInt() * 10_000 + it[3].toInt()
                 }
             }
         }).toList()
@@ -133,18 +133,18 @@ object InAppUpdater {
         } else {
             currentVersion?.versionName?.let { versionName ->
                 versionRegexLocal.find(versionName)?.groupValues?.let {
-                    it[3].toInt() * 100_000_000 + it[4].toInt() * 10_000 + it[5].toInt()
+                    it[1].toInt() * 100_000_000 + it[2].toInt() * 10_000 + it[3].toInt()
                 }
             }?.compareTo(
                 foundVersion.groupValues.let {
-                    it[3].toInt() * 100_000_000 + it[4].toInt() * 10_000 + it[5].toInt()
+                    it[1].toInt() * 100_000_000 + it[2].toInt() * 10_000 + it[3].toInt()
                 })!! < 0
         }
 
         return Update(
             shouldUpdate,
             foundAsset.browserDownloadUrl,
-            foundVersion.groupValues[2],
+            foundVersion.groupValues[0],
             found.body,
             found.nodeId
         )
@@ -189,7 +189,7 @@ object InAppUpdater {
     private suspend fun Activity.downloadUpdate(url: String): Boolean {
         try {
             Log.d(LOG_TAG, "Downloading update: $url")
-            val appUpdateName = "CloudStream"
+            val appUpdateName = "Skystream"
             val appUpdateSuffix = "apk"
 
             // Delete all old updates

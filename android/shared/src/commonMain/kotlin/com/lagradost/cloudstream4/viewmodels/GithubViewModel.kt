@@ -150,6 +150,20 @@ data class DigestPair(
  *   <---(state)---/        <--(callback)--/
  * ```
  * */
+private val versionComponentRegex = Regex("""(\d+)\.(\d+)\.(\d+)""")
+
+private fun extractVersion(value: String?): Triple<Int, Int, Int>? {
+    val match = value?.let { versionComponentRegex.find(it) } ?: return null
+    return Triple(
+        match.groupValues[1].toInt(),
+        match.groupValues[2].toInt(),
+        match.groupValues[3].toInt()
+    )
+}
+
+private fun compareVersions(a: Triple<Int, Int, Int>, b: Triple<Int, Int, Int>): Int =
+    compareValuesBy(a, b, { it.first }, { it.second }, { it.third })
+
 class GithubViewModel(
     val remoteUserName: String,
     val remoteRepository: String,
@@ -290,12 +304,22 @@ class GithubViewModel(
             contentType = remoteContentType
         )
 
-        // If on stable, only check that the display name matches
-        if (!prerelease && release.displayName == versionName) {
-            updateState {
-                copy(dialog = baseDialog.copy(state = GithubUpdateDialogState.NoUpdateFound))
+        // If on stable, compare the release version against the installed version
+        if (!prerelease) {
+            val releaseVersion = extractVersion(release.displayName) ?: extractVersion(release.tagName)
+            val currentVersion = extractVersion(versionName)
+            val isNewer = if (releaseVersion != null && currentVersion != null) {
+                compareVersions(releaseVersion, currentVersion) > 0
+            } else {
+                // Fall back to name equality when a version cannot be parsed
+                release.displayName != versionName
             }
-            return@dispatchUpdate
+            if (!isNewer) {
+                updateState {
+                    copy(dialog = baseDialog.copy(state = GithubUpdateDialogState.NoUpdateFound))
+                }
+                return@dispatchUpdate
+            }
         }
 
         // If this was automated, and we have pressed "skip this update" then check the node-id
