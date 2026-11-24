@@ -30,8 +30,9 @@ jobs:
       - name: Ensure Android SDK 37 platform
         run: |
           set -e
-          yes | sdkmanager --licenses >/dev/null || true
-          sdkmanager "platforms;android-37" || sdkmanager --list_installed
+          SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          yes | "$SDKMANAGER" --licenses >/dev/null || true
+          "$SDKMANAGER" "platforms;android-37"
 
       - name: Setup Gradle (with cache)
         uses: gradle/actions/setup-gradle@v5
