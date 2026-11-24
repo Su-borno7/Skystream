@@ -158,14 +158,15 @@ jobs:
       - name: Annotate packaging failure
         if: failure()
         run: |
-          if [ -f "$RUNNER_TEMP/electron-builder.log" ]; then
-            grep -n -iE 'error|⨯|failed' "$RUNNER_TEMP/electron-builder.log" | tail -12 | while IFS= read -r line || [ -n "$line" ]; do
-              printf '::error::pkg: %s\n' "$(printf '%s' "$line" | sed 's/%/%25/g' | cut -c1-1500)"
-            done
-            tail -18 "$RUNNER_TEMP/electron-builder.log" | while IFS= read -r line || [ -n "$line" ]; do
-              printf '::error::tail: %s\n' "$(printf '%s' "$line" | sed 's/%/%25/g' | cut -c1-1500)"
-            done
-          fi
+          LOG="$RUNNER_TEMP/electron-builder.log"
+          if [ ! -f "$LOG" ]; then printf '::error::pkg: NO LOG FILE at %s\n' "$LOG"; exit 0; fi
+          printf '::error::pkg: log has %s lines\n' "$(wc -l < "$LOG")"
+          ( grep -iE 'error|⨯|failed' "$LOG" || true ) | tail -8 | while IFS= read -r line; do
+            printf '::error::pkg: %s\n' "$(printf '%s' "$line" | sed 's/%/%25/g' | cut -c1-800)"
+          done
+          tail -8 "$LOG" | while IFS= read -r line; do
+            printf '::error::tail: %s\n' "$(printf '%s' "$line" | sed 's/%/%25/g' | cut -c1-800)"
+          done
           exit 0
 
       - name: Upload package artifact
