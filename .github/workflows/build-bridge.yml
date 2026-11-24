@@ -21,11 +21,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Set up JDK 17
+      - name: Set up JDK 21
         uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: 17
+          java-version: 21
 
       # CloudStream's own library (the extension API) is built from source;
       # NiceHttp is compiled the same way (upstream depends on it).
