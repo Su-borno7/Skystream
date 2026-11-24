@@ -28,10 +28,10 @@
     <color name="blackText">#000</color>
     <color name="skyContrast">#06202F</color>
     <!-- Glass theme (frosted deep-space glassmorphism) -->
-    <color name="glassBlackBg">#F0121A28</color>
-    <color name="glassGrayBg">#F01A2333</color>
-    <color name="glassIconGrayBg">#F01C2634</color>
-    <color name="glassBoxItemBg">#F01F2A3C</color>
+    <color name="glassBlackBg">#CC152032</color>
+    <color name="glassGrayBg">#CC1E2837</color>
+    <color name="glassIconGrayBg">#CC212C3A</color>
+    <color name="glassBoxItemBg">#C4232F44</color>
     <color name="glassTextColor">#EDF2FB</color>
     <color name="glassGrayTextColor">#A8B7CE</color>
 

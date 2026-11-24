@@ -11,14 +11,14 @@
         <shape>
             <gradient android:type="radial" android:gradientRadius="1400"
                       android:centerX="0.85" android:centerY="0.08"
-                      android:startColor="#3D38BDF8" android:centerColor="#1438BDF8" android:endColor="#0038BDF8" />
+                      android:startColor="#5738BDF8" android:centerColor="#1F38BDF8" android:endColor="#0038BDF8" />
         </shape>
     </item>
     <item>
         <shape>
             <gradient android:type="radial" android:gradientRadius="1400"
                       android:centerX="0.1" android:centerY="0.95"
-                      android:startColor="#338B5CF6" android:centerColor="#108B5CF6" android:endColor="#008B5CF6" />
+                      android:startColor="#4A8B5CF6" android:centerColor="#188B5CF6" android:endColor="#008B5CF6" />
         </shape>
     </item>
     <item>

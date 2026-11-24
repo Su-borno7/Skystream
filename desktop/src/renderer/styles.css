@@ -62,23 +62,23 @@
 /* ═══════════ Glass — frosted deep-space glassmorphism (optional) ═══════════ */
 [data-theme="glass"] {
   --bg: #0D141F;
-  --bg-elev: rgba(22, 31, 46, 0.66);
-  --surface: rgba(29, 39, 55, 0.55);
-  --surface-2: rgba(38, 50, 70, 0.55);
-  --surface-3: rgba(49, 64, 88, 0.6);
-  --border: rgba(160, 198, 233, 0.22);
-  --border-soft: rgba(160, 198, 233, 0.12);
+  --bg-elev: rgba(23, 32, 47, 0.5);
+  --surface: rgba(28, 38, 54, 0.4);
+  --surface-2: rgba(36, 47, 66, 0.4);
+  --surface-3: rgba(47, 60, 82, 0.45);
+  --border: rgba(170, 205, 235, 0.24);
+  --border-soft: rgba(170, 205, 235, 0.13);
   --text: #EDF2FB;
   --text-muted: #A8B7CE;
   --text-faint: #6E7E97;
   --accent: #38BDF8;
-  --accent-hover: #56CDFC;
+  --accent-hover: #6BD5FD;
   --accent-soft: rgba(56, 189, 248, 0.22);
   --accent-contrast: #06202F;
   --danger: #F2555A;
   --ok: #34D399;
   --warn: #FBBF24;
-  --radius: 16px;
+  --radius: 18px;
   --radius-sm: 12px;
   --shadow: 0 18px 48px rgba(2, 6, 14, 0.55);
 }
@@ -484,22 +484,25 @@ input, select, textarea { font-family: inherit; }
 /* ═══════════ Glass — backdrop & translucency ═══════════ */
 [data-theme="glass"] body {
   background:
-    radial-gradient(1100px 700px at 85% -10%, rgba(56, 189, 248, 0.26), transparent 60%),
-    radial-gradient(900px 700px at -10% 108%, rgba(139, 92, 246, 0.26), transparent 60%),
+    radial-gradient(1100px 700px at 85% -10%, rgba(56, 189, 248, 0.34), transparent 62%),
+    radial-gradient(900px 700px at -10% 108%, rgba(139, 92, 246, 0.34), transparent 62%),
+    radial-gradient(900px 620px at 58% 112%, rgba(244, 114, 182, 0.16), transparent 58%),
     linear-gradient(160deg, #141D2C 0%, #090D14 100%);
 }
 [data-theme="glass"] .content { background: transparent; }
 [data-theme="glass"] .titlebar {
   background: rgba(13, 20, 31, 0.55);
-  backdrop-filter: blur(20px) saturate(1.4);
-  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  backdrop-filter: blur(28px) saturate(1.5);
+  -webkit-backdrop-filter: blur(28px) saturate(1.5);
   border-bottom: 1px solid var(--border-soft);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09);
 }
 [data-theme="glass"] .sidebar {
   background: rgba(13, 20, 31, 0.5);
-  backdrop-filter: blur(22px) saturate(1.4);
-  -webkit-backdrop-filter: blur(22px) saturate(1.4);
+  backdrop-filter: blur(30px) saturate(1.5);
+  -webkit-backdrop-filter: blur(30px) saturate(1.5);
   border-right: 1px solid var(--border-soft);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
 }
 [data-theme="glass"] .poster-card,
 [data-theme="glass"] .download-row,
@@ -514,3 +517,16 @@ input, select, textarea { font-family: inherit; }
   box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.28), 0 24px 56px rgba(2, 6, 14, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.09);
 }
 [data-theme="glass"] ::selection { background: rgba(56, 189, 248, 0.35); }
+
+/* Shiopa-style frosted capsules in glass mode */
+[data-theme="glass"] .chip,
+[data-theme="glass"] .episode-tab,
+[data-theme="glass"] .btn,
+[data-theme="glass"] .search-box,
+[data-theme="glass"] .segmented,
+[data-theme="glass"] .segmented button,
+[data-theme="glass"] .status-pill {
+  border-radius: 999px;
+}
+[data-theme="glass"] .search-box { border-color: var(--border-soft); }
+[data-theme="glass"] .chip { backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }

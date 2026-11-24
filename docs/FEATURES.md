@@ -35,8 +35,8 @@ A fork of [recloudstream/cloudstream](https://github.com/recloudstream/cloudstre
 - **Redesigned interface** — deep space-slate palette with a sky-cyan accent,
   rounded Material 3 component shapes, and **Inter** as the default typeface
   (Google Sans remains selectable); visually distinct from stock CloudStream.
-- Optional **Glass** theme — frosted deep-space panels over an aurora gradient backdrop
-  (Settings → Theme → Glass).
+- Optional **Glass** theme (Settings → Theme → Glass) — Shiopa-inspired frosted deep-space
+  panels, full-capsule pills and a vivid two-glow aurora backdrop.
 - **In-app updater** points at `Su-borno7/Skystream` GitHub releases — installing
   `android-v*` releases delivers updates inside the app.
 - Settings → About links to this repository.
@@ -95,9 +95,9 @@ An Electron app ("Skystream for PC") for Windows and Linux (macOS via local buil
 
 ### Appearance & behaviour
 
-- Theme (**Dark** / **AMOLED** / **Light** / **Glass** — frosted glassmorphism over an
-  aurora gradient), **accent colour** palette (defaults to Skystream sky-cyan), bundled
-  **Inter** typeface; gradient wordmark and glowing hover states.
+- Theme (**Dark** / **AMOLED** / **Light** / **Glass** — Shiopa-inspired frosted pills and
+  translucent panels over a vivid aurora backdrop), **accent colour** palette (defaults to
+  Skystream sky-cyan), bundled **Inter** typeface; gradient wordmark and glowing hover states.
 - **Reduce motion** (accessibility), **hardware acceleration** toggle.
 - Default quality (Auto / Highest / Lowest), skip-intro seconds, autoplay next episode,
   remember position.
