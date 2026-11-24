@@ -22,7 +22,7 @@ open class Context {
         const val CONTEXT_IGNORE_SECURITY = 2
     }
 
-    fun getApplicationContext(): Context = SkystreamHost.applicationContext ?: this
+    open fun getApplicationContext(): Context = SkystreamHost.applicationContext ?: this
 
     open fun getFilesDir(): File = File(SkystreamHost.dataDir, "files").apply { mkdirs() }
     open fun getCacheDir(): File = File(SkystreamHost.dataDir, "cache").apply { mkdirs() }

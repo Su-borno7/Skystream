@@ -73,10 +73,14 @@ open class Typeface {
     companion object {
         @JvmField val DEFAULT: Typeface = Typeface()
         @JvmField val BOLD: Typeface = Typeface()
+        @JvmField val DEFAULT_BOLD: Typeface = Typeface()
+        @JvmField val MONOSPACE: Typeface = Typeface()
+        @JvmField val SANS_SERIF: Typeface = Typeface()
+        @JvmField val SERIF: Typeface = Typeface()
         @JvmStatic
         fun create(family: String?, style: Int): Typeface = Typeface()
+
         const val NORMAL = 0
-        const val BOLD = 1
         const val ITALIC = 2
         const val BOLD_ITALIC = 3
     }

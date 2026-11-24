@@ -19,7 +19,7 @@ open class Activity : Context() {
 
     open fun finish() {}
     open fun recreate() {}
-    open fun getResources(): Resources = Resources()
+    override fun getResources(): Resources = Resources()
 
     open fun onCreate(savedInstanceState: Any?) {}
     open fun onDestroy() {}
@@ -28,7 +28,7 @@ open class Activity : Context() {
     open fun getRequestedOrientation(): Int = 0
     open fun getComponentName(): android.content.ComponentName =
         android.content.ComponentName(getPackageName(), javaClass.name)
-    open fun startActivity(intent: Intent?) {}
+    override fun startActivity(intent: Intent?) {}
     open fun startActivityForResult(intent: Intent?, requestCode: Int) {}
     open fun setResult(resultCode: Int) {}
     open fun setResult(resultCode: Int, data: Intent?) {}

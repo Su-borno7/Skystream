@@ -9,8 +9,7 @@ open class Intent @JvmOverloads constructor(
 
     private val extras = HashMap<String, Any?>()
 
-    constructor(packageContext: Context, cls: Class<*>) : this(null, null)
-    constructor(action: String?, uri: android.net.Uri?) : this(action, uri)
+    constructor(packageContext: Context?, cls: Class<*>?) : this(null, null)
 
     fun setFlags(flags: Int): Intent = apply { this.flags = flags }
     fun addFlags(flags: Int): Intent = apply { this.flags = this.flags or flags }

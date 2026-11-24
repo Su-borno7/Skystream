@@ -12,7 +12,7 @@ class ApplicationInfo {
     var packageName: String = "com.skystream.app"
     var flags: Int = 0
     var sourceDir: String = ""
-    var loadLabel(pm: PackageManager): String = "Skystream"
+    fun loadLabel(pm: PackageManager): String = "Skystream"
 }
 
 open class PackageManager {
