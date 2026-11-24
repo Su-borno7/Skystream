@@ -49,6 +49,8 @@ object GithubReleases : GithubRepository {
 
     private val defaultHeaders = mapOf("Accept" to "application/vnd.github.v3+json")
 
+    private val versionRegex = Regex("""(\d+)\.(\d+)\.(\d+)""")
+
     @Throws
     override suspend fun getSha(
         userName: String,
@@ -69,21 +71,33 @@ object GithubReleases : GithubRepository {
         prereleaseTag: String,
         contentType: String,
     ): GithubFile {
-        val latestReleaseUrl = if (prerelease) {
+        val latestRelease: GithubRelease = if (prerelease) {
             // Find the release object
             // https://docs.github.com/en/rest/releases/releases?apiVersion=2026-03-10#get-a-release-by-tag-name
-            "https://api.github.com/repos/$userName/$repository/releases/tags/$prereleaseTag"
+            val url = "https://api.github.com/repos/$userName/$repository/releases/tags/$prereleaseTag"
+            app.get(url = url, headers = defaultHeaders).parsed<GithubRelease>()
         } else {
-            // Just get the latest release
-            // https://docs.github.com/en/rest/releases/releases?apiVersion=2026-03-10#get-the-latest-release
-            // The latest release is the most recent non-prerelease, non-draft release, sorted by the created_at attribute
-            "https://api.github.com/repos/$userName/$repository/releases/latest"
+            // Do not use /releases/latest here: it returns the most recent non-prerelease
+            // release repo-wide, which may be a desktop-only release with no APK attached.
+            // Instead pick the newest non-prerelease release that actually carries an
+            // asset of the requested content type, by semver.
+            val url = "https://api.github.com/repos/$userName/$repository/releases?per_page=30"
+            val releases = app.get(url = url, headers = defaultHeaders).parsed<Array<GithubRelease>>()
+            releases
+                .filter { release -> !release.prerelease }
+                .mapNotNull { release ->
+                    val asset = release.assets.firstOrNull { asset -> asset.contentType == contentType }
+                        ?: return@mapNotNull null
+                    val version = versionRegex.find(asset.name)?.groupValues?.let {
+                        Triple(it[1].toInt(), it[2].toInt(), it[3].toInt())
+                    }
+                    Pair(release to asset, version ?: Triple(0, 0, 0))
+                }
+                .maxWithOrNull(compareBy({ it.second.first }, { it.second.second }, { it.second.third }))
+                ?.first
+                ?.first
+                ?: throw FileNotFoundException()
         }
-
-        val latestRelease = app.get(
-            url = latestReleaseUrl,
-            headers = defaultHeaders
-        ).parsed<GithubRelease>()
 
         // Find the first correct asset, given that we might have other binaries we release in the same version
         val foundAsset = latestRelease.assets.firstOrNull { asset ->
