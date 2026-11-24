@@ -45,22 +45,14 @@ jobs:
       - name: Annotate failures from log
         if: failure()
         run: |
-          # Diagnostics in this file almost always sit right before the failing
-          # task's exception block. Print ONLY that window (annotations are capped).
+          # Print ONLY the "What went wrong" section plus any Kotlin diagnostics.
+          # GitHub caps how many annotations a step can emit, so this must stay tiny.
           LOG="$RUNNER_TEMP/bridge-build.log"
-          if [ -f "$LOG" ]; then
-            FIRST=$(grep -n 'Execution failed for task' "$LOG" | head -1 | cut -d: -f1)
-            if [ -n "$FIRST" ]; then
-              START=$((FIRST > 60 ? FIRST - 60 : 1))
-              sed -n "${START},$((FIRST))p" "$LOG" | tail -45 | while IFS= read -r line || [ -n "$line" ]; do
-                printf '::error::%s\n' "$(printf '%s' "$line" | sed 's/%/%25/g' | cut -c1-2000)"
-              done
-            else
-              tail -25 "$LOG" | while IFS= read -r line || [ -n "$line" ]; do
-                printf '::error::%s\n' "$(printf '%s' "$line" | sed 's/%/%25/g' | cut -c1-2000)"
-              done
-            fi
-          fi
+          if [ ! -f "$LOG" ]; then echo "::error::log missing"; exit 0; fi
+          {
+            grep -m1 -A12 'What went wrong' "$LOG"
+            grep -E '^e: ' "$LOG" | head -10
+          } | sed 's/%/%25/g' | cut -c1-1000 | while IFS= read -r line; do printf '::error::%s\n' "$line"; done
           exit 0
 
       - name: Upload build log on failure
