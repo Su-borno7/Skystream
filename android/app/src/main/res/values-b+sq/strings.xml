@@ -561,7 +561,7 @@
     <string name="dismiss">Largo</string>
     <string name="open_downloaded_repo">Hap repository-n</string>
     <string name="battery_dialog_title">Çaktivizo kursimin e baterisë</string>
-    <string name="battery_dialog_message">Për të siguruar shkarkime të pandërprera dhe njoftime për serialet e abonuar, Skystream ka nevojë për leje për të funksionuar në sfond. Duke shtypur OK, do t’ju shfaqet një dialog kërkese. Ju lutem shtypni “Lejo”.\n\nJu lutemi vini re: kjo leje nuk do të thotë që CS3 do të harxhojë baterinë tuaj. Do të funksionojë në sfond vetëm kur është e nevojshme, si p.sh. kur merr njoftime ose shkarkon video nga shtesat zyrtare.</string>
+    <string name="battery_dialog_message">Për të siguruar shkarkime të pandërprera dhe njoftime për serialet e abonuar, Skystream ka nevojë për leje për të funksionuar në sfond. Duke shtypur OK, do t’ju shfaqet një dialog kërkese. Ju lutem shtypni “Lejo”.\n\nJu lutemi vini re: kjo leje nuk do të thotë që Skystream do të harxhojë baterinë tuaj. Do të funksionojë në sfond vetëm kur është e nevojshme, si p.sh. kur merr njoftime ose shkarkon video nga shtesat zyrtare.</string>
     <string name="app_unrestricted_toast">Përdorimi i baterisë është i vendosur si i pakufizuar</string>
     <string name="app_info_intent_error">Informacioni i aplikacionit Skystream nuk mund të hapet.</string>
     <string name="update_notification_downloading">Po shkarkohet përditësimi i aplikacionit…</string>

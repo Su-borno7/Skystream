@@ -43,9 +43,9 @@ class SetupFragmentLanguage : BaseFragment<FragmentSetupLanguageBinding>(
                 // Icons may crash on some weird android versions?
                 safe {
                     val drawable = when {
-                        BuildConfig.DEBUG -> R.drawable.cloud_2_gradient_debug
-                        BuildConfig.FLAVOR == "prerelease" -> R.drawable.cloud_2_gradient_beta
-                        else -> R.drawable.cloud_2_gradient
+                        BuildConfig.DEBUG -> R.drawable.sky_logo_gradient_debug
+                        BuildConfig.FLAVOR == "prerelease" -> R.drawable.sky_logo_gradient_beta
+                        else -> R.drawable.sky_logo_gradient
                     }
                     appIconImage.setImageDrawable(ContextCompat.getDrawable(ctx, drawable))
                 }

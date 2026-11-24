@@ -12,7 +12,7 @@ Copyright © the recloudstream/CloudStream authors, licensed under the
 GNU General Public License v3.0 (see `android/LICENSE`).
 
 Modifications made by the Skystream project (see `android/`):
-- Renamed the application to **Skystream** (`com.skystream.app`), new launcher icons and banner.
+- Renamed the application to **Skystream** (`com.skystream.app`), new paper-plane logo, launcher icons, TV banner and documentation artwork.
 - In-app updater and source links point to the Skystream repository (`Su-borno7/Skystream`).
 - Version reset to 1.0.0; the in-repo public keystore signs release APKs (reproducible-build model).
 - 53 localized `strings.xml` files updated to the Skystream name.
