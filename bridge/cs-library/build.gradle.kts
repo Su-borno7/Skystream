@@ -18,7 +18,7 @@ kotlin {
     }
 
     compilerOptions {
-        freeCompilerArgs.addAll("-Xexpect-actual-classes", "-nowarn")
+        freeCompilerArgs.addAll("-Xexpect-actual-classes", "-Xannotation-default-target=param-property", "-nowarn")
     }
 
     sourceSets {

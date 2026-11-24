@@ -40,6 +40,22 @@ jobs:
           chmod +x gradlew
           ./gradlew :app:installDist --stacktrace 2>&1 | tee "$RUNNER_TEMP/bridge-build.log"
 
+      # The sandbox this repo is developed in cannot read GitHub logs directly;
+      # surface compiler diagnostics as workflow annotations instead.
+      - name: Annotate failures from log
+        if: failure()
+        run: |
+          LOG="$RUNNER_TEMP/bridge-build.log"
+          if [ -f "$LOG" ]; then
+            grep -E '^e: |^w: .*\.kt(on)?[: ][0-9]+|error:' "$LOG" | head -40 | while IFS= read -r line || [ -n "$line" ]; do
+              printf '::error::%s\n' "$(printf '%s' "$line" | tr '\r' ' ' | sed 's/%/%25/g' | cut -c1-2000)"
+            done
+            sed -n '/What went wrong/,+8p' "$LOG" | head -40 | while IFS= read -r line || [ -n "$line" ]; do
+              printf '::error::%s\n' "$(printf '%s' "$line" | sed 's/%/%25/g' | cut -c1-2000)"
+            done
+          fi
+          exit 0
+
       - name: Upload build log on failure
         if: failure()
         uses: actions/upload-artifact@v4
