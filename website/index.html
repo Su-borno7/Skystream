@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skystream — Every story, one stream</title>
+<meta name="description" content="Skystream is a free, open-source media centre for Android and PC — movies, series and anime powered by the CloudStream extension ecosystem. No account, no subscription, no ads.">
+<meta name="theme-color" content="#070B12">
+<link rel="icon" type="image/png" href="assets/icon.png">
+<link rel="apple-touch-icon" href="assets/icon.png">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Skystream — Every story, one stream">
+<meta property="og:description" content="Free, open-source media centre for Android and PC. Movies, series and anime via the CloudStream extension ecosystem.">
+<meta property="og:url" content="https://su-borno7.github.io/Skystream/">
+<meta property="og:image" content="https://su-borno7.github.io/Skystream/assets/icon.png">
+<meta name="twitter:card" content="summary">
+<!-- Typeface: Inter (SIL OFL 1.1), bundled under assets/fonts -->
+<link rel="preload" href="assets/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+<canvas id="aurora" class="aurora-canvas" aria-hidden="true"></canvas>
+
+<!-- ═══════════ NAV ═══════════ -->
+<header class="nav" id="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="#top" aria-label="Skystream home">
+      <svg class="brand-plane" viewBox="0 0 100 100" width="34" height="34" aria-hidden="true">
+        <circle cx="50" cy="50" r="50" fill="#141C2A"/>
+        <path d="M8,44 L93,10 L57,88 L42,55 Z" fill="#F2F7FF"/>
+        <path d="M42,55 L93,10 L57,88 Z" fill="#C4D4EC"/>
+        <path d="M42,55 L55,66 L49,78 Z" fill="#38BDF8"/>
+      </svg>
+      <span class="brand-word">SKYSTREAM</span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#download">Download</a>
+      <a href="#repos">Repositories</a>
+      <a href="#features">Features</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-ghost btn-sm nav-gh" href="https://github.com/Su-borno7/Skystream" target="_blank" rel="noopener">
+      <svg viewBox="0 0 16 16" width="17" height="17" aria-hidden="true" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+      <span class="gh-label">GitHub</span>
+      <span class="gh-stars" id="ghStars" hidden>★ <b id="ghStarCount">0</b></span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#download">Download</a>
+    <a href="#repos">Repositories</a>
+    <a href="#features">Features</a>
+    <a href="#faq">FAQ</a>
+    <a href="https://github.com/Su-borno7/Skystream" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+</header>
+
+<main id="top">
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="hero-copy reveal">
+      <div class="eyebrow"><span class="pulse-dot"></span> FREE &amp; OPEN SOURCE · ANDROID + PC</div>
+      <h1 class="hero-title">Every story,<br><span class="grad-text">one Skystream.</span></h1>
+      <p class="hero-sub">Movies, series and anime in one beautiful, open-source media centre — powered by the CloudStream extension ecosystem. No account. No subscription. No ads. Your library, your progress, your device.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-accent btn-lg" id="heroAndroidBtn" href="#download">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M4 20h16"/></svg>
+          Download for Android
+        </a>
+        <a class="btn btn-ghost btn-lg" href="#download" data-highlight="pcCard">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M9 21h6M12 17v4"/></svg>
+          Download for PC
+        </a>
+      </div>
+      <div class="hero-proof">
+        <div class="proof-item"><b data-count="170" data-suffix="+">0</b><span>extensions catalogued</span></div>
+        <div class="proof-sep"></div>
+        <div class="proof-item"><b data-count="3">0</b><span>language hubs: Bangla · English · Hindi</span></div>
+        <div class="proof-sep"></div>
+        <div class="proof-item"><b data-count="0">0</b><span>ads, trackers or telemetry</span></div>
+      </div>
+    </div>
+
+    <div class="hero-stage reveal" aria-hidden="true">
+      <!-- floating desktop window -->
+      <div class="mock mock-desktop float-slow">
+        <div class="mock-titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><div class="mock-title">Skystream — Watching now</div></div>
+        <div class="mock-screen">
+          <div class="mock-art"><div class="mock-art-title">CINEMATHEQUE</div><div class="mock-art-tag">1998 · Neo-noir</div></div>
+          <div class="mock-row"><div class="mock-btn-play">▶&hairsp; Play</div><div class="mock-pill">＋ My List</div></div>
+          <div class="mock-eps"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+      </div>
+      <!-- floating phone -->
+      <div class="mock mock-phone float">
+        <div class="mock-notch"></div>
+        <div class="mock-phone-screen">
+          <div class="mock-statusbar"><span>21:42</span><span class="mock-net">●●● ▮▮</span></div>
+          <div class="mock-hero">
+            <div class="mock-kicker">NOW STREAMING</div>
+            <div class="mock-hero-title">The Silent<br>Meridian</div>
+            <div class="mock-rating">★★★★★ <i>9.1</i></div>
+            <div class="mock-synop">A cartographer who maps places that don't exist finds the one that does.</div>
+            <div class="mock-chips"><span>Anime</span><span>Thriller</span><span>4K</span></div>
+            <div class="mock-cta">▶&hairsp; Play</div>
+          </div>
+          <div class="mock-dock"><i>⌂</i><i>⌕</i><i>▤</i><i>⬇</i><i>⚙</i></div>
+        </div>
+      </div>
+      <div class="stage-glow g1"></div>
+      <div class="stage-glow g2"></div>
+    </div>
+  </div>
+
+  <!-- provider marquee -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track" id="marqueeTrack">
+      <span>BanglaPlex</span><span>CineStream</span><span>CTGMovies</span><span>CNCVerse</span><span>Phisher Repo</span><span>Redowan BDIX</span><span>Bollyflix</span><span>VegaMovies</span><span>CineFreak</span><span>MegaRepo</span><span>DesireMovies</span><span>FMFTP</span><span>MoviesDrive</span><span>MovieBox</span><span>9kMovies</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ DOWNLOAD ═══════════ -->
+<section class="section" id="download">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">GET THE APP</div>
+      <h2 class="section-title">Download <span class="grad-text">Skystream</span></h2>
+      <p class="section-sub">Versions are fetched live from GitHub releases — you always get the latest build, signed with the in-repo public keystore on Android.</p>
+    </div>
+
+    <div class="download-grid">
+      <!-- Android -->
+      <article class="dl-card reveal" id="androidCard">
+        <div class="dl-badge">RECOMMENDED FOR PHONES</div>
+        <div class="dl-icon">
+          <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18.5h2"/></svg>
+        </div>
+        <h3>Android</h3>
+        <p class="dl-desc">APK for phones &amp; tablets (Android 7.0+). Includes the in-app updater — fixes arrive automatically.</p>
+        <div class="dl-meta"><span class="dl-version" id="androidVersion">v…</span><span class="dl-size" id="androidSize"></span></div>
+        <a class="btn btn-accent btn-block" id="androidDownload" href="https://github.com/Su-borno7/Skystream/releases/latest">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M4 20h16"/></svg>
+          Download APK
+        </a>
+        <div class="dl-note">Signed APK · <a href="https://github.com/Su-borno7/Skystream/blob/main/android/keystore/README.md">verify the keystore</a></div>
+      </article>
+
+      <!-- Windows -->
+      <article class="dl-card reveal" id="pcCard">
+        <div class="dl-badge dl-badge-violet">FOR YOUR COMPUTER</div>
+        <div class="dl-icon dl-violet">
+          <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M9 21h6M12 17v4"/></svg>
+        </div>
+        <h3>Windows</h3>
+        <p class="dl-desc">NSIS installer for Windows 10/11 (x64). Bundles the JVM bridge and a Temurin JRE — zero setup.</p>
+        <div class="dl-meta"><span class="dl-version" id="windowsVersion">v…</span><span class="dl-size" id="windowsSize"></span></div>
+        <a class="btn btn-accent btn-block" id="windowsDownload" href="https://github.com/Su-borno7/Skystream/releases/tag/desktop-v1.0.0">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M4 20h16"/></svg>
+          Download for Windows
+        </a>
+        <div class="dl-note">SmartScreen may warn — the installer is unsigned. <a href="https://github.com/Su-borno7/Skystream/releases">All releases</a></div>
+      </article>
+
+      <!-- Linux -->
+      <article class="dl-card reveal" id="linuxCard">
+        <div class="dl-badge dl-badge-rose">POWER USER'S PICK</div>
+        <div class="dl-icon dl-rose">
+          <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2c-2.5 2.5-2 6-2 8L7 12l3 2-1.5 3 3.5-1 3 3 1-4 3.5 1-1-3.5L22 10l-4 .5c0-3 .5-6-6-8.5Z"/></svg>
+        </div>
+        <h3>Linux</h3>
+        <p class="dl-desc">AppImage for x86_64 — works on any modern distro. chmod +x and it runs, bridge and JRE included.</p>
+        <div class="dl-meta"><span class="dl-version" id="linuxVersion">v…</span><span class="dl-size" id="linuxSize"></span></div>
+        <a class="btn btn-accent btn-block" id="linuxDownload" href="https://github.com/Su-borno7/Skystream/releases/tag/desktop-v1.0.0">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M4 20h16"/></svg>
+          Download for Linux
+        </a>
+        <div class="dl-note">Requires libfuse2 (<code>sudo apt install libfuse2</code>) on Debian/Ubuntu.</div>
+      </article>
+    </div>
+    <p class="download-fallback reveal">Everything is also on <a href="https://github.com/Su-borno7/Skystream/releases">GitHub Releases</a> — changelogs, older versions and checksums live there.</p>
+  </div>
+</section>
+
+<!-- ═══════════ REPOSITORIES ═══════════ -->
+<section class="section section-alt" id="repos">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">EXTENSION REPOSITORIES</div>
+      <h2 class="section-title">Best repos, <span class="grad-text">one tap away</span></h2>
+      <p class="section-sub">Skystream ships with zero content sources. Add a community repository below — most trusted picks across three language hubs. Press <kbd>/</kbd> to search.</p>
+    </div>
+
+    <div class="repo-toolbar reveal">
+      <div class="repo-tabs" role="tablist" aria-label="Filter by language">
+        <button class="repo-tab active" role="tab" aria-selected="true" data-tab="bn"><span class="tab-mono">বাংলা</span> Bangla</button>
+        <button class="repo-tab" role="tab" aria-selected="false" data-tab="en"><span class="tab-mono">EN</span> English</button>
+        <button class="repo-tab" role="tab" aria-selected="false" data-tab="hi"><span class="tab-mono">हिन्दी</span> Hindi</button>
+      </div>
+      <label class="repo-search">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="repoSearch" type="text" placeholder="Filter repositories…" autocomplete="off" spellcheck="false" aria-label="Filter repositories">
+        <kbd>/</kbd>
+      </label>
+    </div>
+
+    <div class="repo-grid" id="repoGrid" aria-live="polite"></div>
+    <div class="repo-empty" id="repoEmpty" hidden>Nothing matches that filter — try “BDIX”, “anime” or “live TV”.</div>
+
+    <div class="howto reveal">
+      <div class="howto-steps">
+        <div class="howto-step"><span class="howto-n">1</span><div><b>Copy the repo link</b><small>Hit “Copy link” on any card above.</small></div></div>
+        <div class="howto-arrow" aria-hidden="true">→</div>
+        <div class="howto-step"><span class="howto-n">2</span><div><b>Open Skystream</b><small>Settings → Extensions → Repositories → Add repository.</small></div></div>
+        <div class="howto-arrow" aria-hidden="true">→</div>
+        <div class="howto-step"><span class="howto-n">3</span><div><b>Paste &amp; install</b><small>Paste the link, confirm, then enable the extensions you want.</small></div></div>
+      </div>
+      <p class="repo-disclaimer">Repositories are third-party and unreviewed — Skystream does not host, vet or endorse them, and some include adult plugins. Check the repository's page before installing; content legality varies by country.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FEATURES ═══════════ -->
+<section class="section" id="features">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">WHY SKYSTREAM</div>
+      <h2 class="section-title">Built for people who <span class="grad-text">actually watch</span></h2>
+    </div>
+    <div class="feature-grid" id="featureGrid"></div>
+  </div>
+</section>
+
+<!-- ═══════════ FAQ ═══════════ -->
+<section class="section section-alt" id="faq">
+  <div class="container container-narrow">
+    <div class="section-head reveal">
+      <div class="eyebrow">GOOD TO KNOW</div>
+      <h2 class="section-title">Frequently asked <span class="grad-text">questions</span></h2>
+    </div>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+</main>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="#top">
+          <svg class="brand-plane" viewBox="0 0 100 100" width="30" height="30" aria-hidden="true"><circle cx="50" cy="50" r="50" fill="#141C2A"/><path d="M8,44 L93,10 L57,88 L42,55 Z" fill="#F2F7FF"/><path d="M42,55 L93,10 L57,88 Z" fill="#C4D4EC"/><path d="M42,55 L55,66 L49,78 Z" fill="#38BDF8"/></svg>
+          <span class="brand-word">SKYSTREAM</span>
+        </a>
+        <p>Every story, one stream. A free, open-source media centre for Android and PC, running on the CloudStream extension ecosystem.</p>
+      </div>
+      <nav class="footer-col" aria-label="Product">
+        <h4>Product</h4>
+        <a href="#download">Download</a>
+        <a href="#repos">Repositories</a>
+        <a href="#features">Features</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <nav class="footer-col" aria-label="Project">
+        <h4>Project</h4>
+        <a href="https://github.com/Su-borno7/Skystream" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/Su-borno7/Skystream/releases" target="_blank" rel="noopener">All releases</a>
+        <a href="https://github.com/Su-borno7/Skystream/issues" target="_blank" rel="noopener">Report an issue</a>
+        <a href="https://github.com/Su-borno7/Skystream/blob/main/docs/FEATURES.md" target="_blank" rel="noopener">Full feature list</a>
+      </nav>
+      <nav class="footer-col" aria-label="Legal">
+        <h4>Legal</h4>
+        <a href="https://github.com/Su-borno7/Skystream/blob/main/LICENSE" target="_blank" rel="noopener">GPL-3.0 license</a>
+        <a href="https://github.com/Su-borno7/Skystream/blob/main/NOTICE.md" target="_blank" rel="noopener">Notices</a>
+        <span class="footer-plain">No telemetry, ever — your library stays on your device.</span>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year">2026</span> Skystream contributors. GPL-3.0.</span>
+      <span>Not affiliated with or endorsed by the CloudStream project.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="js/app.js"></script>
+</body>
+</html>
