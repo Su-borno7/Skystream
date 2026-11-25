@@ -40,6 +40,12 @@ jobs:
         with:
           path: website
 
+      - name: Wait for artifact propagation
+        # deploy-pages fails with "No artifacts named github-pages were found"
+        # when it queries the artifact API before the upload becomes visible
+        # (typically 10-60s). Give it room instead of racing it.
+        run: sleep 45
+
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v5
