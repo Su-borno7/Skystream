@@ -277,7 +277,7 @@ const FAQ = [
   ];
   rail.innerHTML = TRENDING.map((f) => `
     <a class="poster-card" href="#download" aria-label="${f.title} (${f.year}) — get Skystream to stream it">
-      <img src="${f.src}" alt="Original key art for ${f.title}" width="436" height="654" loading="lazy" decoding="async">
+      <img src="${f.src}" alt="Official poster for ${f.title}" width="436" height="654" loading="lazy" decoding="async">
       <span class="poster-lang">${f.lang}</span>
       <span class="poster-overlay">
         <span class="poster-genre">${f.genre}</span>
