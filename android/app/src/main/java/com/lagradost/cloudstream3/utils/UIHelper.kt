@@ -208,12 +208,14 @@ object UIHelper {
     }
 
     fun Context.getSpanCount(isHorizontal:Boolean=false): Int {
-//        val compactView = false
-        val spanCountLandscape = if (isHorizontal) 3 else 6
-        val spanCountPortrait = if (isHorizontal) 2 else 3
+        // Dense poster-wall layout: more columns on every form factor
+        val spanCountLandscape = if (isHorizontal) 4 else 8
+        val spanCountPortrait = if (isHorizontal) 2 else 4
         val orientation = resources.configuration.orientation
 
-        return if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        return if (isLayout(TV)) {
+            if (isHorizontal) 5 else 9
+        } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             spanCountLandscape
         } else spanCountPortrait
     }

@@ -654,3 +654,58 @@ input, select, textarea { font-family: inherit; }
 @media (prefers-reduced-motion: reduce) {
   [data-theme="sky"] .cloud { animation: none; }
 }
+
+/* ═══════════ DENSE POSTER WALL — layout redesign ═══════════
+   Media-centre density: slim icon rail, poster grids everywhere,
+   compact rows and chrome. Player and settings untouched. */
+.sidebar { width: 76px; padding: 12px 8px; align-items: center; }
+.nav-item { justify-content: center; padding: 11px 0; gap: 0; width: 100%; border-radius: 12px; }
+.nav-item span { display: none; }
+.sidebar-foot { padding: 8px 0 2px; display: flex; justify-content: center; width: 100%; }
+.bridge-pill { justify-content: center; padding: 6px; }
+.bridge-text { display: none; }
+
+.screen { padding: 14px 16px 40px; }
+.screen-head { margin-bottom: 12px; }
+.screen-title { font-size: 18px; }
+.screen-sub { font-size: 11.5px; }
+
+.section-row { margin-bottom: 14px; }
+.section-row-head { margin-bottom: 6px; }
+.section-row-title { font-size: 13px; }
+
+/* poster wall: horizontal strips become dense responsive grids */
+.posters {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+  gap: 10px;
+  overflow: visible;
+  padding-bottom: 2px;
+  scroll-snap-type: none;
+}
+.posters .poster-card { flex: none; width: 100%; }
+.poster-card { border-radius: 12px; }
+.poster-card:hover { transform: translateY(-3px) scale(1.015); }
+.poster-meta { font-size: 11px; padding: 22px 8px 8px; }
+
+.results-grid { grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); gap: 10px; }
+.library-row { grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); gap: 10px; }
+.library-block { margin-bottom: 14px; }
+
+.continue-block { margin-bottom: 14px; }
+.continue-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; overflow: visible; padding-bottom: 0; scroll-snap-type: none; }
+.continue-grid .poster-card { flex: none; width: 100%; }
+
+.search-box { height: 44px; gap: 10px; padding: 0 12px; border-radius: 12px; }
+.search-box input { font-size: 14px; }
+.scope-chips { margin: 10px 0 2px; gap: 6px; }
+.chip { padding: 5px 11px; font-size: 11px; }
+
+.btn { padding: 8px 13px; font-size: 12.5px; }
+.btn-small { padding: 5px 11px; font-size: 11px; }
+
+.downloads-list { gap: 6px; }
+.download-row { padding: 8px 10px; gap: 10px; border-radius: 12px; }
+.download-icon { width: 38px; height: 38px; border-radius: 10px; }
+.download-name { font-size: 12px; margin-bottom: 2px; }
+.download-meta { font-size: 10px; gap: 8px; }
