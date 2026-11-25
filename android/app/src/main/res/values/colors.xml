@@ -68,14 +68,14 @@
     <!-- <color name="usedStorageColor">?attr/white</color>#fff-->
     <!-- <color name="freeStorageColor">?attr/grayTextColor</color> #676767-->
 
-    <!--Sky Theme (blue sky + white clouds, matches su-borno7.github.io/Skystream)-->
-    <color name="skyPrimaryGrayBg">#EBFFFFFF</color>
-    <color name="skyPrimaryBlackBg">#8FC3E3</color>
-    <color name="skyIconGrayBg">#F2FAFE</color>
-    <color name="skyBoxItemBg">#F5FAFE</color>
-    <color name="skyTextColor">#0B2B47</color>
-    <color name="skyGrayTextColor">#33536F</color>
-    <color name="skyIconColor">#33536F</color>
+    <!--Sky Theme (app-icon night: navy #0B1019→#24457A backdrop, moon glow, #38BDF8 accent, matches su-borno7.github.io/Skystream)-->
+    <color name="skyPrimaryGrayBg">#E6141C2A</color>
+    <color name="skyPrimaryBlackBg">#232F47</color>
+    <color name="skyIconGrayBg">#1B2436</color>
+    <color name="skyBoxItemBg">#1B2436</color>
+    <color name="skyTextColor">#F2F7FF</color>
+    <color name="skyGrayTextColor">#A9BCD6</color>
+    <color name="skyIconColor">#A9BCD6</color>
 
     <!--Light Mode -->
     <color name="lightPrimaryGrayBackground">#EDF0F7</color>

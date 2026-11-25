@@ -190,7 +190,7 @@
         <item name="android:text">@string/quality_hd</item>
     </style>
 
-    <!-- Blue-sky backdrop: azure gradient, sun glow, soft white clouds, bright horizon -->
+    <!-- App-icon night backdrop: deep navy gradient, moon glow, slate clouds, cyan horizon -->
     <style name="SkyMode">
         <item name="android:windowBackground">@drawable/sky_background</item>
         <item name="primaryGrayBackground">@color/skyPrimaryGrayBg</item>
@@ -204,10 +204,10 @@
         <item name="black">@color/white</item>
         <item name="account_unselected_stroke">@color/transparent</item>
         <item name="colorOnPrimary">@color/skyContrast</item>
-        <item name="isLightTheme">true</item>
+        <item name="isLightTheme">false</item>
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Skystream.Pill</item>
         <item name="chipCornerRadius">999dp</item>
-        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
     </style>
 
     <style name="LightMode">
