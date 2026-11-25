@@ -24,7 +24,7 @@ Skystream does **not** ship, host or endorse any content source.
 
 ---
 
-## Skystream for Android (`android-v1.0.0`)
+## Skystream for Android (`android-v1.0.3`)
 
 A fork of [recloudstream/cloudstream](https://github.com/recloudstream/cloudstream)
 (`com.skystream.app`), rebranded to Skystream:
@@ -46,7 +46,7 @@ A fork of [recloudstream/cloudstream](https://github.com/recloudstream/cloudstre
 - Built and tested by GitHub Actions on every push to `android/**`; tagged `android-v*`
   releases are signed and attached automatically by `release-android.yml`.
 
-## Skystream for PC (`desktop-v1.0.0`)
+## Skystream for PC (`desktop-v1.0.1`)
 
 An Electron app ("Skystream for PC") for Windows and Linux (macOS via local build):
 
@@ -150,6 +150,6 @@ over loopback; a stale bridge never leaves the UI hanging.
 
 | Platform | Latest | Artifact |
 |----------|--------|----------|
-| Android  | [`android-v1.0.0`](https://github.com/Su-borno7/Skystream/releases/tag/android-v1.0.0) | `Skystream-1.0.0-android.apk` |
-| Linux    | [`desktop-v1.0.0`](https://github.com/Su-borno7/Skystream/releases/tag/desktop-v1.0.0) | `Skystream-1.0.0-linux-x86_64.AppImage` |
-| Windows  | [`desktop-v1.0.0`](https://github.com/Su-borno7/Skystream/releases/tag/desktop-v1.0.0) | `Skystream-1.0.0-win-x64.exe` |
+| Android  | [`android-v1.0.3`](https://github.com/Su-borno7/Skystream/releases/tag/android-v1.0.3) | `Skystream-1.0.3-android.apk` |
+| Linux    | [`desktop-v1.0.1`](https://github.com/Su-borno7/Skystream/releases/tag/desktop-v1.0.1) | `Skystream-1.0.1-linux-x86_64.AppImage` |
+| Windows  | [`desktop-v1.0.1`](https://github.com/Su-borno7/Skystream/releases/tag/desktop-v1.0.1) | `Skystream-1.0.1-win-x64.exe` |
