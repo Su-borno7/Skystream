@@ -52,6 +52,36 @@ function repoStatusOf(status) {
   }
 }
 
+/**
+ * Versions in CloudStream repositories are inconsistent: mostly integers
+ * (e.g. "4"), sometimes semver strings ("1.10.0"). A raw string compare marks
+ * "1.10.0" < "1.9.0", hiding updates. Compare segment-wise, numerically when
+ * both segments are numbers, and treat missing segments as 0.
+ */
+function compareVersions(a, b) {
+  const parse = (v) =>
+    String(v ?? '')
+      .trim()
+      .replace(/^v/i, '')
+      .split('.')
+      .map((seg) => (/^\d+$/.test(seg) ? parseInt(seg, 10) : seg.toLowerCase()));
+  const pa = parse(a);
+  const pb = parse(b);
+  const len = Math.max(pa.length, pb.length);
+  for (let i = 0; i < len; i++) {
+    const x = i < pa.length ? pa[i] : 0;
+    const y = i < pb.length ? pb[i] : 0;
+    if (typeof x === 'number' && typeof y === 'number') {
+      if (x !== y) return x - y;
+    } else if (x !== y) {
+      const sx = String(x);
+      const sy = String(y);
+      return sx < sy ? -1 : 1;
+    }
+  }
+  return 0;
+}
+
 class ExtensionManager {
   /**
    * @param {object} opts
@@ -195,7 +225,7 @@ class ExtensionManager {
             status: repoStatusOf(plugin.status),
             installed: !!local,
             installedVersion: local ? local.version : null,
-            updateAvailable: !!local && plugin.version > local.version,
+            updateAvailable: !!local && compareVersions(plugin.version, local.version) > 0,
             enabled: local ? local.enabled : false,
           });
         }
@@ -304,7 +334,7 @@ class ExtensionManager {
     const { plugins } = await this.fetchRepoPlugins(plugin.repoUrl, { bypassCache: true });
     const latest = plugins.find((p) => p.internalName === plugin.internalName);
     if (!latest) throw new Error(`${plugin.name} no longer exists in its repository`);
-    if (latest.version <= plugin.version) return { updated: false, plugin };
+    if (compareVersions(latest.version, plugin.version) <= 0) return { updated: false, plugin };
     const installed = await this.install(latest, plugin.repoUrl); // keeps enabled=true, overwrites record
     return { updated: true, plugin: installed };
   }
