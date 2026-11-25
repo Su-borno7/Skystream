@@ -264,29 +264,6 @@ const FAQ = [
 (function trending() {
   const rail = document.getElementById('posterRail');
   if (!rail) return;
-  const TRENDING = [
-    { src: 'assets/posters/dune-part-two.jpg', title: 'Dune: Part Two', year: 2024, genre: 'Sci-fi · Epic', rating: '8.5', lang: 'EN' },
-    { src: 'assets/posters/jawan.jpg', title: 'Jawan', year: 2023, genre: 'Action · Thriller', rating: '7.1', lang: 'HI' },
-    { src: 'assets/posters/sinners.jpg', title: 'Sinners', year: 2025, genre: 'Folk Horror · Music', rating: '8.2', lang: 'EN' },
-    { src: 'assets/posters/kgf-chapter-2.jpg', title: 'K.G.F: Chapter 2', year: 2022, genre: 'Action · Crime', rating: '8.3', lang: 'HI' },
-    { src: 'assets/posters/f1.jpg', title: 'F1', year: 2025, genre: 'Racing · Drama', rating: '8.1', lang: 'EN' },
-    { src: 'assets/posters/hawa.jpg', title: 'Hawa', year: 2022, genre: 'Romance · Monsoon', rating: '8.4', lang: 'BN' },
-    { src: 'assets/posters/gladiator-ii.jpg', title: 'Gladiator II', year: 2024, genre: 'Epic · War', rating: '7.4', lang: 'EN' },
-    { src: 'assets/posters/inside-out-2.jpg', title: 'Inside Out 2', year: 2024, genre: 'Animation · Family', rating: '7.8', lang: 'EN' },
-    { src: 'assets/posters/priyotoma.jpg', title: 'Priyotoma', year: 2023, genre: 'Romance · Comedy', rating: '7.3', lang: 'BN' },
-  ];
-  rail.innerHTML = TRENDING.map((f) => `
-    <a class="poster-card" href="#download" aria-label="${f.title} (${f.year}) — get Skystream to stream it">
-      <img src="${f.src}" alt="Official poster for ${f.title}" width="436" height="654" loading="lazy" decoding="async">
-      <span class="poster-lang">${f.lang}</span>
-      <span class="poster-overlay">
-        <span class="poster-genre">${f.genre}</span>
-        <h3>${f.title}</h3>
-        <span class="poster-meta"><span>${f.year}</span><span class="poster-rating">★ ${f.rating}</span></span>
-        <span class="poster-cta">Stream it on Skystream →</span>
-      </span>
-    </a>`).join('');
-
   const step = () => {
     const card = rail.querySelector('.poster-card');
     return card ? card.getBoundingClientRect().width + 20 : 240;
