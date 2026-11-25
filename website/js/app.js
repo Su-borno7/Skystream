@@ -222,7 +222,7 @@ const FAQ = [
   { q: 'Is Skystream affiliated with CloudStream?', a: 'No. Skystream is an independent fork/alternative built around the same extension ecosystem (same .cs3 packages, same repo.json format). It is not affiliated with or endorsed by the CloudStream project or its authors.' },
   { q: 'Android says “unknown app” when I install the APK — is it safe?', a: 'That warning appears for every sideloaded APK. Skystream APKs are signed with the public in-repo keystore (android/keystore), so you can verify the signature, and public CI builds the exact APK you download. If in doubt, build it yourself from source — the steps are in the README.' },
   { q: 'How do I add a repository?', a: 'In the app: Settings → Extensions → Repositories → Add repository, then paste a repo.json link (grab one from the Repositories section above — “Open in app” does it for you). Then enable the extensions you like.' },
-  { q: 'How do updates work?', a: 'Android: Skystream checks GitHub for android-v* releases and updates itself in-app — 1.0.2 fixes a bug where it kept offering the same update. PC: Settings → About → “Check for updates” tells you when a new desktop release is out. Both platforms otherwise stay completely silent.' },
+  { q: 'How do updates work?', a: 'Android: Skystream checks GitHub for android-v* releases and updates itself in-app — keep it updated and it stays quiet unless a new release is out. PC: Settings → About → “Check for updates” tells you when a new desktop release is out. Both platforms otherwise stay completely silent.' },
   { q: 'Which platforms are supported?', a: 'Android phones and tablets (the APK), Windows 10/11 and any modern x86_64 Linux distro (AppImage). macOS can be built locally from source — see the README. iOS and TV boxes are not supported yet.' },
   { q: 'Will Skystream ever know what I watch?', a: 'No. There is no telemetry of any kind — no analytics SDK, no crash reporter, no account server. Your library, progress and history never leave your device.' },
 ];
@@ -258,6 +258,78 @@ const FAQ = [
       }, 350);
     });
   });
+})();
+
+/* ───────── trending poster wall ───────── */
+(function trending() {
+  const rail = document.getElementById('posterRail');
+  if (!rail) return;
+  const TRENDING = [
+    { src: 'assets/posters/dune-part-two.jpg', title: 'Dune: Part Two', year: 2024, genre: 'Sci-fi · Epic', rating: '8.5', lang: 'EN' },
+    { src: 'assets/posters/jawan.jpg', title: 'Jawan', year: 2023, genre: 'Action · Thriller', rating: '7.1', lang: 'HI' },
+    { src: 'assets/posters/sinners.jpg', title: 'Sinners', year: 2025, genre: 'Folk Horror · Music', rating: '8.2', lang: 'EN' },
+    { src: 'assets/posters/kgf-chapter-2.jpg', title: 'K.G.F: Chapter 2', year: 2022, genre: 'Action · Crime', rating: '8.3', lang: 'HI' },
+    { src: 'assets/posters/f1.jpg', title: 'F1', year: 2025, genre: 'Racing · Drama', rating: '8.1', lang: 'EN' },
+    { src: 'assets/posters/hawa.jpg', title: 'Hawa', year: 2022, genre: 'Romance · Monsoon', rating: '8.4', lang: 'BN' },
+    { src: 'assets/posters/gladiator-ii.jpg', title: 'Gladiator II', year: 2024, genre: 'Epic · War', rating: '7.4', lang: 'EN' },
+    { src: 'assets/posters/inside-out-2.jpg', title: 'Inside Out 2', year: 2024, genre: 'Animation · Family', rating: '7.8', lang: 'EN' },
+    { src: 'assets/posters/priyotoma.jpg', title: 'Priyotoma', year: 2023, genre: 'Romance · Comedy', rating: '7.3', lang: 'BN' },
+  ];
+  rail.innerHTML = TRENDING.map((f) => `
+    <a class="poster-card" href="#download" aria-label="${f.title} (${f.year}) — get Skystream to stream it">
+      <img src="${f.src}" alt="Original key art for ${f.title}" width="436" height="654" loading="lazy" decoding="async">
+      <span class="poster-lang">${f.lang}</span>
+      <span class="poster-overlay">
+        <span class="poster-genre">${f.genre}</span>
+        <h3>${f.title}</h3>
+        <span class="poster-meta"><span>${f.year}</span><span class="poster-rating">★ ${f.rating}</span></span>
+        <span class="poster-cta">Stream it on Skystream →</span>
+      </span>
+    </a>`).join('');
+
+  const step = () => {
+    const card = rail.querySelector('.poster-card');
+    return card ? card.getBoundingClientRect().width + 20 : 240;
+  };
+  const prev = document.getElementById('railPrev');
+  const next = document.getElementById('railNext');
+  const updateBtns = () => {
+    const max = rail.scrollWidth - rail.clientWidth - 4;
+    if (prev) prev.disabled = rail.scrollLeft <= 4;
+    if (next) next.disabled = rail.scrollLeft >= max;
+  };
+  prev && prev.addEventListener('click', () => rail.scrollBy({ left: -step() * 2, behavior: 'smooth' }));
+  next && next.addEventListener('click', () => rail.scrollBy({ left: step() * 2, behavior: 'smooth' }));
+  rail.addEventListener('scroll', updateBtns, { passive: true });
+  updateBtns();
+
+  // slow auto-advance, paused on hover/focus and under reduced motion
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce) {
+    let timer = null, paused = false;
+    const tick = () => {
+      if (paused) return;
+      const max = rail.scrollWidth - rail.clientWidth - 4;
+      if (rail.scrollLeft >= max) rail.scrollTo({ left: 0, behavior: 'smooth' });
+      else rail.scrollBy({ left: step(), behavior: 'smooth' });
+    };
+    const start = () => { if (!timer) timer = setInterval(tick, 3500); };
+    rail.addEventListener('pointerenter', () => { paused = true; });
+    rail.addEventListener('pointerleave', () => { paused = false; });
+    rail.addEventListener('focusin', () => { paused = true; });
+    rail.addEventListener('focusout', () => { paused = false; });
+    start();
+  }
+})();
+
+/* ───────── back to top ───────── */
+(function backTop() {
+  const btn = document.getElementById('backTop');
+  if (!btn) return;
+  const onScroll = () => btn.classList.toggle('show', window.scrollY > 600);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  onScroll();
 })();
 
 /* ───────── live GitHub release metadata ───────── */
