@@ -57,6 +57,7 @@ jobs:
       # surface the Gradle failure summary as workflow annotations instead.
       - name: Annotate failures from log
         if: failure()
+        continue-on-error: true
         shell: bash
         run: |
           # Diagnostics in this file almost always sit right before the failing
@@ -111,3 +112,4 @@ jobs:
           tag_name: ${{ github.ref_name }}
           files: ${{ steps.apk.outputs.apk }}
           fail_on_unmatched_files: true
+          generate_release_notes: true

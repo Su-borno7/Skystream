@@ -15,6 +15,7 @@ const { ExtensionManager } = require('./extensions');
 const { Bridge } = require('./bridge');
 const { MediaProxy } = require('./proxy');
 const { DownloadManager } = require('./downloads');
+const { compareVersions } = require('./version');
 
 const ACCENT = '#38BDF8';
 
@@ -96,6 +97,37 @@ function registerIpc() {
     node: process.versions.node,
     bridge: bridge.status(),
   }));
+
+  ipcMain.handle('updates:check', async () => {
+    // Read-only check mirroring the Android updater, without auto-installing
+    // anything: finds the newest desktop-v* release that carries an installer
+    // for this platform and compares semver against the running app.
+    const platformExt = process.platform === 'win32' ? '.exe' : '.AppImage';
+    try {
+      const res = await fetch('https://api.github.com/repos/Su-borno7/Skystream/releases?per_page=30', {
+        headers: { Accept: 'application/vnd.github+json', 'User-Agent': 'Skystream-Desktop' },
+      });
+      if (!res.ok) return { status: 'error', message: `GitHub returned HTTP ${res.status}` };
+      const releases = await res.json();
+      const candidates = (Array.isArray(releases) ? releases : [])
+        .filter((r) => !r.prerelease && !r.draft && typeof r.tag_name === 'string' && r.tag_name.startsWith('desktop-v'))
+        .map((r) => {
+          const asset = (r.assets || []).find((a) => typeof a.name === 'string' && a.name.endsWith(platformExt));
+          return asset ? { version: r.tag_name.slice('desktop-v'.length), url: r.html_url } : null;
+        })
+        .filter(Boolean)
+        .sort((a, b) => compareVersions(b.version, a.version));
+      if (candidates.length === 0) return { status: 'error', message: 'No desktop releases with an installer for this platform found' };
+      const latest = candidates[0];
+      const current = app.getVersion();
+      if (compareVersions(latest.version, current) > 0) {
+        return { status: 'update-available', version: latest.version, url: latest.url };
+      }
+      return { status: 'current', current, latest: latest.version };
+    } catch (err) {
+      return { status: 'error', message: String((err && err.message) || err) };
+    }
+  });
 
   ipcMain.handle('app:openExternal', (_event, url) => {
     if (typeof url === 'string' && /^https?:\/\//i.test(url)) return shell.openExternal(url);

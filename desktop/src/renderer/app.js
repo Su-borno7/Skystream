@@ -1686,6 +1686,37 @@ async function renderSettings() {
 
   // ── About ───────────────────────────────────────────────────────────────────
   const about = settingsCard('About', 'Skystream');
+  about.appendChild(settingRow('Updates', 'Check GitHub for a newer desktop release', (() => {
+    const wrap = el('div', 'update-check');
+    const b = el('button', 'btn btn-small btn-ghost', 'Check for updates');
+    const status = el('div', 'setting-hint');
+    b.onclick = async () => {
+      b.disabled = true;
+      b.textContent = 'Checking…';
+      status.textContent = '';
+      try {
+        const result = await api.checkForUpdates();
+        if (result.status === 'current') {
+          status.textContent = `You're on the latest version (${result.latest}).`;
+        } else if (result.status === 'update-available') {
+          status.textContent = `Update available: v${result.version}`;
+          const dl = el('button', 'btn btn-small btn-accent', 'Download');
+          dl.onclick = () => api.openExternal(result.url);
+          wrap.appendChild(dl);
+        } else {
+          status.textContent = `Couldn't check: ${result.message || 'unknown error'}`;
+        }
+      } catch (err) {
+        status.textContent = `Couldn't check: ${err && err.message ? err.message : err}`;
+      } finally {
+        b.disabled = false;
+        b.textContent = 'Check for updates';
+      }
+    };
+    wrap.appendChild(b);
+    wrap.appendChild(status);
+    return wrap;
+  })()));
   about.appendChild(settingRow('Version', appInfo.version || '0.0.0', (() => {
     const b = el('button', 'btn btn-small btn-ghost', 'Copy diagnostics');
     b.onclick = async () => {

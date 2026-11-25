@@ -530,3 +530,6 @@ input, select, textarea { font-family: inherit; }
 }
 [data-theme="glass"] .search-box { border-color: var(--border-soft); }
 [data-theme="glass"] .chip { backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+
+/* ═══════════ About — update check ═══════════ */
+.update-check { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
