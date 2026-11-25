@@ -4,71 +4,7 @@
 const $ = (sel, ctx = document) => ctx.querySelector(sel);
 const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 
-/* ───────── aurora canvas (stars + drifting light) ───────── */
-(function aurora() {
-  const canvas = document.getElementById('aurora');
-  const ctx = canvas && canvas.getContext('2d');
-  if (!ctx) return;
-  let w = 0, h = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
-  let stars = [], orbs = [], raf;
-
-  const rand = (a, b) => a + Math.random() * (b - a);
-
-  function resize() {
-    w = window.innerWidth; h = window.innerHeight;
-    canvas.width = w * dpr; canvas.height = h * dpr;
-    canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    stars = Array.from({ length: 150 }, () => ({
-      x: Math.random() * w, y: Math.random() * h * 0.75,
-      r: rand(0.4, 1.5), base: rand(0.25, 0.85),
-      phase: Math.random() * Math.PI * 2, speed: rand(0.6, 1.4),
-    }));
-    orbs = [
-      { x: w * 0.85, y: -h * 0.12, r: 520, hue: [56, 189, 248], a: 0.16, t: 0 },
-      { x: w * 0.05, y: h * 1.02, r: 480, hue: [139, 92, 246], a: 0.15, t: 2 },
-      { x: w * 0.62, y: h * 1.12, r: 420, hue: [244, 114, 182], a: 0.09, t: 4 },
-    ];
-  }
-
-  function frame(time) {
-    const t = time / 1000;
-    ctx.clearRect(0, 0, w, h);
-
-    // gradient orbs
-    for (const o of orbs) {
-      const drift = Math.sin(t * 0.18 + o.t) * 90;
-      const g = ctx.createRadialGradient(o.x + drift, o.y + drift * 0.6, 0, o.x + drift, o.y + drift * 0.6, o.r);
-      g.addColorStop(0, `rgba(${o.hue[0]},${o.hue[1]},${o.hue[2]},${o.a})`);
-      g.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.fillStyle = g;
-      ctx.fillRect(0, 0, w, h);
-    }
-
-    // twinkling stars
-    for (const s of stars) {
-      const tw = s.base + Math.sin(t * s.speed + s.phase) * 0.28;
-      ctx.globalAlpha = Math.max(0.05, tw);
-      ctx.fillStyle = '#DCE9FF';
-      ctx.beginPath();
-      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fill();
-    }
-    ctx.globalAlpha = 1;
-    raf = requestAnimationFrame(frame);
-  }
-
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-  resize();
-  window.addEventListener('resize', resize, { passive: true });
-  if (!reduce.matches) {
-    raf = requestAnimationFrame(frame);
-    reduce.addEventListener?.('change', (e) => {
-      if (e.matches) { cancelAnimationFrame(raf); ctx.clearRect(0, 0, w, h); }
-      else raf = requestAnimationFrame(frame);
-    });
-  }
-})();
+/* ───────── background: blue sky + drifting white clouds (pure CSS in style.css) ───────── */
 
 /* ───────── nav scroll + mobile menu + scroll progress ───────── */
 (function chrome() {
