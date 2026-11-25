@@ -101,8 +101,13 @@ jobs:
         working-directory: desktop
         run: |
           VERSION="${GITHUB_REF_NAME#desktop-v}"
-          echo "Tag $GITHUB_REF_NAME -> setting package.json version to $VERSION"
-          npm version --no-git-tag-version "$VERSION"
+          CURRENT=$(node -p "require('./package.json').version")
+          echo "Tag $GITHUB_REF_NAME -> package.json version is $CURRENT"
+          if [ "$CURRENT" != "$VERSION" ]; then
+            npm version --no-git-tag-version "$VERSION"
+          else
+            echo "package.json already matches tag; skipping npm version"
+          fi
 
       - name: Bundle Temurin JRE 21
         shell: bash
