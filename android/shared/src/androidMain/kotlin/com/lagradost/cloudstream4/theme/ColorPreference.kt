@@ -16,6 +16,7 @@ fun perfToMode(perf: String?) =
         "Dracula" -> CloudStreamThemeMode.Dracula
         "Lavender" -> CloudStreamThemeMode.Lavender
         "SilentBlue" -> CloudStreamThemeMode.SilentBlue
+        "Sky" -> CloudStreamThemeMode.Sky
         "Monet" -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             CloudStreamThemeMode.Dynamic
         } else {
@@ -63,7 +64,7 @@ fun perfToColor(perf : String?) = when (perf) {
 
 fun Context.loadThemeMode(): CloudStreamThemeMode {
     val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-    return perfToMode(prefs.getString("theme_key", "AmoledLight"))
+    return perfToMode(prefs.getString("theme_key", "Sky"))
 }
 
 fun Context.loadPrimaryColor(): CloudStreamPrimaryColor {

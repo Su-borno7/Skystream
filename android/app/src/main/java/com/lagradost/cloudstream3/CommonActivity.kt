@@ -320,7 +320,7 @@ object CommonActivity {
     fun updateTheme(act: Activity) {
         val settingsManager = PreferenceManager.getDefaultSharedPreferences(act)
         if (settingsManager
-                .getString(act.getString(R.string.app_theme_key), "AmoledLight") == "System"
+                .getString(act.getString(R.string.app_theme_key), "Sky") == "System"
             && Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
         ) {
             loadThemes(act)
@@ -345,12 +345,13 @@ object CommonActivity {
         val settingsManager = PreferenceManager.getDefaultSharedPreferences(act)
 
         val currentTheme =
-            when (settingsManager.getString(act.getString(R.string.app_theme_key), "AmoledLight")) {
+            when (settingsManager.getString(act.getString(R.string.app_theme_key), "Sky")) {
                 "System" -> mapSystemTheme(act)
                 "Black" -> R.style.AppTheme
                 "Light" -> R.style.LightMode
                 "Amoled" -> R.style.AmoledMode
                 "AmoledLight" -> R.style.AmoledModeLight
+                "Sky" -> R.style.SkyMode
                 "Monet" -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
                     R.style.MonetMode else R.style.AppTheme
 

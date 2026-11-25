@@ -533,3 +533,124 @@ input, select, textarea { font-family: inherit; }
 
 /* ═══════════ About — update check ═══════════ */
 .update-check { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+
+/* ═══════════ Sky — blue sky + drifting white clouds (matches the website) ═══════════ */
+[data-theme="sky"] {
+  --bg: #68A7DE;
+  --bg-elev: rgba(255, 255, 255, 0.85);
+  --surface: rgba(255, 255, 255, 0.68);
+  --surface-2: rgba(255, 255, 255, 0.52);
+  --surface-3: #D9E9F4;
+  --border: rgba(8, 47, 84, 0.18);
+  --border-soft: rgba(8, 47, 84, 0.10);
+  --text: #0B2B47;
+  --text-muted: #33536F;
+  --text-faint: #58758F;
+  --accent: #0284C7;
+  --accent-hover: #0369A1;
+  --accent-soft: rgba(2, 132, 199, 0.14);
+  --accent-contrast: #FFFFFF;
+  --danger: #E11D48;
+  --ok: #059669;
+  --warn: #D97706;
+  --shadow: 0 18px 48px rgba(8, 47, 84, 0.3);
+  --radius: 18px;
+  --radius-sm: 12px;
+}
+
+/* backdrop: azure gradient + sun glow + soft white cloud ellipses, fixed behind the app */
+.sky-bg {
+  display: none; position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none;
+  background: linear-gradient(180deg,
+    #3F88CC 0%,
+    #4F93D3 22%,
+    #68A7DE 42%,
+    #86BCEA 62%,
+    #A6D2F2 80%,
+    #C8E6F8 100%);
+}
+.sky-bg::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(255,255,255,0.35) 82%, rgba(255,255,255,0.6) 100%);
+}
+[data-theme="sky"] .sky-bg { display: block; }
+[data-theme="sky"] body,
+[data-theme="sky"] .content { background: transparent; }
+.sky-bg .sun {
+  position: absolute; top: -130px; right: -130px; width: 480px; height: 480px; border-radius: 50%;
+  background: radial-gradient(circle, #FFFDF2 0%, #FFF9D8 16%, rgba(255,246,190,0.85) 30%, rgba(255,244,176,0.35) 52%, transparent 72%);
+}
+.sky-bg .cloud {
+  --cw: 180px; --top: 10%; --dur: 90s; --delay: 0s; --op: 0.9;
+  position: absolute; top: var(--top); left: 0;
+  width: var(--cw); height: calc(var(--cw) * 0.34);
+  background: #FFFFFF; border-radius: 999px; opacity: var(--op);
+  filter: drop-shadow(0 16px 26px rgba(8, 47, 84, 0.16));
+  animation: cloud-pass var(--dur) linear infinite;
+  animation-delay: var(--delay);
+  will-change: transform;
+}
+.sky-bg .cloud::before,
+.sky-bg .cloud::after { content: ""; position: absolute; background: #FFFFFF; border-radius: 50%; }
+.sky-bg .cloud::before { width: calc(var(--cw) * 0.42); height: calc(var(--cw) * 0.42); top: calc(var(--cw) * -0.21); left: calc(var(--cw) * 0.14); }
+.sky-bg .cloud::after  { width: calc(var(--cw) * 0.28); height: calc(var(--cw) * 0.28); top: calc(var(--cw) * -0.13); left: calc(var(--cw) * 0.48); }
+@keyframes cloud-pass {
+  from { transform: translateX(calc(var(--cw) * -1.8)); }
+  to   { transform: translateX(calc(100vw + var(--cw) * 2)); }
+}
+.sky-bg .cloud-1 { --top: 6%;  --cw: 240px; --dur: 95s;  --delay: -30s;  --op: 0.95; }
+.sky-bg .cloud-2 { --top: 13%; --cw: 150px; --dur: 125s; --delay: -74s;  --op: 0.7;  filter: drop-shadow(0 12px 20px rgba(8,47,84,0.14)) blur(0.6px); }
+.sky-bg .cloud-3 { --top: 21%; --cw: 330px; --dur: 80s;  --delay: -12s;  --op: 0.98; }
+.sky-bg .cloud-4 { --top: 29%; --cw: 110px; --dur: 145s; --delay: -101s; --op: 0.55; filter: drop-shadow(0 10px 18px rgba(8,47,84,0.12)) blur(1px); }
+.sky-bg .cloud-5 { --top: 37%; --cw: 280px; --dur: 108s; --delay: -49s;  --op: 0.9; }
+.sky-bg .cloud-6 { --top: 46%; --cw: 175px; --dur: 78s;  --delay: -26s;  --op: 0.85; }
+.sky-bg .cloud-7 { --top: 56%; --cw: 235px; --dur: 122s; --delay: -88s;  --op: 0.7;  filter: drop-shadow(0 12px 22px rgba(8,47,84,0.14)) blur(0.5px); }
+.sky-bg .cloud-8 { --top: 65%; --cw: 130px; --dur: 90s;  --delay: -8s;   --op: 0.55; filter: drop-shadow(0 10px 18px rgba(8,47,84,0.12)) blur(1px); }
+.sky-bg .cloud-9 { --top: 15%; --cw: 195px; --dur: 103s; --delay: -63s;  --op: 0.8; }
+
+/* frosted white glass over the sky */
+[data-theme="sky"] .titlebar {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(28px) saturate(1.4);
+  -webkit-backdrop-filter: blur(28px) saturate(1.4);
+  border-bottom: 1px solid var(--border-soft);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+[data-theme="sky"] .sidebar {
+  background: rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(30px) saturate(1.4);
+  -webkit-backdrop-filter: blur(30px) saturate(1.4);
+  border-right: 1px solid var(--border-soft);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+[data-theme="sky"] .poster-card,
+[data-theme="sky"] .download-row,
+[data-theme="sky"] .detail-panel,
+[data-theme="sky"] .episode-btn,
+[data-theme="sky"] .source-item {
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 8px 26px rgba(8, 47, 84, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+[data-theme="sky"] .poster-card:hover {
+  border-color: rgba(2, 132, 199, 0.45);
+  box-shadow: 0 0 0 1px rgba(2, 132, 199, 0.25), 0 22px 52px rgba(8, 47, 84, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+[data-theme="sky"] ::selection { background: rgba(2, 132, 199, 0.3); }
+[data-theme="sky"] .nav-item.active { color: var(--accent); }
+[data-theme="sky"] .chip,
+[data-theme="sky"] .episode-tab,
+[data-theme="sky"] .btn,
+[data-theme="sky"] .search-box,
+[data-theme="sky"] .segmented,
+[data-theme="sky"] .segmented button,
+[data-theme="sky"] .status-pill {
+  border-radius: 999px;
+}
+[data-theme="sky"] .chip { backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+[data-theme="sky"] .detail-backdrop::after {
+  background: linear-gradient(90deg, var(--bg) 8%, rgba(104, 167, 222, 0.55) 45%, transparent 78%),
+              linear-gradient(transparent 30%, var(--bg) 100%);
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-theme="sky"] .cloud { animation: none; }
+}

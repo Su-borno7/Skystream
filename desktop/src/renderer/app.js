@@ -63,7 +63,7 @@ async function loadSettings() {
 }
 function applySettings(s) {
   if (!s) return;
-  document.documentElement.dataset.theme = s.theme || 'dark';
+  document.documentElement.dataset.theme = s.theme || 'sky';
   document.documentElement.dataset.reduceMotion = s.reduceMotion ? 'true' : 'false';
   document.documentElement.style.setProperty('--accent', s.accent || '#38BDF8');
   document.documentElement.style.setProperty('--accent-hover', shadeAccent(s.accent || '#38BDF8'));
@@ -1589,9 +1589,9 @@ async function renderSettings() {
 
   // ── Appearance ────────────────────────────────────────────────────────────
   const appearance = settingsCard('Appearance', 'Theme, accent and motion');
-  appearance.appendChild(settingRow('Theme', 'Dark suits late-night, light suits daylight, Glass is Shiopa-style frost', (() => {
+  appearance.appendChild(settingRow('Theme', 'Sky matches the website — blue sky, drifting clouds. Dark suits late-night, Glass is Shiopa-style frost', (() => {
     const seg = el('div', 'segmented');
-    for (const [value, label] of [['dark', 'Dark'], ['amoled', 'AMOLED'], ['light', 'Light'], ['glass', 'Glass']]) {
+    for (const [value, label] of [['sky', 'Sky'], ['dark', 'Dark'], ['amoled', 'AMOLED'], ['light', 'Light'], ['glass', 'Glass']]) {
       const b = el('button', settings.theme === value ? 'active' : '', label);
       b.onclick = async () => { await patchSettings({ theme: value }); renderSettings(); };
       seg.appendChild(b);

@@ -45,7 +45,7 @@ function sha256Hex(buf) {
 
 const DEFAULT_SETTINGS = {
   accent: '#38BDF8',
-  theme: 'dark', // dark | amoled | light | glass
+  theme: 'sky', // sky | dark | amoled | light | glass
   defaultQuality: 'auto', // auto | highest | lowest
   rememberPosition: true,
   hardwareAcceleration: true,

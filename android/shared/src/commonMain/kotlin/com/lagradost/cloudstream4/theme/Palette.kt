@@ -73,6 +73,15 @@ internal object CloudStreamPalette {
     val LavenderGrayText = Color(0xFF9AB3FF)
     val LavenderIcon = Color(0xFF7C3AED)
 
+    // Sky (website theme: blue sky + white clouds, frosted white cards, navy text)
+    val SkyPrimaryGrayBg = Color(0xEBFFFFFF)
+    val SkyBlackBg = Color(0xFF8FC3E3)
+    val SkyIconGrayBg = Color(0xFFF2FAFE)
+    val SkyBoxItemBg = Color(0xFFF5FAFE)
+    val SkyText = Color(0xFF0B2B47)
+    val SkyGrayText = Color(0xFF33536F)
+    val SkyIcon = Color(0xFF33536F)
+
     // Silent Blue
     val SilentBluePrimaryGrayBg = Color(0xFF282F49)
     val SilentBlueBlackBg = Color(0xFF151A30)

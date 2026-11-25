@@ -42,14 +42,15 @@ function getDownloadDir() {
 }
 
 function createWindow() {
-  nativeTheme.themeSource = (state && state.getSettings().theme) === 'light' ? 'light' : 'dark';
+  const initialTheme = state && state.getSettings().theme;
+  nativeTheme.themeSource = (initialTheme === 'light' || initialTheme === 'sky') ? 'light' : 'dark';
 
   mainWindow = new BrowserWindow({
     width: 1440,
     height: 900,
     minWidth: 960,
     minHeight: 640,
-    backgroundColor: '#0C1016',
+    backgroundColor: '#68A7DE',
     frame: false,
     title: 'Skystream',
     show: false,
@@ -172,7 +173,7 @@ function registerIpc() {
     for (const [key, value] of Object.entries(patch || {})) allowed[key] = value;
     const merged = state.setSettings(allowed);
     if (patch && Object.prototype.hasOwnProperty.call(patch, 'theme')) {
-      nativeTheme.themeSource = merged.theme === 'light' ? 'light' : 'dark';
+      nativeTheme.themeSource = (merged.theme === 'light' || merged.theme === 'sky') ? 'light' : 'dark';
     }
     return merged;
   });

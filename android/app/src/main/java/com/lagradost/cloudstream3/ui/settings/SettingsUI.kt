@@ -143,7 +143,7 @@ class SettingsUI : BasePreferenceFragmentCompat() {
             }
 
             val currentLayout =
-                settingsManager.getString(getString(R.string.app_theme_key), prefValues.first())
+                settingsManager.getString(getString(R.string.app_theme_key), "Sky")
 
             activity?.showBottomDialog(
                 prefNames.toList(),

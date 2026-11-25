@@ -148,6 +148,19 @@ internal fun lavenderScheme() = CloudStreamColorScheme(
     isLight = true,
 )
 
+internal fun skyScheme() = CloudStreamColorScheme(
+    background = CloudStreamPalette.SkyBlackBg,
+    surfaceVariant = CloudStreamPalette.SkyPrimaryGrayBg,
+    surface = CloudStreamPalette.SkyIconGrayBg,
+    surfaceContainer = CloudStreamPalette.SkyBoxItemBg,
+    onBackground = CloudStreamPalette.SkyText,
+    onSurfaceVariant = CloudStreamPalette.SkyGrayText,
+    icon = CloudStreamPalette.SkyIcon,
+    primary = CloudStreamPalette.Primary,
+    ongoing = CloudStreamPalette.Ongoing,
+    isLight = true,
+)
+
 internal fun silentBlueScheme() = CloudStreamColorScheme(
     background = CloudStreamPalette.SilentBlueBlackBg,
     surfaceVariant = CloudStreamPalette.SilentBluePrimaryGrayBg,
