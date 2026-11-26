@@ -43,9 +43,12 @@ function sha256Hex(buf) {
   return crypto.createHash('sha256').update(buf).digest('hex');
 }
 
+/** Legacy theme values from pre-Première builds → new keys. */
+const LEGACY_THEMES = { sky: 'premiere', dark: 'premiere', amoled: 'noir', glass: 'premiere', light: 'linen' };
+
 const DEFAULT_SETTINGS = {
-  accent: '#38BDF8',
-  theme: 'sky', // sky | dark | amoled | light | glass
+  accent: '#E0B15C',
+  theme: 'premiere', // premiere | noir | linen
   defaultQuality: 'auto', // auto | highest | lowest
   rememberPosition: true,
   hardwareAcceleration: true,
@@ -81,7 +84,13 @@ class AppState {
   }
 
   getSettings() {
-    return Object.assign({}, DEFAULT_SETTINGS, this.settings.data);
+    const merged = Object.assign({}, DEFAULT_SETTINGS, this.settings.data);
+    if (LEGACY_THEMES[merged.theme]) {
+      merged.theme = LEGACY_THEMES[merged.theme];
+      this.settings.data = merged;
+      this.settings.save(); // one-time rewrite of legacy values
+    }
+    return merged;
   }
 
   setSettings(patch) {

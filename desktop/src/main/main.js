@@ -20,7 +20,7 @@ const tmdb = require('./tmdb');
 const skip = require('./skip');
 const trakt = require('./trakt');
 
-const ACCENT = '#38BDF8';
+const ACCENT = '#E0B15C';
 
 let state = null;
 let extensions = null;
@@ -46,7 +46,7 @@ function getDownloadDir() {
 
 function createWindow() {
   const initialTheme = state && state.getSettings().theme;
-  nativeTheme.themeSource = (initialTheme === 'light' || initialTheme === 'sky') ? 'light' : 'dark';
+  nativeTheme.themeSource = (initialTheme === 'linen') ? 'light' : 'dark';
 
   mainWindow = new BrowserWindow({
     width: 1440,
@@ -176,7 +176,7 @@ function registerIpc() {
     for (const [key, value] of Object.entries(patch || {})) allowed[key] = value;
     const merged = state.setSettings(allowed);
     if (patch && Object.prototype.hasOwnProperty.call(patch, 'theme')) {
-      nativeTheme.themeSource = (merged.theme === 'light' || merged.theme === 'sky') ? 'light' : 'dark';
+      nativeTheme.themeSource = (merged.theme === 'linen') ? 'light' : 'dark';
     }
     return merged;
   });

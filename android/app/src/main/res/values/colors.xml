@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#38BDF8</color>
+    <color name="colorPrimary">#E0B15C</color>
     <color name="colorPrimarySecond">@color/colorPrimary</color>
-    <color name="colorSearch">#1D2530</color> <!--#3444D1 @color/itemBackground-->
+    <color name="colorSearch">#252119</color> <!--#3444D1 @color/itemBackground-->
     <color name="colorOngoing">#F53B66</color> <!--FF8181-->
-    <color name="colorPrimaryDark">#0B0E14</color>
-    <color name="colorAccent">#38BDF8</color> <!-- 818fff-->
+    <color name="colorPrimaryDark">#141110</color>
+    <color name="colorAccent">#E0B15C</color> <!-- 818fff-->
 
-    <color name="primaryGrayBackground">#161C26</color> <!--0f0f10 0E0E10 303135 2B2C30-->
-    <color name="primaryBlackBackground">#0C1016</color> <!--1C1C20 191a1f 19181E 202125 1C1C20-->
-    <color name="iconGrayBackground">#111722</color> <!--141419 202125-->
-    <color name="boxItemBackground">#121924</color> <!-- 17171B 1B1B20-->
+    <color name="primaryGrayBackground">#1D1A16</color> <!--0f0f10 0E0E10 303135 2B2C30-->
+    <color name="primaryBlackBackground">#141110</color> <!--1C1C20 191a1f 19181E 202125 1C1C20-->
+    <color name="iconGrayBackground">#1A1714</color> <!--141419 202125-->
+    <color name="boxItemBackground">#1D1A16</color> <!-- 17171B 1B1B20-->
 
-    <color name="textColor">#EAEEF6</color> <!--FFF-->
-    <color name="grayTextColor">#8996AB</color> <!-- 5e5f62-->
+    <color name="textColor">#EDE3D0</color> <!--FFF-->
+    <color name="grayTextColor">#A99B86</color> <!-- 5e5f62-->
     <color name="grayShimmer">#DCDCDC</color> <!-- 5e5f62-->
 
     <color name="searchColorTransparent">#1AFFFFFF</color> <!--DADADA-->
@@ -26,25 +26,25 @@
 
     <color name="whiteText">#FFF</color>
     <color name="blackText">#000</color>
-    <color name="skyContrast">#06202F</color>
+    <color name="skyContrast">#231806</color>
     <!-- Glass theme (frosted deep-space glassmorphism) -->
-    <color name="glassBlackBg">#CC152032</color>
-    <color name="glassGrayBg">#CC1E2837</color>
-    <color name="glassIconGrayBg">#CC212C3A</color>
-    <color name="glassBoxItemBg">#C4232F44</color>
-    <color name="glassTextColor">#EDF2FB</color>
-    <color name="glassGrayTextColor">#A8B7CE</color>
+    <color name="glassBlackBg">#CC141110</color>
+    <color name="glassGrayBg">#CC1D1A16</color>
+    <color name="glassIconGrayBg">#CC252119</color>
+    <color name="glassBoxItemBg">#C4322D24</color>
+    <color name="glassTextColor">#EDE3D0</color>
+    <color name="glassGrayTextColor">#A99B86</color>
 
     <color name="progressBackgroundColor">#1AFFFFFF</color>
 
-    <color name="dubColorText">#06202F</color>
+    <color name="dubColorText">#231806</color>
     <color name="amoledModeLight">#101318</color>
 
-    <color name="dubColorBg">#38BDF8</color>
+    <color name="dubColorBg">#E0B15C</color>
     <color name="subColorText">#571711</color> <!--F53B66 FA3D79-->
     <color name="subColorBg">#F53B66</color>
-    <color name="typeColorText">#BEC8FF</color>
-    <color name="typeColorBg">#1A2340</color>
+    <color name="typeColorText">#E0B15C</color>
+    <color name="typeColorBg">#2A2417</color>
 
     <!--
     <color name="ratingColor">#4C3115</color>
@@ -63,19 +63,19 @@
     <color name="videoProgress">#66B5B5B5</color> <!--66B5B5B5-->
     <!--<color name="videoCache">#663D50FA</color>--> <!--66B5B5B5-->
 
-    <color name="iconColor">#8B96A9</color>
+    <color name="iconColor">#A99B86</color>
 
     <!-- <color name="usedStorageColor">?attr/white</color>#fff-->
     <!-- <color name="freeStorageColor">?attr/grayTextColor</color> #676767-->
 
-    <!--Sky Theme (app-icon night: navy #0B1019→#24457A backdrop, moon glow, #38BDF8 accent, matches su-borno7.github.io/Skystream)-->
-    <color name="skyPrimaryGrayBg">#E6141C2A</color>
-    <color name="skyPrimaryBlackBg">#232F47</color>
-    <color name="skyIconGrayBg">#1B2436</color>
-    <color name="skyBoxItemBg">#1B2436</color>
-    <color name="skyTextColor">#F2F7FF</color>
-    <color name="skyGrayTextColor">#A9BCD6</color>
-    <color name="skyIconColor">#A9BCD6</color>
+    <!--Première Theme (default: warm graphite backdrop, champagne gold glow, matches the desktop Première design)-->
+    <color name="skyPrimaryGrayBg">#E61D1A16</color>
+    <color name="skyPrimaryBlackBg">#181410</color>
+    <color name="skyIconGrayBg">#1D1A16</color>
+    <color name="skyBoxItemBg">#252119</color>
+    <color name="skyTextColor">#EDE3D0</color>
+    <color name="skyGrayTextColor">#A99B86</color>
+    <color name="skyIconColor">#A99B86</color>
 
     <!--Light Mode -->
     <color name="lightPrimaryGrayBackground">#EDF0F7</color>

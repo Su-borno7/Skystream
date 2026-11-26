@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Sky theme backdrop: app-icon night backdrop — deep navy gradient, moon glow (top-right steel/cyan), violet haze (bottom-left), faint slate clouds and a cyan horizon -->
+<!-- Première theme backdrop: warm graphite gradient, candle glow (top-right champagne), ember haze (bottom-left), faint umber clouds -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- deep navy, zenith -> faintly lit horizon (matches the website night palette) -->
     <item>
         <shape>
             <gradient android:type="linear" android:angle="270"
-                      android:startColor="#05080F" android:centerColor="#141C2A" android:endColor="#24457A" />
+                      android:startColor="#0B0908" android:centerColor="#161210" android:endColor="#2E2412" />
         </shape>
     </item>
 
@@ -13,7 +13,7 @@
     <item>
         <shape>
             <gradient android:type="linear" android:angle="90"
-                      android:startColor="#0038BDF8" android:centerColor="#0038BDF8" android:endColor="#2638BDF8" />
+                      android:startColor="#00E0B15C" android:centerColor="#00E0B15C" android:endColor="#26E0B15C" />
         </shape>
     </item>
 
@@ -22,7 +22,7 @@
         <shape android:shape="oval">
             <gradient android:type="radial" android:gradientRadius="310dp"
                       android:centerX="0.5" android:centerY="0.5"
-                      android:startColor="#59282454" android:centerColor="#29282454" android:endColor="#00282454" />
+                      android:startColor="#592E2417" android:centerColor="#292E2417" android:endColor="#002E2417" />
         </shape>
     </item>
 
@@ -31,7 +31,7 @@
         <shape android:shape="oval">
             <gradient android:type="radial" android:gradientRadius="310dp"
                       android:centerX="0.5" android:centerY="0.5"
-                      android:startColor="#E6F2F7FF" android:centerColor="#4D7DD3FC" android:endColor="#007DD3FC" />
+                      android:startColor="#E6FBF3DC" android:centerColor="#4DE0B15C" android:endColor="#00E0B15C" />
         </shape>
     </item>
 
@@ -40,21 +40,21 @@
         <shape android:shape="oval">
             <gradient android:type="radial" android:gradientRadius="150dp"
                       android:centerX="0.5" android:centerY="0.5"
-                      android:startColor="#80233252" android:centerColor="#47233252" android:endColor="#00233252" />
+                      android:startColor="#802E2419" android:centerColor="#472E2419" android:endColor="#002E2419" />
         </shape>
     </item>
     <item android:left="18dp" android:top="-6dp" android:width="150dp" android:height="110dp">
         <shape android:shape="oval">
             <gradient android:type="radial" android:gradientRadius="75dp"
                       android:centerX="0.5" android:centerY="0.5"
-                      android:startColor="#80233252" android:centerColor="#40233252" android:endColor="#00233252" />
+                      android:startColor="#802E2419" android:centerColor="#402E2419" android:endColor="#002E2419" />
         </shape>
     </item>
     <item android:left="120dp" android:top="6dp" android:width="140dp" android:height="100dp">
         <shape android:shape="oval">
             <gradient android:type="radial" android:gradientRadius="70dp"
                       android:centerX="0.5" android:centerY="0.5"
-                      android:startColor="#73233252" android:centerColor="#33233252" android:endColor="#00233252" />
+                      android:startColor="#732E2419" android:centerColor="#332E2419" android:endColor="#002E2419" />
         </shape>
     </item>
 
@@ -63,14 +63,14 @@
         <shape android:shape="oval">
             <gradient android:type="radial" android:gradientRadius="135dp"
                       android:centerX="0.5" android:centerY="0.5"
-                      android:startColor="#73233252" android:centerColor="#38233252" android:endColor="#00233252" />
+                      android:startColor="#732E2419" android:centerColor="#382E2419" android:endColor="#002E2419" />
         </shape>
     </item>
     <item android:left="300dp" android:top="250dp" android:width="140dp" android:height="100dp">
         <shape android:shape="oval">
             <gradient android:type="radial" android:gradientRadius="70dp"
                       android:centerX="0.5" android:centerY="0.5"
-                      android:startColor="#66233252" android:centerColor="#2E233252" android:endColor="#00233252" />
+                      android:startColor="#662E2419" android:centerColor="#2E2E2419" android:endColor="#002E2419" />
         </shape>
     </item>
 
@@ -79,14 +79,14 @@
         <shape android:shape="oval">
             <gradient android:type="radial" android:gradientRadius="130dp"
                       android:centerX="0.5" android:centerY="0.5"
-                      android:startColor="#61233252" android:centerColor="#2B233252" android:endColor="#00233252" />
+                      android:startColor="#612E2419" android:centerColor="#2B2E2419" android:endColor="#002E2419" />
         </shape>
     </item>
     <item android:left="96dp" android:top="590dp" android:width="130dp" android:height="90dp">
         <shape android:shape="oval">
             <gradient android:type="radial" android:gradientRadius="65dp"
                       android:centerX="0.5" android:centerY="0.5"
-                      android:startColor="#55233252" android:centerColor="#1F233252" android:endColor="#00233252" />
+                      android:startColor="#552E2419" android:centerColor="#1F2E2419" android:endColor="#002E2419" />
         </shape>
     </item>
 </layer-list>

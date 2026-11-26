@@ -135,6 +135,22 @@ test('tmdb list paths route TV section names correctly', () => {
   assert.equal(p.topRated('tv'), '/tv/top_rated');
 });
 
+test('legacy theme values migrate to Première keys', async () => {
+  const fs = require('fs');
+  const os = require('os');
+  const path = require('path');
+  const { AppState } = require('../src/main/store');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'skystream-theme-'));
+  const storeDir = path.join(dir, 'store');
+  fs.mkdirSync(storeDir, { recursive: true });
+  fs.writeFileSync(path.join(storeDir, 'settings.json'), JSON.stringify({ theme: 'sky' }));
+  const state = new AppState(dir);
+  assert.equal(state.getSettings().theme, 'premiere');
+  assert.equal(state.getSettings().theme, 'premiere'); // second call: stable, no rewrite loop
+  // and the file was rewritten so the next launch sees the new value
+  assert.equal(JSON.parse(fs.readFileSync(path.join(storeDir, 'settings.json'), 'utf8')).theme, 'premiere');
+});
+
 test('trakt isExpired treats tokens inside 60s of expiry as expired', () => {
   const { isExpired } = trakt._internal;
   const now = Date.now();

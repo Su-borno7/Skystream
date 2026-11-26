@@ -191,6 +191,11 @@ test('home renders provider rows and poster cards from the bridge', async () => 
   const cards = doc.querySelectorAll('#home-body .poster-card');
   assert.ok(cards.length >= 3, `expected >=3 poster cards, got ${cards.length}`);
   assert.match(doc.querySelector('#bridge-text').textContent, /FakeProvider|provider/i);
+  // Première redesign: featured hero banner renders from the first home item
+  const hero = doc.querySelector('#home-hero');
+  assert.equal(hero.hidden, false, 'hero is visible on home');
+  assert.match(hero.textContent, /Featured tonight/i);
+  assert.match(hero.textContent, /Item 1/);
 });
 
 test('search runs, renders results, and navigates to detail', async () => {

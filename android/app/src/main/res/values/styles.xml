@@ -190,7 +190,7 @@
         <item name="android:text">@string/quality_hd</item>
     </style>
 
-    <!-- App-icon night backdrop: deep navy gradient, moon glow, slate clouds, cyan horizon -->
+    <!-- Première backdrop: warm graphite gradient, champagne glow, umber clouds (matches the desktop Première design) -->
     <style name="SkyMode">
         <item name="android:windowBackground">@drawable/sky_background</item>
         <item name="primaryGrayBackground">@color/skyPrimaryGrayBg</item>

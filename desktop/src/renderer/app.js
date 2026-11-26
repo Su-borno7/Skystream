@@ -51,10 +51,11 @@ const state = {
   searchDone: new Map(),  // provider internalName -> hasNext
   detailCurrent: null,    // { provider, url }
   libraryCache: [],
+  homeHero: null,         // { item, provider } — featured banner pick
 };
 
 /* ═══════════ settings ═══════════ */
-const ACCENTS = ['#38BDF8', '#7C3AED', '#0EA5E9', '#10B981', '#F59E0B', '#EF4444', '#EC4899', '#14B8A6'];
+const ACCENTS = ['#E0B15C', '#C98A3F', '#B5651D', '#46C783', '#2EC4B6', '#B388E8', '#D6455B', '#38BDF8'];
 const SUBTITLE_COLORS = ['#FFFFFF', '#FBBF24', '#34D399', '#67E8F9'];
 
 async function loadSettings() {
@@ -63,10 +64,10 @@ async function loadSettings() {
 }
 function applySettings(s) {
   if (!s) return;
-  document.documentElement.dataset.theme = s.theme || 'sky';
+  document.documentElement.dataset.theme = s.theme || 'premiere';
   document.documentElement.dataset.reduceMotion = s.reduceMotion ? 'true' : 'false';
-  document.documentElement.style.setProperty('--accent', s.accent || '#38BDF8');
-  document.documentElement.style.setProperty('--accent-hover', shadeAccent(s.accent || '#38BDF8'));
+  document.documentElement.style.setProperty('--accent', s.accent || '#E0B15C');
+  document.documentElement.style.setProperty('--accent-hover', shadeAccent(s.accent || '#E0B15C'));
 }
 function shadeAccent(hex) {
   // lighten toward white by ~12%
@@ -273,6 +274,8 @@ async function renderHome() {
   const empty = $('#home-empty');
   const offline = $('#home-offline');
   body.innerHTML = '';
+  state.homeHero = null;
+  $('#home-hero').hidden = true;
   await refreshBridge();
   await renderContinueBlock($('#home-continue'));
 
@@ -321,6 +324,7 @@ async function renderHome() {
     }
   }
   $$('.skeleton', body).forEach((n) => n.remove());
+  renderHero();
   state.homeLoaded = true;
 }
 
@@ -339,6 +343,7 @@ function renderHomeSections(body, provider, lists) {
     for (const sub of rows) {
       const items = sub.items || [];
       if (!items.length) continue;
+      if (!state.homeHero && items[0]) state.homeHero = { item: items[0], provider };
       const row = el('div', 'section-row');
       const head = el('div', 'section-row-head');
       const title = el('div', 'section-row-title');
@@ -352,6 +357,47 @@ function renderHomeSections(body, provider, lists) {
       body.appendChild(row);
     }
   }
+}
+
+/* ═══════════ home hero — featured banner from the first available item ═══════════ */
+function renderHero() {
+  const hero = $('#home-hero');
+  const pick = state.homeHero;
+  hero.innerHTML = '';
+  if (!pick) { hero.hidden = true; return; }
+  const { item, provider } = pick;
+
+  const inner = el('div', 'hero-inner');
+  inner.appendChild(el('div', 'hero-kicker', 'Featured tonight'));
+  inner.appendChild(el('h2', 'hero-title', item.name || 'Untitled'));
+  const meta = el('div', 'hero-meta');
+  const metaBits = [provider.name];
+  if (item.type) metaBits.push(String(item.type));
+  if (item.year) metaBits.push(String(item.year));
+  metaBits.forEach((bit, i) => {
+    if (i > 0) meta.appendChild(el('span', 'hero-dot'));
+    meta.appendChild(el('span', null, bit));
+  });
+  inner.appendChild(meta);
+  const actions = el('div', 'hero-actions');
+  const play = el('button', 'btn btn-accent');
+  play.innerHTML = '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M8.5 6.5v11l9-5.5z" fill="currentColor"/></svg> Play';
+  play.addEventListener('click', () => goDetail(provider.internalName, item));
+  const more = el('button', 'btn btn-ghost', 'Details');
+  more.addEventListener('click', () => goDetail(provider.internalName, item));
+  actions.append(play, more);
+  inner.appendChild(actions);
+  hero.appendChild(inner);
+
+  const art = el('div', 'hero-art');
+  const img = document.createElement('img');
+  img.alt = '';
+  img.referrerPolicy = 'no-referrer';
+  img.onerror = () => art.remove();
+  posterUrl(item).then((src) => { if (src) img.src = src; else art.remove(); });
+  art.appendChild(img);
+  hero.appendChild(art);
+  hero.hidden = false;
 }
 
 /* ═══════════ EXPLORE screen (TMDB) ═══════════ */
@@ -1790,9 +1836,9 @@ async function renderSettings() {
 
   // ── Appearance ────────────────────────────────────────────────────────────
   const appearance = settingsCard('Appearance', 'Theme, accent and motion');
-  appearance.appendChild(settingRow('Theme', 'Sky matches the website — blue sky, drifting clouds. Dark suits late-night, Glass is Shiopa-style frost', (() => {
+  appearance.appendChild(settingRow('Theme', 'Première is warm graphite with champagne gold; Noir is true-black; Linen is warm paper light', (() => {
     const seg = el('div', 'segmented');
-    for (const [value, label] of [['sky', 'Sky'], ['dark', 'Dark'], ['amoled', 'AMOLED'], ['light', 'Light'], ['glass', 'Glass']]) {
+    for (const [value, label] of [['premiere', 'Première'], ['noir', 'Noir'], ['linen', 'Linen']]) {
       const b = el('button', settings.theme === value ? 'active' : '', label);
       b.onclick = async () => { await patchSettings({ theme: value }); renderSettings(); };
       seg.appendChild(b);
@@ -2024,7 +2070,7 @@ function applySubtitleStyle(sizePct, color) {
   styleEl.textContent = `video::cue { color: ${color || '#FFFFFF'}; font-size: ${Math.round(scale * 100)}%; }`;
 }
 
-/* ═══════════ wiring: shell, titlebar, navigation ═══════════ */
+/* ═══════════ wiring: shell, top bar, navigation ═══════════ */
 $('#tb-min').addEventListener('click', () => api.window.minimize());
 $('#tb-close').addEventListener('click', () => api.window.close());
 const maxBtn = $('#tb-max');
