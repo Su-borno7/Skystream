@@ -126,7 +126,7 @@ function confirmModal(title, body, confirmLabel = 'Confirm', danger = false) {
 }
 
 /* ═══════════ navigation / router ═══════════ */
-const routes = ['home', 'search', 'detail', 'library', 'downloads', 'extensions', 'settings'];
+const routes = ['home', 'explore', 'search', 'detail', 'library', 'downloads', 'extensions', 'settings'];
 function navigate(hash) {
   if (location.hash === hash) renderRoute();
   else location.hash = hash;
@@ -144,6 +144,7 @@ function renderRoute() {
   }
   $$('.nav-item').forEach((btn) => btn.classList.toggle('active', btn.dataset.nav === screen));
   if (screen === 'home') renderHome();
+  else if (screen === 'explore') renderExplore();
   else if (screen === 'library') renderLibrary();
   else if (screen === 'downloads') renderDownloads();
   else if (screen === 'extensions') renderExtensions();
@@ -351,6 +352,117 @@ function renderHomeSections(body, provider, lists) {
       body.appendChild(row);
     }
   }
+}
+
+/* ═══════════ EXPLORE screen (TMDB) ═══════════ */
+const exploreState = { mediaType: 'movie', section: 'trending', page: 1, totalPages: 1, loading: false, hasKey: false };
+
+function exploreCardNode(item) {
+  const card = el('div', 'poster-card explore-card');
+  card.tabIndex = 0;
+  card.setAttribute('role', 'button');
+  card.setAttribute('aria-label', item.name || 'title');
+  const fallback = el('div', 'poster-fallback', (item.name || '?').trim().charAt(0).toUpperCase());
+  card.appendChild(fallback);
+  if (item.posterUrl) {
+    const img = document.createElement('img');
+    img.loading = 'lazy';
+    img.alt = item.name || '';
+    img.src = item.posterUrl;
+    img.referrerPolicy = 'no-referrer';
+    img.onerror = () => img.remove();
+    img.onload = () => { fallback.hidden = true; };
+    card.appendChild(img);
+  }
+  const meta = el('div', 'poster-meta');
+  meta.appendChild(el('div', 'poster-type', item.mediaType === 'tv' ? 'series' : 'movie'));
+  meta.appendChild(el('div', null, item.name || 'Untitled'));
+  const bits = [];
+  if (item.year) bits.push(item.year);
+  if (item.rating != null && item.rating > 0) bits.push(`★ ${item.rating}`);
+  if (bits.length) meta.appendChild(el('div', 'explore-sub', bits.join('  ·  ')));
+  card.appendChild(meta);
+  const play = () => explorePlay(item);
+  card.addEventListener('click', play);
+  card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); play(); } });
+  return card;
+}
+
+function explorePlay(item) {
+  searchInput.value = item.name || '';
+  $('#search-clear').hidden = !searchInput.value;
+  go('search');
+  runSearch(true);
+}
+
+async function renderExplore(reset = true) {
+  if (reset) { exploreState.page = 1; exploreState.totalPages = 1; }
+  // Re-check the key every time the screen renders (the user may have just added one in Settings).
+  try {
+    const s = await api.tmdb.status();
+    exploreState.hasKey = !!(s && s.hasKey);
+  } catch {
+    exploreState.hasKey = false;
+  }
+  const prompt = $('#explore-key-prompt');
+  const controls = $('#explore-controls');
+  const grid = $('#explore-grid');
+  const status = $('#explore-status');
+  const more = $('#explore-more');
+  $('#explore-legal').hidden = !exploreState.hasKey;
+  prompt.hidden = exploreState.hasKey;
+  controls.hidden = !exploreState.hasKey;
+  if (!exploreState.hasKey) {
+    grid.innerHTML = '';
+    status.hidden = true;
+    more.hidden = true;
+    return;
+  }
+  if (exploreState.loading) return;
+  exploreState.loading = true;
+  status.hidden = false;
+  status.textContent = reset ? 'Loading…' : 'Loading more…';
+  try {
+    const res = await api.tmdb.list({ mediaType: exploreState.mediaType, section: exploreState.section, page: exploreState.page });
+    exploreState.totalPages = res.totalPages || 1;
+    if (reset) grid.innerHTML = '';
+    for (const item of res.items || []) grid.appendChild(exploreCardNode(item));
+    status.hidden = true;
+    more.hidden = exploreState.page >= exploreState.totalPages;
+  } catch (err) {
+    status.hidden = false;
+    status.textContent = (err && err.message) || 'Explore failed to load.';
+    more.hidden = true;
+  } finally {
+    exploreState.loading = false;
+  }
+}
+
+$('#explore-key-cta').addEventListener('click', () => go('settings'));
+$('#explore-more').addEventListener('click', async () => {
+  if (exploreState.loading || exploreState.page >= exploreState.totalPages) return;
+  exploreState.page += 1;
+  await renderExplore(false);
+});
+$('#explore-attribution').addEventListener('click', (e) => {
+  e.preventDefault();
+  api.openExternal('https://www.themoviedb.org');
+});
+for (const btn of $$('#explore-media button')) {
+  btn.addEventListener('click', () => {
+    if (exploreState.mediaType === btn.dataset.mt) return;
+    exploreState.mediaType = btn.dataset.mt;
+    $$('#explore-media button').forEach((b) => b.classList.toggle('active', b === btn));
+    renderExplore(true);
+  });
+}
+for (const btn of $$('#explore-section button')) {
+  btn.addEventListener('click', () => {
+    if (exploreState.section === btn.dataset.section) return;
+    exploreState.section = btn.dataset.section;
+    $$('#explore-section button').forEach((b) => b.classList.toggle('active', b === btn));
+    renderExplore(true);
+  });
 }
 
 /* ═══════════ SEARCH screen ═══════════ */
@@ -750,6 +862,9 @@ const player = {
   hideTimer: null,
   lastSave: 0,
   inLibrary: false,
+  skipSegments: [],
+  skippedSkipSegments: new Set(),
+  activeSkipSegment: null,
 };
 const video = $('#player-video');
 
@@ -835,6 +950,10 @@ function openPlayer({ provider, detailUrl, data, episode, title, subtitle, entry
   player.data = data;
   player.episode = episode || null;
   player.episodeList = episodeList || [];
+  player.skipSegments = [];
+  player.skippedSkipSegments = new Set();
+  player.activeSkipSegment = null;
+  $('#pc-skip').hidden = true;
   player.links = links;
   player.subtitles = subtitles;
   player.title = title || '';
@@ -852,7 +971,71 @@ function openPlayer({ provider, detailUrl, data, episode, title, subtitle, entry
   renderPlayerSources();
   attachSource(bestLink(links, state.settings?.defaultQuality));
   refreshLibraryButton();
+  loadSkipSegments();
   pokeHud();
+}
+
+/* ═══════════ skip segments (IntroDB / AniSkip via main process) ═══════════ */
+function skipTypeLabel(type) {
+  if (type === 'intro') return 'intro';
+  if (type === 'outro') return 'outro';
+  if (type === 'recap') return 'recap';
+  return 'segment';
+}
+
+function loadSkipSegments() {
+  const settings = state.settings || {};
+  if (!settings.skipIntroOutro || !player.episode) return;
+  const season = player.episode.season ?? 1;
+  const number = player.episode.episode ?? 1;
+  const fetchSegments = async () => {
+    try {
+      const durationSec = Number.isFinite(video.duration) && video.duration > 0 ? video.duration : undefined;
+      const segments = await api.skip.segments({ title: player.title, season, episode: number, durationSec });
+      // Guard against a stale response landing after the user closed the player or moved to another title.
+      if (!$('#player-overlay').hidden && player.progressKey) {
+        player.skipSegments = Array.isArray(segments) ? segments : [];
+      }
+    } catch {
+      player.skipSegments = [];
+    }
+  };
+  if (Number.isFinite(video.duration) && video.duration > 0) fetchSegments();
+  else video.addEventListener('loadedmetadata', fetchSegments, { once: true });
+}
+
+function updateSkipUi() {
+  const btn = $('#pc-skip');
+  const segments = player.skipSegments;
+  if (!segments.length) { btn.hidden = true; player.activeSkipSegment = null; return; }
+  const t = video.currentTime;
+  let seg = null;
+  for (const s of segments) {
+    if (t >= s.start && t < s.end) { seg = s; break; }
+  }
+  if (!seg || player.skippedSkipSegments.has(seg.start)) { btn.hidden = true; player.activeSkipSegment = null; return; }
+  player.activeSkipSegment = seg;
+  const label = skipTypeLabel(seg.type);
+  if (state.settings?.skipAuto) {
+    player.skippedSkipSegments.add(seg.start);
+    video.currentTime = seg.end;
+    btn.hidden = true;
+    toast(`Skipped ${label}`, 'info', 1800);
+    return;
+  }
+  btn.textContent = `Skip ${label}`;
+  btn.hidden = false;
+}
+
+function scrobbleCurrent() {
+  const s = state.settings || {};
+  if (!s.traktClientId || !s.traktClientSecret) return;
+  const ep = player.episode;
+  api.trakt.scrobble({ title: player.title, season: ep ? ep.season ?? 1 : undefined, episode: ep ? ep.episode ?? undefined : undefined })
+    .then((res) => {
+      if (res && res.scrobbled) toast(`Scrobbled to Trakt · ${(res.resolved && res.resolved.name) || player.title}`, 'success', 2600);
+    })
+    .catch(() => { /* best effort — never disturb playback */ });
 }
 
 function currentSubtitles() { return player.subtitles || []; }
@@ -956,6 +1139,9 @@ async function closePlayer() {
     video.removeAttribute('src');
     video.load();
     $('#player-overlay').hidden = true;
+    $('#pc-skip').hidden = true;
+    player.skipSegments = [];
+    player.activeSkipSegment = null;
     document.exitFullscreen?.().catch(() => {});
   }
 }
@@ -1002,6 +1188,14 @@ $('#pc-download').addEventListener('click', () => {
   const label = `${player.title}${player.episode ? ` ${episodeSummary(player.episode)}` : ''}`;
   queueDownload(player.current, label, player.provider, null);
 });
+$('#pc-skip').addEventListener('click', () => {
+  const seg = player.activeSkipSegment;
+  if (!seg) return;
+  player.skippedSkipSegments.add(seg.start);
+  video.currentTime = seg.end;
+  $('#pc-skip').hidden = true;
+});
+
 $('#player-panel-toggle').addEventListener('click', () => { $('#player-panel').hidden = !$('#player-panel').hidden; });
 $('#pc-play').addEventListener('click', togglePlay);
 function togglePlay() { if (video.paused) video.play(); else video.pause(); }
@@ -1010,7 +1204,9 @@ video.addEventListener('play', () => { setPlayIcon(true); pokeHud(); });
 video.addEventListener('pause', () => { setPlayIcon(false); clearTimeout(player.hideTimer); overlay.classList.remove('hud-hidden'); saveProgressNow(); });
 video.addEventListener('ended', () => {
   setPlayIcon(false);
+  $('#pc-skip').hidden = true;
   saveProgressNow();
+  scrobbleCurrent();
   if (state.settings?.autoplayNext && player.episode) playNextEpisode(true);
 });
 video.addEventListener('timeupdate', () => {
@@ -1024,6 +1220,7 @@ video.addEventListener('timeupdate', () => {
   }
   const now = Date.now();
   if (now - (player.lastSave || 0) > 5000) { player.lastSave = now; saveProgressNow(); }
+  if (state.settings?.skipIntroOutro && player.skipSegments.length) updateSkipUi();
 });
 video.addEventListener('progress', () => {
   try {
@@ -1583,7 +1780,11 @@ $('#extensions-reload').addEventListener('click', async (e) => {
 async function renderSettings() {
   const body = $('#settings-body');
   body.innerHTML = '<div class="loading-line"><div class="spinner"></div> Loading…</div>';
-  const [settings, appInfo] = await Promise.all([api.settings.get(), api.appInfo().catch(() => ({}))]);
+  const [settings, appInfo, traktStatus] = await Promise.all([
+    api.settings.get(),
+    api.appInfo().catch(() => ({})),
+    api.trakt.status().catch(() => null),
+  ]);
   state.settings = settings;
   body.innerHTML = '';
 
@@ -1635,6 +1836,59 @@ async function renderSettings() {
   playback.appendChild(settingRow('Autoplay next episode', 'Start the following episode automatically', toggle(!!settings.autoplayNext, (v) => patchSettings({ autoplayNext: v }))));
   playback.appendChild(settingRow('Hardware acceleration', 'Use the GPU for video decode (restart required)', toggle(!!settings.hardwareAcceleration, (v) => patchSettings({ hardwareAcceleration: v }))));
   body.appendChild(playback);
+
+  // ── Explore & tracking ────────────────────────────────────────────────────
+  const tracking = settingsCard('Explore & tracking', 'TMDB discovery, intro/outro skip and Trakt scrobbling');
+  const keyInput = (value, placeholder, onCommit, type = 'text') => {
+    const input = document.createElement('input');
+    input.type = type;
+    input.className = 'text-input';
+    input.placeholder = placeholder;
+    input.autocomplete = 'off';
+    input.spellcheck = false;
+    input.value = value || '';
+    input.onchange = () => onCommit(input.value.trim());
+    return input;
+  };
+  tracking.appendChild(settingRow('TMDB API key', 'Free key from themoviedb.org/settings/api — unlocks the Explore screen and IMDb resolution for skip data', keyInput(settings.tmdbApiKey, 'Paste your key…', (v) => patchSettings({ tmdbApiKey: v }))));
+  tracking.appendChild(settingRow('Skip intro & outro', 'Crowdsourced IntroDB segments (needs TMDB key); AniSkip for anime when a client ID is set', toggle(!!settings.skipIntroOutro, (v) => patchSettings({ skipIntroOutro: v }))));
+  tracking.appendChild(settingRow('Auto-skip segments', 'Seek automatically instead of showing a Skip button', toggle(!!settings.skipAuto, (v) => patchSettings({ skipAuto: v }))));
+  tracking.appendChild(settingRow('AnimeSkip client ID', 'Optional — enables AniSkip anime timing data (anime-skip.com)', keyInput(settings.animeSkipClientId, 'Client ID…', (v) => patchSettings({ animeSkipClientId: v }))));
+  tracking.appendChild(settingRow('Trakt client ID', 'Register a free app at trakt.tv/oauth/applications and enable device code', keyInput(settings.traktClientId, 'Client ID…', (v) => patchSettings({ traktClientId: v }))));
+  tracking.appendChild(settingRow('Trakt client secret', 'Stored on this device only; used solely for the sign-in flow', keyInput(settings.traktClientSecret, 'Client secret…', (v) => patchSettings({ traktClientSecret: v }), 'password')));
+  tracking.appendChild(settingRow('Trakt', 'Report finished movies & episodes to your Trakt history', (() => {
+    const box = el('div', 'trakt-box');
+    const status = el('div', 'trakt-status', traktStatus?.signedIn
+      ? `Signed in${traktStatus.user?.username ? ` as ${traktStatus.user.username}` : ''}`
+      : (traktStatus?.configured ? 'Not signed in' : 'Add your client ID & secret first'));
+    box.appendChild(status);
+    if (traktStatus?.signedIn) {
+      const out = el('button', 'btn btn-ghost btn-small', 'Sign out');
+      out.onclick = async () => { await api.trakt.signOut(); toast('Signed out of Trakt', 'info'); renderSettings(); };
+      box.appendChild(out);
+    } else {
+      const signIn = el('button', 'btn btn-accent btn-small', 'Sign in with Trakt');
+      signIn.onclick = async () => {
+        signIn.disabled = true;
+        signIn.textContent = 'Contacting Trakt…';
+        try {
+          const res = await api.trakt.signIn();
+          box.innerHTML = '';
+          box.appendChild(el('div', 'trakt-code', res.userCode));
+          box.appendChild(el('div', 'setting-hint', `Enter this code at ${res.verificationUrl} — this page updates once you approve.`));
+          const open = el('button', 'btn btn-accent btn-small', 'Open trakt.tv/activate');
+          open.onclick = () => api.openExternal(res.verificationUrl);
+          box.appendChild(open);
+        } catch (err) {
+          toast((err && err.message) || 'Trakt sign-in failed', 'error');
+          renderSettings();
+        }
+      };
+      box.appendChild(signIn);
+    }
+    return box;
+  })()));
+  body.appendChild(tracking);
 
   // ── Subtitles ─────────────────────────────────────────────────────────────
   const subs = settingsCard('Subtitles', 'Size and colour for WebVTT tracks');
@@ -1786,6 +2040,14 @@ async function syncMaximizeButton() {
 api.window.onMaximizedChanged((maximized) => {
   $('.ic-max', maxBtn).hidden = maximized;
   $('.ic-restore', maxBtn).hidden = !maximized;
+});
+api.trakt.onChanged((payload) => {
+  if (payload && payload.signedIn) {
+    toast(`Signed in to Trakt${payload.user?.username ? ` as ${payload.user.username}` : ''}`, 'success');
+  } else if (payload && payload.error) {
+    toast(payload.error, 'error');
+  }
+  if (!$('#screen-settings').hidden) renderSettings();
 });
 
 $$('.nav-item').forEach((btn) => btn.addEventListener('click', () => go(btn.dataset.nav)));

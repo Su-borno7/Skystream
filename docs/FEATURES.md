@@ -60,13 +60,19 @@ An Electron app ("Skystream for PC") for Windows and Linux (macOS via local buil
   subtitle URLs open in the system browser.
 - **Resume anywhere** — per-episode and per-title position is remembered (toggleable),
   including a "continue watching" rail on Home and in Library.
-- **Skip intro** — auto-seek every episode by N seconds (configurable).
+- **Skip intro & outro** — auto-seek every episode by N seconds (configurable), or skip
+  crowdsourced intro/recap/outro segments (see below).
 - **Autoplay next episode** on `ended` when enabled.
 - **Keyboard shortcuts** — `Space`/`K` play-pause, `J`/`L` ±5 s, arrows seek, `F` fullscreen,
   `M` mute, `S` sources panel, `N` next episode, `Esc` close.
 
 ### Finding things
 
+- **Explore** — a discovery screen powered by [TMDB](https://www.themoviedb.org): trending
+  this week, popular, top-rated, now-playing and upcoming, for movies and series, with
+  posters, ratings and pagination. Bring your own free TMDB API key (Settings → Explore &
+  tracking) — the app ships with no baked-in key. This product uses the TMDB API but is not
+  endorsed or certified by TMDB. Clicking a title searches your installed providers for it.
 - **Home feed** populated from the home pages of your enabled providers, with skeleton
   loading and per-provider error reporting.
 - **Universal search** across all enabled providers at once; provider scope chips (persisted)
@@ -74,6 +80,26 @@ An Electron app ("Skystream for PC") for Windows and Linux (macOS via local buil
   one-click removal.
 - **Rich detail pages** — hero backdrop, year / duration / content rating / score, tags,
   plot, cast, recommendations, episode browser with season selector and watched markers.
+
+### Discovery & tracking (optional, your own keys)
+
+- **Skip intro / recap / outro** — while playing an episode, Skystream fetches crowdsourced
+  skip segments and shows a one-tap **Skip** button (or auto-seeks, your choice). Sources:
+  [IntroDB](https://api.introdb.app) (needs the TMDB key to resolve IMDb ids) and, for anime,
+  [AnimeSkip](https://anime-skip.com) (needs an AniList id — resolved automatically — plus
+  your own AnimeSkip client ID; AniSkip data replaces IntroDB's when present, matching
+  upstream semantics). Empty results and rate limits are cached/honoured; playback is never
+  blocked by a missing segment.
+- **Trakt scrobbling** — finished movies and episodes are reported to your Trakt history
+  (`/scrobble/stop`) when signed in. Sign in from Settings → Explore & tracking using the
+  device-authorization flow: you register a free Trakt API app at
+  [trakt.tv/oauth/applications](https://trakt.tv/oauth/applications), paste its Client ID and
+  Secret, and approve the code at trakt.tv/activate. Tokens live in a separate on-device
+  secrets store (never in settings export) and refresh automatically. Titles are matched to
+  TMDB ids best-effort via your TMDB key — scrobbling is skipped silently when no confident
+  match exists. Skystream has no account of its own and no telemetry.
+- **No baked-in credentials** — TMDB, AnimeSkip and Trakt are all bring-your-own-key;
+  nothing shared ships in the installer.
 
 ### Your data
 
@@ -141,10 +167,18 @@ over loopback; a stale bridge never leaves the UI hanging.
 
 ## Deliberately missing
 
-- No accounts, cloud sync, or telemetry.
+- No Skystream account, cloud sync service, or telemetry. Optional third-party sign-ins
+  (Trakt) use your own API app and credentials.
 - No content bundled or endorsed; extensions are third-party.
 - Desktop installers are unsigned (Windows SmartScreen will warn on first run);
   Android APKs are signed with the committed public keystore.
+
+## Prior art & credits
+
+The skip-segment design (IntroDB/AniSkip sources, cache semantics, segment sanitizing) was
+ported as a re-implementation from [akashdh11's Skystream](https://github.com/akashdh11/skystream)
+(GPL-3.0). No upstream code was copied; the desktop app talks to the same public HTTP APIs.
+TMDB artwork is © TMDB and used under their terms — always load live from image.tmdb.org.
 
 ## Where to get it
 

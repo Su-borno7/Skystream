@@ -27,14 +27,22 @@ async function _fetch(url, { timeout = DEFAULT_TIMEOUT_MS, headers = {}, redirec
 
 async function fetchJson(url, { timeout, headers } = {}) {
   const res = await _fetch(url, { timeout, headers });
-  if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
   const text = await res.text();
   if (text.length > MAX_JSON_BYTES) throw new Error(`Response too large from ${url}`);
+  let data = null;
   try {
-    return JSON.parse(text);
+    data = text ? JSON.parse(text) : null;
   } catch (err) {
     throw new Error(`Invalid JSON from ${url}: ${err.message}`);
   }
+  if (!res.ok) {
+    const err = new Error(`HTTP ${res.status} for ${url}`);
+    err.status = res.status;
+    err.body = data;
+    err.headers = res.headers;
+    throw err;
+  }
+  return data;
 }
 
 async function fetchBuffer(url, { timeout, headers, maxBytes = MAX_PLUGIN_BYTES } = {}) {
@@ -66,4 +74,38 @@ function normalizeRepoUrl(input) {
   return 'https://' + fixed.replace(/^\/+/, '');
 }
 
-module.exports = { fetchJson, fetchBuffer, normalizeRepoUrl, DESKTOP_UA };
+/** POST a JSON body, parse the JSON response. Used by AniList/AnimeSkip/Trakt GraphQL & OAuth endpoints. */
+async function postJson(url, body, { timeout, headers = {}, acceptedStatuses = [] } = {}) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(new Error(`Request timed out after ${timeout || DEFAULT_TIMEOUT_MS}ms`)), timeout || DEFAULT_TIMEOUT_MS);
+  let res;
+  try {
+    res = await fetch(url, {
+      method: 'POST',
+      signal: controller.signal,
+      redirect: 'follow',
+      headers: Object.assign({ 'User-Agent': DESKTOP_UA, Accept: 'application/json', 'Content-Type': 'application/json' }, headers),
+      body: JSON.stringify(body),
+    });
+  } finally {
+    clearTimeout(timer);
+  }
+  const text = await res.text();
+  if (text.length > MAX_JSON_BYTES) throw new Error(`Response too large from ${url}`);
+  let data = null;
+  try {
+    data = text ? JSON.parse(text) : null;
+  } catch (err) {
+    throw new Error(`Invalid JSON from ${url}: ${err.message}`);
+  }
+  if (!res.ok && !acceptedStatuses.includes(res.status)) {
+    const err = new Error(`HTTP ${res.status} for ${url}`);
+    err.status = res.status;
+    err.body = data;
+    err.headers = res.headers;
+    throw err;
+  }
+  return { status: res.status, data, headers: res.headers };
+}
+
+module.exports = { fetchJson, postJson, fetchBuffer, normalizeRepoUrl, DESKTOP_UA };

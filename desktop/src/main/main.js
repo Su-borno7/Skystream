@@ -16,6 +16,9 @@ const { Bridge } = require('./bridge');
 const { MediaProxy } = require('./proxy');
 const { DownloadManager } = require('./downloads');
 const { compareVersions } = require('./version');
+const tmdb = require('./tmdb');
+const skip = require('./skip');
+const trakt = require('./trakt');
 
 const ACCENT = '#38BDF8';
 
@@ -177,6 +180,32 @@ function registerIpc() {
     }
     return merged;
   });
+
+  // --- discovery & tracking (TMDB Explore, skip segments, Trakt) --------------
+  const emitTraktChanged = (payload) => {
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      mainWindow.webContents.send('trakt:changed', payload);
+    }
+  };
+
+  ipcMain.handle('tmdb:status', () => ({ hasKey: tmdb.hasKey(state) }));
+  ipcMain.handle('tmdb:list', (_event, payload) => tmdb.list(state, payload || {}));
+  ipcMain.handle('tmdb:search', (_event, payload) => tmdb.search(state, payload || {}));
+  ipcMain.handle('tmdb:resolve', (_event, payload) => tmdb.bestMatch(state, payload || {}));
+
+  ipcMain.handle('skip:segments', (_event, payload) =>
+    skip.segmentsForEpisode(state, payload || {}));
+
+  ipcMain.handle('trakt:status', () => trakt.status(state));
+  ipcMain.handle('trakt:signIn', (_event, start) =>
+    trakt.beginDeviceSignIn(state, { onChanged: emitTraktChanged }));
+  ipcMain.handle('trakt:signOut', async () => {
+    await trakt.signOut(state);
+    emitTraktChanged({ signedIn: false });
+    return trakt.status(state);
+  });
+  ipcMain.handle('trakt:scrobble', (_event, payload) =>
+    trakt.scrobbleStop(state, payload || {}));
 
   // --- repositories & extensions ------------------------------------------------
   ipcMain.handle('repos:list', () => extensions.listRepositories());

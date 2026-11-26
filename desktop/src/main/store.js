@@ -58,6 +58,13 @@ const DEFAULT_SETTINGS = {
   subtitleColor: '#FFFFFF',
   jsdelivrProxy: false,
   checkUpdatesOnLaunch: false,
+  // Third-party discovery & tracking (ported from akashdh11's Skystream).
+  tmdbApiKey: '', // user-supplied free key from themoviedb.org — never baked in
+  animeSkipClientId: '', // optional client id for AnimeSkip (https://anime-skip.com)
+  skipIntroOutro: true, // fetch crowdsourced intro/outro segments while playing
+  skipAuto: false, // auto-seek through segments instead of showing a button
+  traktClientId: '', // user-registered Trakt app credentials (device flow)
+  traktClientSecret: '',
 };
 
 class AppState {
@@ -69,6 +76,7 @@ class AppState {
     this.plugins = new Store(path.join(this.dir, 'plugins.json')); // filePath -> plugin record
     this.history = new Store(path.join(this.dir, 'search-history.json'));
     this.progress = new Store(path.join(this.dir, 'watch-progress.json')); // key -> {positionMs, durationMs, at}
+    this.secrets = new Store(path.join(this.dir, 'secrets.json')); // oauth tokens etc. — never sent to the renderer via settings:get
     this.defaults = DEFAULT_SETTINGS;
   }
 
@@ -81,6 +89,20 @@ class AppState {
     this.settings.data = merged;
     this.settings.save();
     return merged;
+  }
+
+  // --- Secrets (OAuth tokens; kept out of the settings payload sent to the renderer) ---
+  getSecret(key, fallback) {
+    return this.secrets.get(key, fallback);
+  }
+
+  setSecret(key, value) {
+    return this.secrets.set(key, value);
+  }
+
+  deleteSecret(key) {
+    delete this.secrets.data[key];
+    this.secrets.save();
   }
 
   // --- Library (bookmarks / continue watching) --------------------------------

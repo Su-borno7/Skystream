@@ -65,6 +65,27 @@ function makeFakeApi() {
       get: async () => ({ ...settings }),
       set: async (patch) => Object.assign(settings, patch),
     },
+    tmdb: {
+      status: async () => ({ hasKey: true }),
+      list: async ({ mediaType, section, page } = {}) => ({
+        items: [
+          { id: 101, mediaType: mediaType || 'movie', name: 'Explore Title', posterUrl: null, year: '2024', rating: 7.9, overview: '' },
+        ],
+        page: page || 1, totalPages: 1, totalResults: 1,
+      }),
+      search: async () => ({ items: [], page: 1, totalPages: 1, totalResults: 0 }),
+      resolve: async () => null,
+    },
+    skip: {
+      segments: async () => [],
+    },
+    trakt: {
+      status: async () => ({ configured: false, signedIn: false, user: null }),
+      signIn: async () => ({ userCode: 'TEST-CODE', verificationUrl: 'https://trakt.tv/activate', expiresIn: 600, interval: 5 }),
+      signOut: async () => ({ configured: false, signedIn: false, user: null }),
+      scrobble: async () => ({ scrobbled: false, reason: 'not-signed-in' }),
+      onChanged: () => () => {},
+    },
     repos: {
       list: async () => [],
       add: async () => ({}),
@@ -244,6 +265,35 @@ test('extensions tab wiring switches panels without errors', async () => {
   reposTab.click();
   await flush();
   assert.equal(doc.querySelector('#tab-repos').hidden, false);
+});
+
+test('explore renders TMDB rows and cards route to search', async () => {
+  const { window } = await boot();
+  const doc = window.document;
+  window.location.hash = '#/explore';
+  await flush();
+  assert.equal(doc.querySelector('#screen-explore').hidden, false);
+  assert.equal(doc.querySelector('#explore-key-prompt').hidden, true); // fake api has a key
+  const cards = doc.querySelectorAll('#explore-grid .poster-card');
+  assert.equal(cards.length, 1);
+  assert.match(cards[0].textContent, /Explore Title/);
+  cards[0].click();
+  await flush();
+  assert.match(window.location.hash, /#\/search/);
+  assert.equal(doc.querySelector('#search-input').value, 'Explore Title');
+});
+
+test('explore prompts for a key when none is configured', async () => {
+  const { window, fake } = await boot();
+  const doc = window.document;
+  const realStatus = fake.api.tmdb.status;
+  fake.api.tmdb.status = async () => ({ hasKey: false });
+  window.location.hash = '#/explore';
+  await flush();
+  assert.equal(doc.querySelector('#explore-key-prompt').hidden, false);
+  assert.equal(doc.querySelector('#explore-controls').hidden, true);
+  assert.equal(doc.querySelectorAll('#explore-grid .poster-card').length, 0);
+  fake.api.tmdb.status = realStatus;
 });
 
 test('library empty state and settings render', async () => {

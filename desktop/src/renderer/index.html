@@ -55,9 +55,13 @@
 <!-- ═══════════ app shell ═══════════ -->
 <div class="shell">
   <nav class="sidebar" id="sidebar">
-    <button class="nav-item active" data-nav="home" title="Home">
+    <button class="nav-item" data-nav="home" title="Home">
       <svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 11.2 12 4l8 7.2M6.4 10v9.4h4.4v-5h2.4v5h4.4V10" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
       <span>Home</span>
+    </button>
+    <button class="nav-item" data-nav="explore" title="Explore">
+      <svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="8.6" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M14.8 9.2 13.4 13.4 9.2 14.8 10.6 10.6z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+      <span>Explore</span>
     </button>
     <button class="nav-item" data-nav="search" title="Search">
       <svg viewBox="0 0 24 24" width="22" height="22"><circle cx="11" cy="11" r="6.6" fill="none" stroke="currentColor" stroke-width="1.7"/><line x1="15.8" y1="15.8" x2="20.2" y2="20.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
@@ -117,6 +121,41 @@
         <p>Install a CloudStream extension to start watching, then it will appear here.</p>
         <button class="btn btn-accent" id="home-empty-cta">Browse extensions</button>
       </div>
+    </section>
+
+    <!-- ═══════════ EXPLORE ═══════════ -->
+    <section class="screen" id="screen-explore" data-screen="explore" hidden>
+      <div class="screen-head">
+        <div>
+          <h1 class="screen-title">Explore</h1>
+          <p class="screen-sub">Trending &amp; popular on TMDB — tap any title to find streams</p>
+        </div>
+        <div class="screen-actions">
+          <a class="tmdb-attribution" id="explore-attribution" href="#" title="This product uses the TMDB API but is not endorsed or certified by TMDB.">TMDB</a>
+        </div>
+      </div>
+      <div class="explore-key-prompt" id="explore-key-prompt" hidden>
+        <h2>Bring your own TMDB key</h2>
+        <p>Explore pulls trending and popular titles from The Movie Database. Skystream ships without a key — paste your free themoviedb.org API key and Explore unlocks instantly.</p>
+        <button class="btn btn-accent" id="explore-key-cta">Add key in Settings</button>
+      </div>
+      <div class="explore-controls" id="explore-controls" hidden>
+        <div class="segmented" id="explore-media">
+          <button data-mt="movie" class="active">Movies</button>
+          <button data-mt="tv">Series</button>
+        </div>
+        <div class="segmented" id="explore-section">
+          <button data-section="trending" class="active">Trending</button>
+          <button data-section="popular">Popular</button>
+          <button data-section="topRated">Top rated</button>
+          <button data-section="nowPlaying">Now playing</button>
+          <button data-section="upcoming">Upcoming</button>
+        </div>
+      </div>
+      <div class="explore-status" id="explore-status" hidden></div>
+      <div class="results-grid explore-grid" id="explore-grid"></div>
+      <div class="load-more-wrap"><button class="btn btn-ghost" id="explore-more" hidden>Load more</button></div>
+      <p class="tmdb-legal" id="explore-legal" hidden>This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
     </section>
 
     <!-- ═══════════ SEARCH ═══════════ -->
@@ -287,6 +326,7 @@
     <div class="panel-head" id="player-subs-head" hidden>Subtitles</div>
     <div class="panel-list" id="player-subs-list"></div>
   </div>
+  <button class="pbtn-skip" id="pc-skip" title="Skip segment" hidden>Skip intro</button>
 
   <div class="player-bottom" id="player-bottom">
     <div class="seek" id="seek" role="slider" aria-label="Seek" tabindex="0">

@@ -33,6 +33,25 @@ contextBridge.exposeInMainWorld('skystream', {
     set: (patch) => invoke('settings:set', patch),
   },
 
+  tmdb: {
+    status: () => invoke('tmdb:status'),
+    list: (payload) => invoke('tmdb:list', payload),
+    search: (payload) => invoke('tmdb:search', payload),
+    resolve: (payload) => invoke('tmdb:resolve', payload),
+  },
+
+  skip: {
+    segments: (payload) => invoke('skip:segments', payload),
+  },
+
+  trakt: {
+    status: () => invoke('trakt:status'),
+    signIn: () => invoke('trakt:signIn'),
+    signOut: () => invoke('trakt:signOut'),
+    scrobble: (payload) => invoke('trakt:scrobble', payload),
+    onChanged: subscribe('trakt:changed'),
+  },
+
   repos: {
     list: () => invoke('repos:list'),
     add: (url) => invoke('repos:add', url),
