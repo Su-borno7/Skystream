@@ -744,7 +744,7 @@ async function renderDetail(provider, url) {
   actions.appendChild(libraryBtn);
 
   const downloadBtn = el('button', 'btn btn-ghost', 'Download');
-  downloadBtn.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 4v10M8.5 10.5 12 14l3.5-3.5M6 17h12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  downloadBtn.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 4.5v10M8.4 11.1 12 14.7 15.6 11.1M4.8 15v2.6a2 2 0 0 0 2 2h10.4a2 2 0 0 0 2-2V15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   downloadBtn.title = 'Download a stream';
   downloadBtn.onclick = () => downloadDetail(d, provider, url, downloadBtn);
   actions.appendChild(downloadBtn);
@@ -1436,8 +1436,8 @@ function downloadRow(job) {
   const row = el('div', 'download-row');
   const icon = el('div', 'download-icon');
   icon.innerHTML = job.status === 'done'
-    ? '<svg viewBox="0 0 24 24" width="22" height="22"><path d="M5 13l4 4L19 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
-    : '<svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 4v10M8.5 10.5 12 14l3.5-3.5M6 17h12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    ? '<svg viewBox="0 0 24 24" width="22" height="22"><path d="M5 13l4 4L19 7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+    : '<svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 4.5v10M8.4 11.1 12 14.7 15.6 11.1M4.8 15v2.6a2 2 0 0 0 2 2h10.4a2 2 0 0 0 2-2V15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   row.appendChild(icon);
 
   const info = el('div', 'download-info');
@@ -1459,7 +1459,7 @@ function downloadRow(job) {
 
   const actions = el('div', 'download-actions');
   if (job.status === 'downloading' || job.status === 'queued') {
-    const cancel = iconButton('<svg viewBox="0 0 24 24" width="17" height="17"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>', 'Cancel download');
+    const cancel = iconButton('<svg viewBox="0 0 24 24" width="17" height="17"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>', 'Cancel download');
     cancel.onclick = () => api.downloads.cancel(job.id);
     actions.appendChild(cancel);
   } else {

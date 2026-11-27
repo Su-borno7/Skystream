@@ -1,9 +1,9 @@
+<!-- Première line-glyph: home (filled — selected state) -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
     android:height="24dp"
-    android:viewportWidth="960"
-    android:viewportHeight="960">
-  <path
-      android:pathData="M160,840v-480l320,-240 320,240v480L560,840v-280L400,560v280L160,840Z"
-      android:fillColor="#e8eaed"/>
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path android:pathData="M12,3.4 L3.2,11 L5.9,11 L5.9,20.2 L10.2,20.2 L10.2,14.9 L13.8,14.9 L13.8,20.2 L18.1,20.2 L18.1,11 L20.8,11 Z"
+        android:fillColor="?attr/textColor"/>
 </vector>
