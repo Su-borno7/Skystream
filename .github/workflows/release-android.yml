@@ -60,28 +60,20 @@ jobs:
         continue-on-error: true
         shell: bash
         run: |
-          # Diagnostics: dump the failure block to a step summary we can read via
-          # the check-runs API (annotations are capped), plus a small annotation.
+          # Diagnostics via annotations only (step summary is not readable via API).
           LOG="$RUNNER_TEMP/android-build.log"
-          emit() { printf '::error::%s\n' "$(printf '%s' "$1" | sed 's/%/%25/g' | tr '\n' ' ' | cut -c1-400)"; }
-          SUMMARY="$GITHUB_STEP_SUMMARY"
+          emit() { printf '::error::%s\n' "$(printf '%s' "$1" | sed 's/%/%25/g' | tr '\n' ' ' | cut -c1-450)"; }
           if [ -f "$LOG" ]; then
-            echo '=== log size: '"$(wc -l < "$LOG")"' lines ===' >> "$SUMMARY"
-            echo '```' >> "$SUMMARY"
-            L=$(grep -n 'FAILURE:' "$LOG" | head -1 | cut -d: -f1)
-            if [ -z "$L" ]; then L=$(wc -l < "$LOG"); fi
-            A=$((L > 30 ? L - 30 : 1))
-            sed -n "${A},$((L + 25))p" "$LOG" >> "$SUMMARY"
-            echo '```' >> "$SUMMARY"
-            echo '=== grep: mergeStableReleaseResources ===' >> "$SUMMARY"
-            echo '```' >> "$SUMMARY"
-            grep -n 'mergeStableReleaseResources\|processStableReleaseResources\|stableRelease' "$LOG" | head -40 >> "$SUMMARY"
-            echo '```' >> "$SUMMARY"
-            echo '=== grep: Error/exception/aapt/Resource ===' >> "$SUMMARY"
-            echo '```' >> "$SUMMARY"
-            grep -n -i -E 'error|exception|aapt|resource|duplicate|failed' "$LOG" | head -60 >> "$SUMMARY"
-            echo '```' >> "$SUMMARY"
-            emit "see step summary for the full failure block ($(wc -l < "$LOG") log lines)"
+            L=$(grep -n 'What went wrong' "$LOG" | head -1 | cut -d: -f1)
+            if [ -n "$L" ]; then
+              A=$((L > 2 ? L - 2 : 1))
+              sed -n "${A},$((L + 8))p" "$LOG" | while IFS= read -r line || [ -n "$line" ]; do emit "$line"; done
+            fi
+            emit '==== Caused by ===='
+            grep -n 'Caused by' "$LOG" | head -8 | while IFS= read -r line; do emit "$line"; done
+            emit '==== duplicate/conflict/aapt/resource markers ===='
+            grep -n -i -E 'duplicate|conflict|aapt|resource.*(not found|error)|link.*fail|error:' "$LOG" | head -12 | while IFS= read -r line; do emit "$line"; done
+            emit "log size: $(wc -l < "$LOG") lines"
           else
             emit "log file missing: $LOG"
           fi
