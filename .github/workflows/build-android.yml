@@ -55,21 +55,24 @@ jobs:
       - name: Annotate failures from log
         if: failure()
         run: |
-          # Diagnostics in this file almost always sit right before the failing
-          # task's exception block. Print ONLY that window (annotations are capped).
+          # Diagnostics: surface the real failure. 'Execution failed for task' never
+          # matched last time (daemon crash / truncated log), so grep broad markers,
+          # print the 'What went wrong' block with context, and dump log head/tail.
           LOG="$RUNNER_TEMP/android-build.log"
+          emit() { printf '::error::%s\n' "$(printf '%s' "$1" | sed 's/%/%25/g' | tr '\n' ' ' | cut -c1-400)"; }
           if [ -f "$LOG" ]; then
-            FIRST=$(grep -n 'Execution failed for task' "$LOG" | head -1 | cut -d: -f1)
-            if [ -n "$FIRST" ]; then
-              START=$((FIRST > 60 ? FIRST - 60 : 1))
-              sed -n "${START},$((FIRST))p" "$LOG" | tail -45 | while IFS= read -r line || [ -n "$line" ]; do
-                printf '::error::%s\n' "$(printf '%s' "$line" | sed 's/%/%25/g' | cut -c1-2000)"
-              done
-            else
-              tail -25 "$LOG" | while IFS= read -r line || [ -n "$line" ]; do
-                printf '::error::%s\n' "$(printf '%s' "$line" | sed 's/%/%25/g' | cut -c1-2000)"
-              done
-            fi
+            emit "==== log size: $(wc -l < "$LOG") lines ===="
+            emit "==== markers ===="
+            grep -n -E 'FAILURE:|What went wrong|FAILED|Execution failed|daemon.*(crash|disappear|died)|OutOfMemory|heap space|error:' "$LOG" | head -30 | while IFS= read -r line; do emit "$line"; done
+            emit "==== What went wrong block ===="
+            L=$(grep -n 'What went wrong' "$LOG" | head -1 | cut -d: -f1)
+            if [ -n "$L" ]; then A=$((L > 8 ? L - 8 : 1)); sed -n "${A},$((L + 30))p" "$LOG" | while IFS= read -r line || [ -n "$line" ]; do emit "$line"; done; fi
+            emit "==== head 15 ===="
+            head -15 "$LOG" | while IFS= read -r line || [ -n "$line" ]; do emit "$line"; done
+            emit "==== tail 50 ===="
+            tail -50 "$LOG" | while IFS= read -r line || [ -n "$line" ]; do emit "$line"; done
+          else
+            emit "log file missing: $LOG"
           fi
           exit 0
 
