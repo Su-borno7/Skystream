@@ -18,7 +18,7 @@
         <shape>
             <gradient android:type="radial" android:gradientRadius="1400"
                       android:centerX="0.1" android:centerY="0.95"
-                      android:startColor="#4A8B5CF6" android:centerColor="#188B5CF6" android:endColor="#008B5CF6" />
+                      android:startColor="#4AB5651D" android:centerColor="#18B5651D" android:endColor="#00B5651D" />
         </shape>
     </item>
     <item>

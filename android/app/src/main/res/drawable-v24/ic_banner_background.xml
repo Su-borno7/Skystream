@@ -4,11 +4,11 @@
     android:height="180dp"
     android:viewportWidth="320"
     android:viewportHeight="180">
-    <path android:pathData="M0,0h320v180h-320z" android:fillColor="#0F141C"/>
+    <path android:pathData="M0,0h320v180h-320z" android:fillColor="#141110"/>
     <path android:pathData="M0,0h320v180h-320z">
         <aapt:attr name="android:fillColor">
             <gradient android:type="radial" android:centerX="0.85" android:centerY="0.05" android:gradientRadius="320"
-                      android:startColor="#4038BDF8" android:centerColor="#1438BDF8" android:endColor="#0038BDF8"/>
+                      android:startColor="#40E0B15C" android:centerColor="#14E0B15C" android:endColor="#00E0B15C"/>
         </aapt:attr>
     </path>
 </vector>

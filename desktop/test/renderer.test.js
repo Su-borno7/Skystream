@@ -18,7 +18,7 @@ const appJs = fs.readFileSync(path.join(__dirname, '..', 'src', 'renderer', 'app
 
 function makeFakeApi() {
   const settings = {
-    accent: '#38BDF8', theme: 'dark', defaultQuality: 'auto', rememberPosition: true,
+    accent: '#E0B15C', theme: 'premiere', defaultQuality: 'auto', rememberPosition: true,
     hardwareAcceleration: true, skipIntroSeconds: 0, autoplayNext: true,
     downloadDir: '/tmp/skystream-downloads', language: 'en', reduceMotion: false,
     subtitleSize: 100, subtitleColor: '#FFFFFF', jsdelivrProxy: false, checkUpdatesOnLaunch: false,

@@ -2,17 +2,17 @@
     xmlns:aapt="http://schemas.android.com/aapt"
     android:width="108dp" android:height="108dp"
     android:viewportWidth="108" android:viewportHeight="108">
-    <path android:pathData="M0,0h108v108h-108z" android:fillColor="#0C1016"/>
+    <path android:pathData="M0,0h108v108h-108z" android:fillColor="#141110"/>
     <path android:pathData="M0,0h108v108h-108z">
         <aapt:attr name="android:fillColor">
             <gradient android:type="radial" android:centerX="0.82" android:centerY="0.1" android:gradientRadius="120"
-                      android:startColor="#3838BDF8" android:centerColor="#1238BDF8" android:endColor="#0038BDF8"/>
+                      android:startColor="#40E0B15C" android:centerColor="#14E0B15C" android:endColor="#00E0B15C"/>
         </aapt:attr>
     </path>
     <path android:pathData="M0,0h108v108h-108z">
         <aapt:attr name="android:fillColor">
             <gradient android:type="radial" android:centerX="0.1" android:centerY="0.98" android:gradientRadius="120"
-                      android:startColor="#2E8B5CF6" android:centerColor="#108B5CF6" android:endColor="#008B5CF6"/>
+                      android:startColor="#2E2E2412" android:centerColor="#102E2412" android:endColor="#002E2412"/>
         </aapt:attr>
     </path>
 </vector>

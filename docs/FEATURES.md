@@ -31,7 +31,10 @@ A fork of [recloudstream/cloudstream](https://github.com/recloudstream/cloudstre
 
 - The full upstream CloudStream experience — extension repositories, plugins, home, search,
   detail pages, episode/season browser, ExoPlayer-based playback, downloads, subtitles.
-- **Skystream branding** throughout (app name, icons, colours).
+- **Skystream branding** throughout (app name, icons, colours). All app icons — Android
+  launcher (adaptive + themed monochrome), TV banner, Play Store listing, splash,
+  desktop installer, favicon — render the same **Première mark** (faceted champagne-gold
+  plane on warm graphite), regenerated deterministically by `tools/make_icons.py`.
 - **Redesigned interface** — warm graphite palette with a champagne-gold accent,
   rounded Material 3 component shapes, and **Inter** as the default typeface
   (Google Sans remains selectable); visually distinct from stock CloudStream.
