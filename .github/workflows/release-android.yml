@@ -60,22 +60,28 @@ jobs:
         continue-on-error: true
         shell: bash
         run: |
-          # Diagnostics: surface the real failure. 'Execution failed for task' never
-          # matched last time (daemon crash / truncated log), so grep broad markers,
-          # print the 'What went wrong' block with context, and dump log head/tail.
+          # Diagnostics: dump the failure block to a step summary we can read via
+          # the check-runs API (annotations are capped), plus a small annotation.
           LOG="$RUNNER_TEMP/android-build.log"
           emit() { printf '::error::%s\n' "$(printf '%s' "$1" | sed 's/%/%25/g' | tr '\n' ' ' | cut -c1-400)"; }
+          SUMMARY="$GITHUB_STEP_SUMMARY"
           if [ -f "$LOG" ]; then
-            emit "==== log size: $(wc -l < "$LOG") lines ===="
-            emit "==== markers ===="
-            grep -n -E 'FAILURE:|What went wrong|FAILED|Execution failed|daemon.*(crash|disappear|died)|OutOfMemory|heap space|error:' "$LOG" | head -30 | while IFS= read -r line; do emit "$line"; done
-            emit "==== What went wrong block ===="
-            L=$(grep -n 'What went wrong' "$LOG" | head -1 | cut -d: -f1)
-            if [ -n "$L" ]; then A=$((L > 8 ? L - 8 : 1)); sed -n "${A},$((L + 30))p" "$LOG" | while IFS= read -r line || [ -n "$line" ]; do emit "$line"; done; fi
-            emit "==== head 15 ===="
-            head -15 "$LOG" | while IFS= read -r line || [ -n "$line" ]; do emit "$line"; done
-            emit "==== tail 50 ===="
-            tail -50 "$LOG" | while IFS= read -r line || [ -n "$line" ]; do emit "$line"; done
+            echo '=== log size: '"$(wc -l < "$LOG")"' lines ===' >> "$SUMMARY"
+            echo '```' >> "$SUMMARY"
+            L=$(grep -n 'FAILURE:' "$LOG" | head -1 | cut -d: -f1)
+            if [ -z "$L" ]; then L=$(wc -l < "$LOG"); fi
+            A=$((L > 30 ? L - 30 : 1))
+            sed -n "${A},$((L + 25))p" "$LOG" >> "$SUMMARY"
+            echo '```' >> "$SUMMARY"
+            echo '=== grep: mergeStableReleaseResources ===' >> "$SUMMARY"
+            echo '```' >> "$SUMMARY"
+            grep -n 'mergeStableReleaseResources\|processStableReleaseResources\|stableRelease' "$LOG" | head -40 >> "$SUMMARY"
+            echo '```' >> "$SUMMARY"
+            echo '=== grep: Error/exception/aapt/Resource ===' >> "$SUMMARY"
+            echo '```' >> "$SUMMARY"
+            grep -n -i -E 'error|exception|aapt|resource|duplicate|failed' "$LOG" | head -60 >> "$SUMMARY"
+            echo '```' >> "$SUMMARY"
+            emit "see step summary for the full failure block ($(wc -l < "$LOG") log lines)"
           else
             emit "log file missing: $LOG"
           fi
