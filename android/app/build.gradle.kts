@@ -93,14 +93,14 @@ android {
     }
 
     signingConfigs {
-        // Skystream release signing: the public, in-repo keystore makes builds reproducible.
-        val skystreamKeystore = System.getenv("SKYSTREAM_KEYSTORE")
-        if (skystreamKeystore != null) {
-            create("skystream") {
-                storeFile = file(skystreamKeystore)
-                storePassword = System.getenv("SKYSTREAM_KEYSTORE_PASSWORD")
-                keyAlias = System.getenv("SKYSTREAM_KEY_ALIAS")
-                keyPassword = System.getenv("SKYSTREAM_KEY_PASSWORD")
+        // Cinelab release signing: the public, in-repo keystore makes builds reproducible.
+        val cinelabKeystore = System.getenv("CINELAB_KEYSTORE")
+        if (cinelabKeystore != null) {
+            create("cinelab") {
+                storeFile = file(cinelabKeystore)
+                storePassword = System.getenv("CINELAB_KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("CINELAB_KEY_ALIAS")
+                keyPassword = System.getenv("CINELAB_KEY_PASSWORD")
             }
         }
         // We just use SIGNING_KEY_ALIAS here since it won't change
@@ -121,7 +121,7 @@ android {
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.skystream.app"
+        applicationId = "com.cinelab.app"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = libs.versions.versionCode.get().toInt()
@@ -165,8 +165,8 @@ android {
             isDebuggable = false
             isMinifyEnabled = false
             isShrinkResources = false
-            if (signingConfigs.names.contains("skystream")) {
-                signingConfig = signingConfigs.getByName("skystream")
+            if (signingConfigs.names.contains("cinelab")) {
+                signingConfig = signingConfigs.getByName("cinelab")
             }
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),

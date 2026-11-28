@@ -40,9 +40,9 @@
         <item name="android:textColor">?attr/textColor</item>
         <item name="android:textColorSecondary">?attr/grayTextColor</item>
 
-        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Skystream.Small</item>
-        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Skystream.Medium</item>
-        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Skystream.Large</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Cinelab.Small</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Cinelab.Medium</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Cinelab.Large</item>
         <item name="android:textColorHint">?attr/grayTextColor</item>
         <item name="android:editTextColor">?attr/textColor</item>
         <item name="android:colorForeground">?attr/textColor</item>
@@ -101,9 +101,9 @@
         <item name="textColor">@color/chip_color_text</item>
         <item name="android:textColor">@color/chip_color_text</item>
         <item name="checkedIconTint">@color/chip_color_text</item>
-        <item name="fontFamily">@font/skystream_sans</item>
+        <item name="fontFamily">@font/cinelab_sans</item>
         <item name="chipIconTint">@color/chip_color_text</item>
-        <item name="android:fontFamily">@font/skystream_sans</item>
+        <item name="android:fontFamily">@font/cinelab_sans</item>
         <item name="android:tag">@string/tv_no_focus_tag</item>
         <item name="chipMinTouchTargetSize">0dp</item>
         <item name="checkedIconVisible">false</item>
@@ -142,7 +142,7 @@
         <item name="white">@color/white</item>
         <item name="black">@color/black</item>
         <item name="colorOnPrimary">@color/skyContrast</item>
-        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Skystream.Pill</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Cinelab.Pill</item>
         <item name="chipCornerRadius">999dp</item>
     </style>
 
@@ -205,7 +205,7 @@
         <item name="account_unselected_stroke">@color/transparent</item>
         <item name="colorOnPrimary">@color/skyContrast</item>
         <item name="isLightTheme">false</item>
-        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Skystream.Pill</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Cinelab.Pill</item>
         <item name="chipCornerRadius">999dp</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
     </style>
@@ -509,7 +509,7 @@
         <item name="android:searchIcon">@drawable/search_icon</item>
         <item name="android:queryHint">@string/search_hint</item>
         <item name="android:background">@color/transparent</item>
-        <item name="android:fontFamily">@font/skystream_sans</item>
+        <item name="android:fontFamily">@font/cinelab_sans</item>
         <item name="closeIcon">@drawable/ic_baseline_close_24</item>
     </style>
 
@@ -551,19 +551,19 @@
 
     <style name="TabNoCaps" parent="TextAppearance.Design.Tab">
         <item name="textAllCaps">false</item>
-        <item name="fontFamily">@font/skystream_sans</item>
+        <item name="fontFamily">@font/cinelab_sans</item>
     </style>
 
     <style name="AppTextViewStyle" parent="android:Widget.TextView">
-        <item name="android:fontFamily">@font/skystream_sans</item>
+        <item name="android:fontFamily">@font/cinelab_sans</item>
     </style>
 
     <style name="AppButtonStyle" parent="android:Widget.Holo.Button">
-        <item name="android:fontFamily">@font/skystream_sans</item>
+        <item name="android:fontFamily">@font/cinelab_sans</item>
     </style>
 
     <style name="AppEditStyle" parent="android:Widget.EditText">
-        <item name="android:fontFamily">@font/skystream_sans</item>
+        <item name="android:fontFamily">@font/cinelab_sans</item>
     </style>
 
     <style name="ResultInfoText">
@@ -580,7 +580,7 @@
     </style>
 
     <style name="AppMaterialButtonStyle" parent="Widget.MaterialComponents.Button">
-        <item name="android:fontFamily">@font/skystream_sans</item>
+        <item name="android:fontFamily">@font/cinelab_sans</item>
     </style>
 
     <style name="Theme.Widget.Tabs" parent="Widget.MaterialComponents.TabLayout.Colored">
@@ -1171,24 +1171,24 @@
         <item name="android:background">@color/playIconBackground</item>
     </style>
 
-    <!-- Skystream: rounder, softer component geometry (distinct from stock Material3) -->
-    <style name="ShapeAppearance.Skystream.Small" parent="ShapeAppearance.Material3.SmallComponent">
+    <!-- Cinelab: rounder, softer component geometry (distinct from stock Material3) -->
+    <style name="ShapeAppearance.Cinelab.Small" parent="ShapeAppearance.Material3.SmallComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">14dp</item>
     </style>
 
-    <style name="ShapeAppearance.Skystream.Medium" parent="ShapeAppearance.Material3.MediumComponent">
+    <style name="ShapeAppearance.Cinelab.Medium" parent="ShapeAppearance.Material3.MediumComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">20dp</item>
     </style>
 
-    <style name="ShapeAppearance.Skystream.Large" parent="ShapeAppearance.Material3.LargeComponent">
+    <style name="ShapeAppearance.Cinelab.Large" parent="ShapeAppearance.Material3.LargeComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">28dp</item>
     </style>
 
     <!-- Shiopa-style full capsule -->
-    <style name="ShapeAppearance.Skystream.Pill" parent="ShapeAppearance.Material3.SmallComponent">
+    <style name="ShapeAppearance.Cinelab.Pill" parent="ShapeAppearance.Material3.SmallComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">999dp</item>
     </style>

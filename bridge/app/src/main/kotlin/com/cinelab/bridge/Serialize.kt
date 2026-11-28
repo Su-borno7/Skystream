@@ -1,4 +1,4 @@
-package com.skystream.bridge
+package com.cinelab.bridge
 
 import com.lagradost.cloudstream3.AnimeLoadResponse
 import com.lagradost.cloudstream3.Episode

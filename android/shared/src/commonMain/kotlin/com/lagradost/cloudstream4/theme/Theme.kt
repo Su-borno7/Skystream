@@ -35,7 +35,7 @@ enum class CloudStreamThemeMode {
     /** "SilentBlue" */
     SilentBlue,
 
-    /** "Sky" — blue sky + white clouds, matches the Skystream website */
+    /** "Sky" — blue sky + white clouds, matches the Cinelab website */
     Sky,
 
     /** "System" resolved on each platform via [isSystemInDarkTheme] */

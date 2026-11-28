@@ -72,7 +72,7 @@ enum class SubtitleFont(
 ) {
     @JsonProperty("Inter")
     @SerialName("Inter")
-    Inter(R.font.skystream_sans, "Inter"),
+    Inter(R.font.cinelab_sans, "Inter"),
     @JsonProperty("Trebuchet")
     @SerialName("Trebuchet")
     Trebuchet(R.font.trebuchet_ms, "Trebuchet MS"),
@@ -715,7 +715,7 @@ class SubtitlesFragment : BaseDialogFragment<SubtitleSettingsBinding>(
             subsFont.setOnClickListener { textView ->
                 val fontTypes = listOf(
                     null to textView.context.getString(R.string.normal),
-                    R.font.skystream_sans to "Inter",
+                    R.font.cinelab_sans to "Inter",
                     R.font.trebuchet_ms to "Trebuchet MS",
                     R.font.netflix_sans to "Netflix Sans",
                     R.font.google_sans to "Google Sans",

@@ -1,4 +1,4 @@
-// Skystream Bridge: loads .cs3 extensions on the JVM and exposes a small
+// Cinelab Bridge: loads .cs3 extensions on the JVM and exposes a small
 // loopback HTTP API to the desktop app.
 plugins {
     kotlin("jvm")
@@ -23,8 +23,8 @@ dependencies {
 }
 
 application {
-    applicationName = "skystream-bridge"
-    mainClass.set("com.skystream.bridge.Main")
+    applicationName = "cinelab-bridge"
+    mainClass.set("com.cinelab.bridge.Main")
     applicationDefaultJvmArgs = listOf(
         "-XX:+UnlockDiagnosticVMOptions",
         "-XX:-BytecodeVerificationRemote",

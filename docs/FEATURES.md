@@ -1,12 +1,12 @@
-# Skystream — Features
+# Cinelab — Features
 
-Skystream is a free and open-source media centre for **Android** and **PC**, built around the
+Cinelab is a free and open-source media centre for **Android** and **PC**, built around the
 CloudStream extension ecosystem. No account, no subscription, no telemetry — you install
 third-party `.cs3` extensions explicitly, exactly like you would in CloudStream.
 
-Skystream does **not** ship, host or endorse any content source.
+Cinelab does **not** ship, host or endorse any content source.
 
-> Skystream is an independent project and is **not affiliated with or endorsed by** the
+> Cinelab is an independent project and is **not affiliated with or endorsed by** the
 > CloudStream project or its authors.
 
 ---
@@ -24,14 +24,14 @@ Skystream does **not** ship, host or endorse any content source.
 
 ---
 
-## Skystream for Android (`android-v1.0.5`)
+## Cinelab for Android (`android-v1.0.5`)
 
 A fork of [recloudstream/cloudstream](https://github.com/recloudstream/cloudstream)
-(`com.skystream.app`), rebranded to Skystream:
+(`com.cinelab.app`), rebranded to Cinelab:
 
 - The full upstream CloudStream experience — extension repositories, plugins, home, search,
   detail pages, episode/season browser, ExoPlayer-based playback, downloads, subtitles.
-- **Skystream branding** throughout (app name, icons, colours). All app icons — Android
+- **Cinelab branding** throughout (app name, icons, colours). All app icons — Android
   launcher (adaptive + themed monochrome), TV banner, Play Store listing, splash,
   desktop installer, favicon — render the same **Première mark** (faceted champagne-gold
   plane on warm graphite), regenerated deterministically by `tools/make_icons.py`.
@@ -45,14 +45,14 @@ A fork of [recloudstream/cloudstream](https://github.com/recloudstream/cloudstre
   `android-v*` releases delivers updates inside the app.
 - Settings → About links to this repository.
 - **Reproducible public release build** — signed with the public keystore committed at
-  `android/keystore/skystream-release.keystore`, so anyone can rebuild the exact signed APK
+  `android/keystore/cinelab-release.keystore`, so anyone can rebuild the exact signed APK
   (see `android/keystore/README.md`).
 - Built and tested by GitHub Actions on every push to `android/**`; tagged `android-v*`
   releases are signed and attached automatically by `release-android.yml`.
 
-## Skystream for PC (`desktop-v1.0.3`)
+## Cinelab for PC (`desktop-v1.0.3`)
 
-An Electron app ("Skystream for PC") for Windows and Linux (macOS via local build):
+An Electron app ("Cinelab for PC") for Windows and Linux (macOS via local build):
 
 ### Watching
 
@@ -87,7 +87,7 @@ An Electron app ("Skystream for PC") for Windows and Linux (macOS via local buil
 
 ### Discovery & tracking (optional, your own keys)
 
-- **Skip intro / recap / outro** — while playing an episode, Skystream fetches crowdsourced
+- **Skip intro / recap / outro** — while playing an episode, Cinelab fetches crowdsourced
   skip segments and shows a one-tap **Skip** button (or auto-seeks, your choice). Sources:
   [IntroDB](https://api.introdb.app) (needs the TMDB key to resolve IMDb ids) and, for anime,
   [AnimeSkip](https://anime-skip.com) (needs an AniList id — resolved automatically — plus
@@ -101,7 +101,7 @@ An Electron app ("Skystream for PC") for Windows and Linux (macOS via local buil
   Secret, and approve the code at trakt.tv/activate. Tokens live in a separate on-device
   secrets store (never in settings export) and refresh automatically. Titles are matched to
   TMDB ids best-effort via your TMDB key — scrobbling is skipped silently when no confident
-  match exists. Skystream has no account of its own and no telemetry.
+  match exists. Cinelab has no account of its own and no telemetry.
 - **No baked-in credentials** — TMDB, AnimeSkip and Trakt are all bring-your-own-key;
   nothing shared ships in the installer.
 
@@ -171,7 +171,7 @@ over loopback; a stale bridge never leaves the UI hanging.
 
 ## Deliberately missing
 
-- No Skystream account, cloud sync service, or telemetry. Optional third-party sign-ins
+- No Cinelab account, cloud sync service, or telemetry. Optional third-party sign-ins
   (Trakt) use your own API app and credentials.
 - No content bundled or endorsed; extensions are third-party.
 - Desktop installers are unsigned (Windows SmartScreen will warn on first run);
@@ -180,14 +180,21 @@ over loopback; a stale bridge never leaves the UI hanging.
 ## Prior art & credits
 
 The skip-segment design (IntroDB/AniSkip sources, cache semantics, segment sanitizing) was
-ported as a re-implementation from [akashdh11's Skystream](https://github.com/akashdh11/skystream)
+ported as a re-implementation from [akashdh11's Cinelab](https://github.com/akashdh11/cinelab)
 (GPL-3.0). No upstream code was copied; the desktop app talks to the same public HTTP APIs.
 TMDB artwork is © TMDB and used under their terms — always load live from image.tmdb.org.
 
 ## Where to get it
 
-| Platform | Latest | Artifact |
+| Platform | Latest | Artifact (current published file names) |
 |----------|--------|----------|
 | Android  | [`android-v1.0.5`](https://github.com/Su-borno7/Skystream/releases/tag/android-v1.0.5) | `Skystream-1.0.5-android.apk` |
 | Linux    | [`desktop-v1.0.3`](https://github.com/Su-borno7/Skystream/releases/tag/desktop-v1.0.3) | `Skystream-1.0.3-linux-x86_64.AppImage` |
 | Windows  | [`desktop-v1.0.3`](https://github.com/Su-borno7/Skystream/releases/tag/desktop-v1.0.3) | `Skystream-1.0.3-win-x64.exe` |
+
+> **Rename note:** the project was rebranded *Skystream → Cinelab*. The published
+> `android-v1.0.5` / `desktop-v1.0.3` releases were built from the pre-rename
+> commit — the APKs and installers in them keep the historical `Skystream-*` file
+> names and the pre-rename `com.skystream.app` identity. From the next release,
+> Android's applicationId is `com.cinelab.app` and CI produces `Cinelab-*`
+> artifacts.

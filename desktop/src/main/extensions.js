@@ -1,6 +1,6 @@
 'use strict';
 /**
- * Skystream — CloudStream-compatible repository & extension manager.
+ * Cinelab — CloudStream-compatible repository & extension manager.
  *
  * Implements the CloudStream extension ecosystem:
  *   repository manifest:  { name, description?, manifestVersion: 1, pluginLists: [...], iconUrl? }
@@ -9,7 +9,7 @@
  *                             fileSize?, fileHash? /* "sha256-<hex>" *\/ } ]
  *   extension package:    .cs3  = zip(manifest.json + classes.dex)
  *
- * The dex bytecode cannot run on a desktop JVM directly; the Skystream bridge
+ * The dex bytecode cannot run on a desktop JVM directly; the Cinelab bridge
  * translates it (see bridge/). This module manages repos, download, verification
  * and installation — the same on-disk layout as the Android app — and hands the
  * enabled plugin set to the bridge for loading.

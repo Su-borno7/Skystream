@@ -1,6 +1,6 @@
 'use strict';
 /**
- * Skystream — loopback media proxy.
+ * Cinelab — loopback media proxy.
  *
  * Streaming hosts frequently require Referer/Origin headers and serve HLS
  * playlists whose segments only work from the playlist's context. Browsers

@@ -1,11 +1,11 @@
 'use strict';
 /* ═══════════════════════════════════════════════════════════════════════════
-   Skystream — renderer application
+   Cinelab — renderer application
    Screens: home · search · detail · library · downloads · extensions · settings
-   All privileged work flows through window.skystream (see preload.js).
+   All privileged work flows through window.cinelab (see preload.js).
    ═══════════════════════════════════════════════════════════════════════════ */
 
-const api = window.skystream;
+const api = window.cinelab;
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 const escapeHtml = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({
@@ -512,7 +512,7 @@ for (const btn of $$('#explore-section button')) {
 }
 
 /* ═══════════ SEARCH screen ═══════════ */
-function scopeKey() { return 'skystream.search.scope'; }
+function scopeKey() { return 'cinelab.search.scope'; }
 function loadScope() {
   try {
     const raw = localStorage.getItem(scopeKey());
@@ -1985,7 +1985,7 @@ async function renderSettings() {
   body.appendChild(storage);
 
   // ── About ───────────────────────────────────────────────────────────────────
-  const about = settingsCard('About', 'Skystream');
+  const about = settingsCard('About', 'Cinelab');
   about.appendChild(settingRow('Updates', 'Check GitHub for a newer desktop release', (() => {
     const wrap = el('div', 'update-check');
     const b = el('button', 'btn btn-small btn-ghost', 'Check for updates');
@@ -2021,7 +2021,7 @@ async function renderSettings() {
     const b = el('button', 'btn btn-small btn-ghost', 'Copy diagnostics');
     b.onclick = async () => {
       const info = [
-        `Skystream ${appInfo.version || '?'} (${appInfo.packaged ? 'packaged' : 'dev'})`,
+        `Cinelab ${appInfo.version || '?'} (${appInfo.packaged ? 'packaged' : 'dev'})`,
         `Electron ${appInfo.electron || '?'} · Chromium ${appInfo.chromium || '?'} · Node ${appInfo.node || '?'}`,
         `Platform: ${appInfo.platform || '?'}`,
         `Bridge: ${appInfo.bridge ? JSON.stringify(appInfo.bridge) : 'unknown'}`,
@@ -2126,7 +2126,7 @@ api.onExtensionsChanged(() => {
 /* ═══════════ init ═══════════ */
 (async function init() {
   if (!api) {
-    document.body.innerHTML = '<div class="empty-state"><h2>Preload failed</h2><p>window.skystream is missing — restart the app.</p></div>';
+    document.body.innerHTML = '<div class="empty-state"><h2>Preload failed</h2><p>window.cinelab is missing — restart the app.</p></div>';
     return;
   }
   try {

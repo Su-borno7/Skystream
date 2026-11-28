@@ -1,8 +1,8 @@
 {
-  "name": "skystream-desktop",
-  "productName": "Skystream",
+  "name": "cinelab-desktop",
+  "productName": "Cinelab",
   "version": "1.0.3",
-  "description": "Skystream — free and open-source extension-based media centre for PC. Compatible with CloudStream repositories.",
+  "description": "Cinelab — free and open-source extension-based media centre for PC. Compatible with CloudStream repositories.",
   "author": "Su-borno7",
   "license": "GPL-3.0-only",
   "private": true,
@@ -26,9 +26,9 @@
     "jsdom": "^31.0.1"
   },
   "build": {
-    "appId": "com.skystream.app",
-    "productName": "Skystream",
-    "copyright": "Skystream contributors",
+    "appId": "com.cinelab.app",
+    "productName": "Cinelab",
+    "copyright": "Cinelab contributors",
     "directories": {
       "output": "dist",
       "buildResources": "build"
@@ -41,7 +41,7 @@
     ],
     "extraResources": [
       {
-        "from": "../bridge/app/build/install/skystream-bridge",
+        "from": "../bridge/app/build/install/cinelab-bridge",
         "to": "bridge"
       },
       {
@@ -57,20 +57,20 @@
         "AppImage"
       ],
       "category": "AudioVideo",
-      "executableName": "skystream",
+      "executableName": "cinelab",
       "syncDesktopName": true
     },
     "win": {
       "target": [
         "nsis"
       ],
-      "executableName": "Skystream"
+      "executableName": "Cinelab"
     },
     "nsis": {
       "oneClick": false,
       "perMachine": false,
       "allowToChangeInstallationDirectory": true,
-      "shortcutName": "Skystream"
+      "shortcutName": "Cinelab"
     },
     "mac": {
       "target": [
@@ -83,5 +83,5 @@
     "type": "git",
     "url": "https://github.com/Su-borno7/Skystream.git"
   },
-  "desktopName": "Skystream"
+  "desktopName": "Cinelab"
 }

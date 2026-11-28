@@ -1,4 +1,4 @@
-name: Build Bridge (Skystream)
+name: Build Bridge (Cinelab)
 
 on:
   push:
@@ -65,18 +65,18 @@ jobs:
       - name: Smoke test bridge (health endpoint)
         run: |
           set -e
-          cd bridge/app/build/install/skystream-bridge
-          mkdir -p /tmp/skystream-bridge-smoke
-          ./bin/skystream-bridge /tmp/skystream-bridge-smoke > /tmp/bridge-smoke.log 2>&1 &
+          cd bridge/app/build/install/cinelab-bridge
+          mkdir -p /tmp/cinelab-bridge-smoke
+          ./bin/cinelab-bridge /tmp/cinelab-bridge-smoke > /tmp/bridge-smoke.log 2>&1 &
           BRIDGE_PID=$!
           for i in $(seq 1 90); do
-            if grep -q 'SKYSTREAM_PORT=' /tmp/bridge-smoke.log 2>/dev/null; then break; fi
+            if grep -q 'CINELAB_PORT=' /tmp/bridge-smoke.log 2>/dev/null; then break; fi
             if ! kill -0 "$BRIDGE_PID" 2>/dev/null; then echo "bridge died"; cat /tmp/bridge-smoke.log; exit 1; fi
             sleep 1
           done
-          PORT=$(grep -oP 'SKYSTREAM_PORT=\K[0-9]+' /tmp/bridge-smoke.log | head -1)
+          PORT=$(grep -oP 'CINELAB_PORT=\K[0-9]+' /tmp/bridge-smoke.log | head -1)
           if [ -z "$PORT" ]; then
-            echo "bridge never reported SKYSTREAM_PORT; smoke log follows:"
+            echo "bridge never reported CINELAB_PORT; smoke log follows:"
             tail -30 /tmp/bridge-smoke.log
             tail -25 /tmp/bridge-smoke.log | sed 's/%/%25/g' | cut -c1-500 | while IFS= read -r line; do printf '::error::smoke: %s\n' "$line"; done
             exit 1
@@ -110,6 +110,6 @@ jobs:
       - name: Upload bridge distribution
         uses: actions/upload-artifact@v4
         with:
-          name: skystream-bridge-dist
-          path: bridge/app/build/install/skystream-bridge/
+          name: cinelab-bridge-dist
+          path: bridge/app/build/install/cinelab-bridge/
           if-no-files-found: error

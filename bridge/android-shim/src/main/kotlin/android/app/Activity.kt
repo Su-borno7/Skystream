@@ -35,7 +35,7 @@ open class Activity : Context() {
     open fun getCallingActivity(): android.content.ComponentName? = null
     open fun getCallingPackage(): String? = null
     open fun requestWindowFeature(featureId: Int): Boolean = true
-    open fun getTitle(): CharSequence = "Skystream"
+    open fun getTitle(): CharSequence = "Cinelab"
     open fun setTitle(title: CharSequence?) {}
     open fun setTitle(titleId: Int) {}
     open fun getPackageName2(): String = getPackageName()

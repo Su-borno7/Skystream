@@ -28,8 +28,8 @@ open class CloudStreamApp : Application() {
         @JvmStatic
         fun init(app: CloudStreamApp, dataDir: java.io.File) {
             _context = app
-            android.content.SkystreamHost.applicationContext = app
-            android.content.SkystreamHost.dataDir = dataDir
+            android.content.CinelabHost.applicationContext = app
+            android.content.CinelabHost.dataDir = dataDir
             dataDir.mkdirs()
         }
 
@@ -62,7 +62,7 @@ open class CloudStreamApp : Application() {
         fun removeKeys(folder: String): Int? = context?.removeKeysCompat(folder)
 
         fun openBrowser(url: String) {
-            println("I/Skystream: openBrowser($url) — headless host, not opened")
+            println("I/Cinelab: openBrowser($url) — headless host, not opened")
         }
 
         // Shared JSON-backed get/set used by the DataStore object as well.
@@ -78,7 +78,7 @@ open class CloudStreamApp : Application() {
                     .putString(path, value?.toJsonLiteral())
                     .apply()
             } catch (t: Throwable) {
-                System.err.println("W/Skystream: setKey($path) failed: $t")
+                System.err.println("W/Cinelab: setKey($path) failed: $t")
             }
         }
 

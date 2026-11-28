@@ -140,7 +140,7 @@ test('legacy theme values migrate to Première keys', async () => {
   const os = require('os');
   const path = require('path');
   const { AppState } = require('../src/main/store');
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'skystream-theme-'));
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'cinelab-theme-'));
   const storeDir = path.join(dir, 'store');
   fs.mkdirSync(storeDir, { recursive: true });
   fs.writeFileSync(path.join(storeDir, 'settings.json'), JSON.stringify({ theme: 'sky' }));

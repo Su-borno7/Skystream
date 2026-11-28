@@ -16,7 +16,7 @@ const skip = require('../src/main/skip');
 const trakt = require('../src/main/trakt');
 
 function tempState() {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'skystream-test-'));
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'cinelab-test-'));
   return new AppState(dir);
 }
 

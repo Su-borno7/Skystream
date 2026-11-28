@@ -7,7 +7,7 @@ open class Fragment {
     open fun isDetached(): Boolean = false
     open fun isRemoving(): Boolean = false
     open fun isHidden(): Boolean = false
-    open fun getContext(): Context? = android.content.SkystreamHost.applicationContext
+    open fun getContext(): Context? = android.content.CinelabHost.applicationContext
     open fun getActivity(): android.app.Activity? = null
     open fun requireContext(): Context = getContext()!!
     open fun onCreate(savedInstanceState: Any?) {}

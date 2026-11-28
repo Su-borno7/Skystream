@@ -1,4 +1,4 @@
-// Skystream Bridge — JVM host for CloudStream (.cs3) extensions on desktop.
+// Cinelab Bridge — JVM host for CloudStream (.cs3) extensions on desktop.
 pluginManagement {
     repositories {
         gradlePluginPortal()
@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "skystream-bridge"
+rootProject.name = "cinelab-bridge"
 include(":cs-library", ":android-shim", ":app")

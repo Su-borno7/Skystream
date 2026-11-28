@@ -1,4 +1,4 @@
-/* ═══════════ Skystream — bundled typeface: Inter (OFL-1.1, see fonts/INTER-LICENSE.txt) ═══════════ */
+/* ═══════════ Cinelab — bundled typeface: Inter (OFL-1.1, see fonts/INTER-LICENSE.txt) ═══════════ */
 @font-face { font-family: "Inter"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/Inter-Regular.woff2") format("woff2"); }
 @font-face { font-family: "Inter"; font-style: italic; font-weight: 400; font-display: swap; src: url("fonts/Inter-Italic.woff2") format("woff2"); }
 @font-face { font-family: "Inter"; font-style: normal; font-weight: 500; font-display: swap; src: url("fonts/Inter-Medium.woff2") format("woff2"); }
@@ -7,7 +7,7 @@
 @font-face { font-family: "Inter"; font-style: italic; font-weight: 700; font-display: swap; src: url("fonts/Inter-BoldItalic.woff2") format("woff2"); }
 
 /* ═══════════════════════════════════════════════════════════════════
-   SKYSTREAM PREMIÈRE — design system
+   CINELAB PREMIÈRE — design system
    Warm graphite + champagne gold; cinema-marquee serif display type
    (Georgia stack — no external font downloads); a film-grain overlay;
    top command bar instead of the CloudStream-style side rail.

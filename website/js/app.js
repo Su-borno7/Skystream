@@ -1,5 +1,5 @@
 'use strict';
-/* ═══════════ Skystream website — interactions ═══════════ */
+/* ═══════════ Cinelab website — interactions ═══════════ */
 
 const $ = (sel, ctx = document) => ctx.querySelector(sel);
 const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
@@ -87,8 +87,8 @@ function toast(msg) {
   const grid = document.getElementById('featureGrid');
   const icon = (paths) => `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>`;
   const data = [
-    { t: 'No ads, no account, no tracking', d: 'Skystream is a media centre, not a business model. Zero ads, zero analytics, zero telemetry — your data lives on your device.', i: '<path d="M12 2 4 6v6c0 5 3.4 9.4 8 10 4.6-.6 8-5 8-10V6l-8-4Z"/><path d="m9.5 12 2 2 3.5-4"/>' },
-    { t: 'CloudStream ecosystem', d: 'The exact same .cs3 extensions and repo.json repositories — if it works in CloudStream, it works in Skystream.', i: '<path d="M4 7l8-4 8 4-8 4-8-4Z"/><path d="m4 12 8 4 8-4M4 17l8 4 8-4"/>' },
+    { t: 'No ads, no account, no tracking', d: 'Cinelab is a media centre, not a business model. Zero ads, zero analytics, zero telemetry — your data lives on your device.', i: '<path d="M12 2 4 6v6c0 5 3.4 9.4 8 10 4.6-.6 8-5 8-10V6l-8-4Z"/><path d="m9.5 12 2 2 3.5-4"/>' },
+    { t: 'CloudStream ecosystem', d: 'The exact same .cs3 extensions and repo.json repositories — if it works in CloudStream, it works in Cinelab.', i: '<path d="M4 7l8-4 8 4-8 4-8-4Z"/><path d="m4 12 8 4 8-4M4 17l8 4 8-4"/>' },
     { t: 'Movies · Series · Anime', d: 'Browsing, search, detail pages, season and episode pickers — everything you expect from a modern streaming app.', i: '<circle cx="12" cy="12" r="9"/><path d="m10 8.5 6 3.5-6 3.5v-7Z"/>' },
     { t: 'Your library, resumed', d: 'Bookmarks and "continue watching" with per-episode progress. Pick up exactly where you left off — on any screen.', i: '<path d="M6 3h12v18l-6-4.5L6 21V3Z"/>' },
     { t: 'Downloads queue', d: 'Save direct media files to your device with a managed queue — pause, resume, retry, and watch offline.', i: '<path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M4 20h16"/>' },
@@ -217,14 +217,14 @@ renderRepos();
 
 /* ───────── FAQ accordion ───────── */
 const FAQ = [
-  { q: 'Is Skystream really free?', a: 'Yes — completely. Skystream is GPL-3.0 open source, built by volunteers. There is no paid tier, no account, no subscription and no ads. The code, the release keystore and every build step are public.' },
-  { q: 'Where do the movies come from?', a: 'Nowhere — Skystream does not ship, host or endorse any content source. It is a media centre that runs third-party extensions you choose to install. You are responsible for the sources you add and for complying with your local laws.' },
-  { q: 'Is Skystream affiliated with CloudStream?', a: 'No. Skystream is an independent fork/alternative built around the same extension ecosystem (same .cs3 packages, same repo.json format). It is not affiliated with or endorsed by the CloudStream project or its authors.' },
-  { q: 'Android says “unknown app” when I install the APK — is it safe?', a: 'That warning appears for every sideloaded APK. Skystream APKs are signed with the public in-repo keystore (android/keystore), so you can verify the signature, and public CI builds the exact APK you download. If in doubt, build it yourself from source — the steps are in the README.' },
+  { q: 'Is Cinelab really free?', a: 'Yes — completely. Cinelab is GPL-3.0 open source, built by volunteers. There is no paid tier, no account, no subscription and no ads. The code, the release keystore and every build step are public.' },
+  { q: 'Where do the movies come from?', a: 'Nowhere — Cinelab does not ship, host or endorse any content source. It is a media centre that runs third-party extensions you choose to install. You are responsible for the sources you add and for complying with your local laws.' },
+  { q: 'Is Cinelab affiliated with CloudStream?', a: 'No. Cinelab is an independent fork/alternative built around the same extension ecosystem (same .cs3 packages, same repo.json format). It is not affiliated with or endorsed by the CloudStream project or its authors.' },
+  { q: 'Android says “unknown app” when I install the APK — is it safe?', a: 'That warning appears for every sideloaded APK. Cinelab APKs are signed with the public in-repo keystore (android/keystore), so you can verify the signature, and public CI builds the exact APK you download. If in doubt, build it yourself from source — the steps are in the README.' },
   { q: 'How do I add a repository?', a: 'In the app: Settings → Extensions → Repositories → Add repository, then paste a repo.json link (grab one from the Repositories section above — “Open in app” does it for you). Then enable the extensions you like.' },
-  { q: 'How do updates work?', a: 'Android: Skystream checks GitHub for android-v* releases and updates itself in-app — keep it updated and it stays quiet unless a new release is out. PC: Settings → About → “Check for updates” tells you when a new desktop release is out. Both platforms otherwise stay completely silent.' },
+  { q: 'How do updates work?', a: 'Android: Cinelab checks GitHub for android-v* releases and updates itself in-app — keep it updated and it stays quiet unless a new release is out. PC: Settings → About → “Check for updates” tells you when a new desktop release is out. Both platforms otherwise stay completely silent.' },
   { q: 'Which platforms are supported?', a: 'Android phones and tablets (the APK), Windows 10/11 and any modern x86_64 Linux distro (AppImage). macOS can be built locally from source — see the README. iOS and TV boxes are not supported yet.' },
-  { q: 'Will Skystream ever know what I watch?', a: 'No. There is no telemetry of any kind — no analytics SDK, no crash reporter, no account server. Your library, progress and history never leave your device.' },
+  { q: 'Will Cinelab ever know what I watch?', a: 'No. There is no telemetry of any kind — no analytics SDK, no crash reporter, no account server. Your library, progress and history never leave your device.' },
 ];
 
 (function faq() {

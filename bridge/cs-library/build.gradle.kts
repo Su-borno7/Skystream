@@ -30,7 +30,7 @@ kotlin {
         }
         commonMain {
             kotlin.srcDir(upstream.resolve("commonMain/kotlin"))
-            // Skystream-specific replacements for generated sources (BuildConfig).
+            // Cinelab-specific replacements for generated sources (BuildConfig).
             kotlin.srcDir("src/shim/kotlin")
             // Compiled in the same module: same circular setup upstream (implicitly) relies on.
             kotlin.srcDir(niceHttp)

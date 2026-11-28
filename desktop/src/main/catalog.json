@@ -1,5 +1,5 @@
 {
-  "note": "Community CloudStream repositories, collected from recloudstream/cs-repos. Skystream does not host, provide or endorse any of these repositories, their extensions, or their content. Extensions are installed only on explicit user action.",
+  "note": "Community CloudStream repositories, collected from recloudstream/cs-repos. Cinelab does not host, provide or endorse any of these repositories, their extensions, or their content. Extensions are installed only on explicit user action.",
   "sources": [
     {
       "url": "https://raw.githubusercontent.com/recloudstream/extensions/master/repo.json",

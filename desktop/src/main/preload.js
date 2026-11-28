@@ -1,6 +1,6 @@
 'use strict';
 /**
- * Skystream — preload bridge. Exposes a narrow, explicit API to the renderer.
+ * Cinelab — preload bridge. Exposes a narrow, explicit API to the renderer.
  * No Node primitives leak into the page.
  */
 const { contextBridge, ipcRenderer } = require('electron');
@@ -12,7 +12,7 @@ const subscribe = (channel) => (callback) => {
   return () => ipcRenderer.removeListener(channel, listener);
 };
 
-contextBridge.exposeInMainWorld('skystream', {
+contextBridge.exposeInMainWorld('cinelab', {
   appInfo: () => invoke('app:info'),
   checkForUpdates: () => invoke('updates:check'),
   openExternal: (url) => invoke('app:openExternal', url),

@@ -1,4 +1,4 @@
-name: Build Android (Skystream)
+name: Build Android (Cinelab)
 
 on:
   push:
@@ -14,7 +14,7 @@ on:
 
 jobs:
   build:
-    name: Build Skystream APK
+    name: Build Cinelab APK
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
@@ -35,10 +35,10 @@ jobs:
       - name: Load public keystore credentials
         working-directory: android
         run: |
-          echo "SKYSTREAM_KEYSTORE=$GITHUB_WORKSPACE/android/keystore/skystream-release.keystore" >> "$GITHUB_ENV"
-          echo "SKYSTREAM_KEYSTORE_PASSWORD=$(cat keystore/PASSWORD.txt)" >> "$GITHUB_ENV"
-          echo "SKYSTREAM_KEY_PASSWORD=$(cat keystore/PASSWORD.txt)" >> "$GITHUB_ENV"
-          echo "SKYSTREAM_KEY_ALIAS=skystream" >> "$GITHUB_ENV"
+          echo "CINELAB_KEYSTORE=$GITHUB_WORKSPACE/android/keystore/cinelab-release.keystore" >> "$GITHUB_ENV"
+          echo "CINELAB_KEYSTORE_PASSWORD=$(cat keystore/PASSWORD.txt)" >> "$GITHUB_ENV"
+          echo "CINELAB_KEY_PASSWORD=$(cat keystore/PASSWORD.txt)" >> "$GITHUB_ENV"
+          echo "CINELAB_KEY_ALIAS=skystream" >> "$GITHUB_ENV"
 
       - name: Make gradlew executable
         working-directory: android
@@ -92,6 +92,6 @@ jobs:
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: skystream-android-apk
+          name: cinelab-android-apk
           path: ${{ steps.apk.outputs.apk }}
           if-no-files-found: error

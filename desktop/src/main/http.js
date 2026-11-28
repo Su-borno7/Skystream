@@ -9,7 +9,7 @@ const MAX_JSON_BYTES = 32 * 1024 * 1024; // 32 MB guard
 const MAX_PLUGIN_BYTES = 128 * 1024 * 1024; // .cs3 files are small; guard anyway
 
 const DESKTOP_UA =
-  'Skystream/1.0.0 (+https://github.com/Su-borno7/Skystream)';
+  'Cinelab/1.0.0 (+https://github.com/Su-borno7/Skystream)';
 
 async function _fetch(url, { timeout = DEFAULT_TIMEOUT_MS, headers = {}, redirect = 'follow' } = {}) {
   const controller = new AbortController();

@@ -6,7 +6,7 @@
  * free Trakt API app (https://trakt.tv/oauth/applications) and pastes its
  * Client ID / Secret into Settings → Explore & tracking. The device flow is
  * used so no redirect/browser hand-off is needed — the same public-client
- * approach akashdh11's Skystream uses.
+ * approach akashdh11's Cinelab uses.
  *
  * Access tokens live in the secrets store, never in the renderer-facing
  * settings payload. Refresh is automatic (Trakt access tokens last ~3

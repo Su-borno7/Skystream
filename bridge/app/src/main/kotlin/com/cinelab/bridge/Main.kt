@@ -1,4 +1,4 @@
-package com.skystream.bridge
+package com.cinelab.bridge
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
@@ -24,11 +24,11 @@ import java.util.concurrent.atomic.AtomicReference
 import java.util.concurrent.locks.ReentrantLock
 
 /**
- * Skystream bridge — loads CloudStream `.cs3` extensions and serves the parts
+ * Cinelab bridge — loads CloudStream `.cs3` extensions and serves the parts
  * of their API that the desktop app needs over loopback HTTP/JSON.
  *
- * Usage: java com.skystream.bridge.Main [userDataDir]
- * Prints `SKYSTREAM_PORT=<port>` on stdout when ready.
+ * Usage: java com.cinelab.bridge.Main [userDataDir]
+ * Prints `CINELAB_PORT=<port>` on stdout when ready.
  */
 object Main {
 
@@ -40,11 +40,11 @@ object Main {
     fun main(args: Array<String>) {
         val userDataDir = File(
             args.getOrNull(0)
-                ?: System.getProperty("skystream.userdata")
-                ?: File(System.getProperty("user.home"), ".skystream-bridge").absolutePath
+                ?: System.getProperty("cinelab.userdata")
+                ?: File(System.getProperty("user.home"), ".cinelab-bridge").absolutePath
         )
         userDataDir.mkdirs()
-        val cacheDir = File(System.getProperty("skystream.cache.dir") ?: File(userDataDir, "cache").absolutePath)
+        val cacheDir = File(System.getProperty("cinelab.cache.dir") ?: File(userDataDir, "cache").absolutePath)
         cacheDir.mkdirs()
 
         // Headless host context for the extension API (prefs store, cache dirs, ...)
@@ -55,7 +55,7 @@ object Main {
         val startNanos = System.nanoTime()
 
         val server = HttpServer.create(InetSocketAddress("127.0.0.1", 0), 0)
-        server.executor = Executors.newCachedThreadPool { r -> Thread(r, "skystream-http").apply { isDaemon = true } }
+        server.executor = Executors.newCachedThreadPool { r -> Thread(r, "cinelab-http").apply { isDaemon = true } }
 
         fun json(exchange: HttpExchange, status: Int, body: Any?) {
             val bytes = mapper.writeValueAsBytes(body)
@@ -244,9 +244,9 @@ object Main {
         server.createContext("/") { exchange -> handle(exchange) }
         server.start()
         val port = server.address.port
-        println("SKYSTREAM_PORT=$port")
+        println("CINELAB_PORT=$port")
         System.out.flush()
-        println("I/Skystream: bridge ready (userDataDir=${userDataDir.absolutePath})")
+        println("I/Cinelab: bridge ready (userDataDir=${userDataDir.absolutePath})")
         System.out.flush()
     }
 

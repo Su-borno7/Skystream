@@ -1,7 +1,7 @@
 'use strict';
 /**
  * Renderer smoke tests — runs the real index.html + app.js inside jsdom with a
- * fake `window.skystream` IPC surface. Verifies:
+ * fake `window.cinelab` IPC surface. Verifies:
  *   home rows render from the bridge,
  *   search flow renders results → detail navigation,
  *   movie detail → Play opens the player overlay and resolves links,
@@ -20,7 +20,7 @@ function makeFakeApi() {
   const settings = {
     accent: '#E0B15C', theme: 'premiere', defaultQuality: 'auto', rememberPosition: true,
     hardwareAcceleration: true, skipIntroSeconds: 0, autoplayNext: true,
-    downloadDir: '/tmp/skystream-downloads', language: 'en', reduceMotion: false,
+    downloadDir: '/tmp/cinelab-downloads', language: 'en', reduceMotion: false,
     subtitleSize: 100, subtitleColor: '#FFFFFF', jsdelivrProxy: false, checkUpdatesOnLaunch: false,
   };
   const homeItem = (n) => ({
@@ -49,14 +49,14 @@ function makeFakeApi() {
   const api = {
     appInfo: async () => ({
       version: '1.0.0-test', platform: 'linux', packaged: false,
-      userData: '/tmp/skystream-userdata', downloadDir: '/tmp/skystream-downloads',
+      userData: '/tmp/cinelab-userdata', downloadDir: '/tmp/cinelab-downloads',
       electron: 'v45', chromium: 'c140', node: 'v22',
       bridge: { java: true, bridgePayload: true, running: true, port: 12345, lastError: null },
     }),
     openExternal: async () => {},
     showItemInFolder: async () => {},
     openPath: async () => '',
-    pickDownloadDir: async () => '/tmp/skystream-downloads',
+    pickDownloadDir: async () => '/tmp/cinelab-downloads',
     window: {
       minimize: async () => {}, toggleMaximize: async () => false, close: async () => {},
       isMaximized: async () => false, onMaximizedChanged: () => () => {},
@@ -177,7 +177,7 @@ async function boot() {
   window.HTMLMediaElement.prototype.pause = function pause() {};
   window.HTMLMediaElement.prototype.load = function load() {};
   const fake = makeFakeApi();
-  window.skystream = fake.api;
+  window.cinelab = fake.api;
   window.eval(appJs);
   await flush();
   return { dom, window, fake };

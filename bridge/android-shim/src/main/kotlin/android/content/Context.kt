@@ -6,8 +6,8 @@ import android.os.UserManager
 import java.io.File
 
 /** Host-application holder. Set once by the bridge at startup. */
-object SkystreamHost {
-    @JvmStatic var dataDir: File = File(System.getProperty("java.io.tmpdir"), "skystream")
+object CinelabHost {
+    @JvmStatic var dataDir: File = File(System.getProperty("java.io.tmpdir"), "cinelab")
     @JvmStatic var applicationContext: Context? = null
 }
 
@@ -22,16 +22,16 @@ open class Context {
         const val CONTEXT_IGNORE_SECURITY = 2
     }
 
-    open fun getApplicationContext(): Context = SkystreamHost.applicationContext ?: this
+    open fun getApplicationContext(): Context = CinelabHost.applicationContext ?: this
 
-    open fun getFilesDir(): File = File(SkystreamHost.dataDir, "files").apply { mkdirs() }
-    open fun getCacheDir(): File = File(SkystreamHost.dataDir, "cache").apply { mkdirs() }
+    open fun getFilesDir(): File = File(CinelabHost.dataDir, "files").apply { mkdirs() }
+    open fun getCacheDir(): File = File(CinelabHost.dataDir, "cache").apply { mkdirs() }
     open fun getExternalFilesDir(type: String?): File? = getFilesDir()
-    open fun getPackageName(): String = "com.skystream.app"
+    open fun getPackageName(): String = "com.cinelab.app"
     open fun getResources(): Resources = Resources()
     open fun getAssets(): AssetManager = AssetManager()
     open fun getSharedPreferences(name: String?, mode: Int): SharedPreferences =
-        FileSharedPreferences(File(SkystreamHost.dataDir, "prefs"), name ?: "default")
+        FileSharedPreferences(File(CinelabHost.dataDir, "prefs"), name ?: "default")
 
     open fun getSystemService(name: String?): Any? = when (name) {
         "ui_mode" -> android.app.UiModeManager()
@@ -40,14 +40,14 @@ open class Context {
     }
 
     open fun startActivity(intent: Intent?) {
-        println("I/Skystream: ignored startActivity(${intent?.action}) — headless host")
+        println("I/Cinelab: ignored startActivity(${intent?.action}) — headless host")
     }
 
     open fun startService(service: Intent?): android.content.ComponentName? = null
     open fun checkSelfPermission(permission: String?): Int = 0 // PERMISSION_GRANTED
     open fun checkCallingPermission(permission: String?): Int = 0
     open fun getPackageManager(): android.content.pm.PackageManager = android.content.pm.PackageManager()
-    open fun getPackageResourcePath(): String = SkystreamHost.dataDir.absolutePath
+    open fun getPackageResourcePath(): String = CinelabHost.dataDir.absolutePath
     open fun getApplicationInfo(): android.content.pm.ApplicationInfo = android.content.pm.ApplicationInfo()
     open fun getClassLoader(): ClassLoader = Context::class.java.classLoader
 

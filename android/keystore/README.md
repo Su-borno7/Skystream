@@ -1,13 +1,13 @@
-# Skystream public release key
+# Cinelab public release key
 
-This directory contains the signing key used for the official **Skystream** Android release APKs.
+This directory contains the signing key used for the official **Cinelab** Android release APKs.
 
 It is committed to the repository on purpose, following the reproducible-build model:
-anyone can build Skystream from source and verify that the APK matches the one published
+anyone can build Cinelab from source and verify that the APK matches the one published
 on the [GitHub releases page](https://github.com/Su-borno7/Skystream/releases).
 
-- Keystore: `skystream-release.keystore`
-- Alias: `skystream`
+- Keystore: `cinelab-release.keystore`
+- Alias: `skystream` (the alias inside the keystore was kept when the project was renamed)
 - Password: see `PASSWORD.txt` (this key is public)
 
 Because the key is public, its authenticity is anchored by the GitHub repository and the

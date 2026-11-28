@@ -17,5 +17,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Skystream"
+rootProject.name = "Cinelab"
 include(":app", ":shared", ":library")

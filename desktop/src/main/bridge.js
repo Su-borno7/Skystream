@@ -1,6 +1,6 @@
 'use strict';
 /**
- * Skystream — main-process side of the Java bridge.
+ * Cinelab — main-process side of the Java bridge.
  *
  * The bridge is a small JVM program (see bridge/) that loads CloudStream `.cs3`
  * extensions (dex → jar translation, JVM build of the extension API, stubbed
@@ -14,7 +14,7 @@ const { spawn, spawnSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-const BRIDGE_MAIN_CLASS = 'com.skystream.bridge.Main';
+const BRIDGE_MAIN_CLASS = 'com.cinelab.bridge.Main';
 
 class Bridge {
   /**
@@ -83,7 +83,7 @@ class Bridge {
     };
   }
 
-  /** Start the bridge process; resolves to true when it reports SKYSTREAM_PORT. */
+  /** Start the bridge process; resolves to true when it reports CINELAB_PORT. */
   start() {
     if (this._readyPromise) return this._readyPromise;
     this._readyPromise = new Promise((resolve) => {
@@ -95,7 +95,7 @@ class Bridge {
         return resolve(false);
       }
       if (!libDir) {
-        this.lastError = 'Bridge payload not found (bridge/lib/*.jar missing). Build it with bridge/build.gradle.kts or use an official Skystream build.';
+        this.lastError = 'Bridge payload not found (bridge/lib/*.jar missing). Build it with bridge/build.gradle.kts or use an official Cinelab build.';
         this._log('bridge: ' + this.lastError);
         return resolve(false);
       }
@@ -109,7 +109,7 @@ class Bridge {
         '-XX:+UnlockDiagnosticVMOptions',
         '-XX:-BytecodeVerificationRemote',
         '-Xmx512m',
-        `-Dskystream.cache.dir=${cacheDir}`,
+        `-Dcinelab.cache.dir=${cacheDir}`,
         '-cp', classpath,
         BRIDGE_MAIN_CLASS,
         this.userDataDir,
@@ -134,7 +134,7 @@ class Bridge {
         for (const line of String(chunk).split(/\r?\n/)) {
           if (!line.trim()) continue;
           this._log(line);
-          const match = /SKYSTREAM_PORT=(\d+)/.exec(line);
+          const match = /CINELAB_PORT=(\d+)/.exec(line);
           if (match) {
             this.port = Number(match[1]);
             this.ready = true;

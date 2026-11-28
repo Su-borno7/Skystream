@@ -1,24 +1,24 @@
-# Skystream
+# Cinelab
 
-![Skystream banner](docs/banner.png)
+![Cinelab banner](docs/banner.png)
 
-**Skystream is a free and open-source media centre** for Android and PC, built around the
+**Cinelab is a free and open-source media centre** for Android and PC, built around the
 CloudStream extension ecosystem. It plays movies, TV series and anime from community
 extensions, with no account and no subscription.
 
-Skystream does **not** ship, host or endorse any content source. Extensions are
+Cinelab does **not** ship, host or endorse any content source. Extensions are
 third-party, GPL-compatible `.cs3` packages that you install explicitly — exactly like
 CloudStream. See [NOTICE.md](NOTICE.md) for attribution and licensing.
 
-> Skystream is an independent project and is **not affiliated with or endorsed by** the
+> Cinelab is an independent project and is **not affiliated with or endorsed by** the
 > CloudStream project or its authors.
 
 ## Project layout
 
 | Path       | What it is |
 |------------|------------|
-| `android/` | Fork of [recloudstream/cloudstream](https://github.com/recloudstream/cloudstream), rebranded to Skystream (`com.skystream.app`). |
-| `desktop/` | New Electron app for Windows / Linux / macOS — the "Skystream for PC" experience. |
+| `android/` | Fork of [recloudstream/cloudstream](https://github.com/recloudstream/cloudstream), rebranded to Cinelab (`com.cinelab.app`). |
+| `desktop/` | New Electron app for Windows / Linux / macOS — the "Cinelab for PC" experience. |
 | `bridge/`  | JVM sidecar that makes Android `.cs3` extensions run on PC (dex → jar translation, JVM build of the extension API, Android class shims). |
 | `docs/`    | Banner/icon assets. |
 | `tools/`   | Asset generation scripts. |
@@ -41,7 +41,7 @@ See **[docs/FEATURES.md](docs/FEATURES.md)** for the full, per-app feature list 
 including the desktop player, downloads, settings, the JVM bridge and its limitations,
 and the deliberately-missing list.
 
-## Skystream for PC (desktop + bridge)
+## Cinelab for PC (desktop + bridge)
 
 ### Run from source
 
@@ -80,7 +80,7 @@ Packaging uses `electron-builder` with the bridge built from source:
 ```bash
 cd bridge
 ./fetch-upstream.sh                    # one-time: downloads upstream CloudStream sources
-./gradlew :app:installDist             # produces bridge/app/build/install/skystream-bridge
+./gradlew :app:installDist             # produces bridge/app/build/install/cinelab-bridge
 
 mkdir -p ../desktop/build/jre          # optional but recommended: a Temurin 21 JRE in
 # ../desktop/build/jre makes electron-builder bundle it (see the Release workflow);
@@ -103,9 +103,9 @@ Release workflow from Adoptium), so the installers work out of the box — no sy
 required. Local `electron-builder` runs without `desktop/build/jre` fall back to a system
 Java 21+ at runtime.
 
-## Skystream for Android
+## Cinelab for Android
 
-A fork of upstream CloudStream with Skystream branding, in-repo public release keystore
+A fork of upstream CloudStream with Cinelab branding, in-repo public release keystore
 (reproducible builds — see `android/keystore/README.md`) and the updater pointed at this
 repository.
 
@@ -115,16 +115,16 @@ cd android
 ```
 
 The output APK is signed with the public keystore committed at
-`android/keystore/skystream-release.keystore` (see its README). GitHub Actions builds the
+`android/keystore/cinelab-release.keystore` (see its README). GitHub Actions builds the
 APK on every push touching `android/` (`.github/workflows/build-android.yml`).
 
 ## CI
 
 | Workflow | Purpose |
 |----------|---------|
-| `Build Bridge (Skystream)` | Builds the JVM bridge from upstream sources, runs a smoke test (`/health`, `/providers`) and uploads the distribution. |
-| `Build Android (Skystream)` | Assembles the stable release APK. |
-| `Release Desktop (Skystream)` | Tag-triggered (`desktop-v*`) desktop package + GitHub release. |
+| `Build Bridge (Cinelab)` | Builds the JVM bridge from upstream sources, runs a smoke test (`/health`, `/providers`) and uploads the distribution. |
+| `Build Android (Cinelab)` | Assembles the stable release APK. |
+| `Release Desktop (Cinelab)` | Tag-triggered (`desktop-v*`) desktop package + GitHub release. |
 
 Build failures surface as workflow **annotations** (the `Annotate failures from log` step
 converts compiler output into `::error::` lines), so compiler errors are visible without
@@ -132,10 +132,10 @@ downloading logs.
 
 ## Legal status
 
-- Extensions are installed only from repositories **you** add; Skystream provides none.
+- Extensions are installed only from repositories **you** add; Cinelab provides none.
 - The built-in repository catalogue is metadata derived from public community listings;
   it is not an endorsement. Sources may be slow, broken or unsafe — review them first.
-- Skystream never downloads or hosts pirated content. All legal responsibility for the
+- Cinelab never downloads or hosts pirated content. All legal responsibility for the
   content you access lies with you and with the extension authors.
 - The repository is GPL-3.0. Third-party works remain under their own licenses.
 

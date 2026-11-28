@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Generates the Skystream mark and every icon asset deterministically.
+"""Generates the Cinelab mark and every icon asset deterministically.
 
-Design: "Skystream Première" — a faceted paper plane rendered in champagne
+Design: "Cinelab Première" — a faceted paper plane rendered in champagne
 gold on a warm-graphite badge (see docs/FEATURES.md). Replaces the old
 navy/cyan cloud logo and the navy paper-plane iteration.
 
@@ -98,7 +98,7 @@ def facet_images(size):
 
 
 def render_mark(size, with_bg=True, bg_rounded=True, mark_scale=0.80):
-    """Full Skystream Première mark. size = final px."""
+    """Full Cinelab Première mark. size = final px."""
     S = size * SS
     canvas = Image.new("RGBA", (S, S), (0, 0, 0, 0))
     if with_bg:
@@ -169,8 +169,10 @@ def banner(w, h, wordmark=True):
     canvas.alpha_composite(mark, (mx, my))
     if wordmark:
         font_size = int(H * 0.26)
+        root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         font = None
-        for candidate in ("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        for candidate in (os.path.join(root, "android", "app", "src", "main", "res", "font", "inter_bold.ttf"),
+                          "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
                           "/usr/share/fonts/dejavu/DejaVuSans-Bold.ttf"):
             try:
                 font = ImageFont.truetype(candidate, font_size)
@@ -182,7 +184,7 @@ def banner(w, h, wordmark=True):
         d = ImageDraw.Draw(canvas)
         tx = mx + mark.width + int(W * 0.045)
         ty = (H - font_size) // 2 - int(H * 0.02)
-        d.text((tx, ty), "Skystream", font=font, fill=INK + (255,))
+        d.text((tx, ty), "Cinelab", font=font, fill=INK + (255,))
     return canvas.resize((w, h), Image.LANCZOS)
 
 

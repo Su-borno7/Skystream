@@ -4,7 +4,7 @@
  * ID resolution for skip segments and Trakt scrobbling.
  *
  * The app ships with NO baked-in API key: each user supplies their own free
- * key (Settings → Explore & tracking), mirroring how akashdh11's Skystream
+ * key (Settings → Explore & tracking), mirroring how akashdh11's Cinelab
  * treats its TMDB key. Attribution to TMDB is required by their terms and is
  * shown on the Explore screen.
  *

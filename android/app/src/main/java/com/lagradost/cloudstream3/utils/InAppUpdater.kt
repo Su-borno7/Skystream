@@ -41,7 +41,7 @@ object InAppUpdater {
     private const val GITHUB_USER_NAME = "Su-borno7"
     private const val GITHUB_REPO = "Skystream"
 
-    private const val PRERELEASE_PACKAGE_NAME = "com.skystream.app.prerelease"
+    private const val PRERELEASE_PACKAGE_NAME = "com.cinelab.app.prerelease"
     private const val LOG_TAG = "InAppUpdater"
 
     @Serializable
@@ -189,7 +189,7 @@ object InAppUpdater {
     private suspend fun Activity.downloadUpdate(url: String): Boolean {
         try {
             Log.d(LOG_TAG, "Downloading update: $url")
-            val appUpdateName = "Skystream"
+            val appUpdateName = "Cinelab"
             val appUpdateSuffix = "apk"
 
             // Delete all old updates

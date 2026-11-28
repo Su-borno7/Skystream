@@ -1,4 +1,4 @@
-package com.skystream.bridge
+package com.cinelab.bridge
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.lagradost.cloudstream3.APIHolder
@@ -205,7 +205,7 @@ class PluginHost(private val cacheDir: File) {
         val newExtractors = com.lagradost.cloudstream3.utils.extractorApis.toList() - beforeExtractors.toSet()
         for (provider in newProviders) provider.sourcePlugin = ref.internalName
         for (extractor in newExtractors) extractor.sourcePlugin = ref.internalName
-        println("I/Skystream: ${ref.internalName} registered ${newProviders.size} provider(s), ${newExtractors.size} extractor(s)")
+        println("I/Cinelab: ${ref.internalName} registered ${newProviders.size} provider(s), ${newExtractors.size} extractor(s)")
 
         return Loaded(
             internalName = ref.internalName,
@@ -228,7 +228,7 @@ class PluginHost(private val cacheDir: File) {
                 try {
                     loadedPlugin.plugin.beforeUnload()
                 } catch (t: Throwable) {
-                    System.err.println("W/Skystream: beforeUnload for ${loadedPlugin.internalName} failed: $t")
+                    System.err.println("W/Cinelab: beforeUnload for ${loadedPlugin.internalName} failed: $t")
                 }
             }
         }

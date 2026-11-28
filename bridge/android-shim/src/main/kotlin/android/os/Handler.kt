@@ -21,7 +21,7 @@ open class Handler @JvmOverloads constructor(looper: Looper? = null, callback: C
 
     companion object {
         private val scheduler = Executors.newScheduledThreadPool(2) { runnable ->
-            Thread(runnable, "skystream-handler").apply { isDaemon = true }
+            Thread(runnable, "cinelab-handler").apply { isDaemon = true }
         }
     }
 

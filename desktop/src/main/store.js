@@ -1,6 +1,6 @@
 'use strict';
 /**
- * Skystream — JSON persistence layer.
+ * Cinelab — JSON persistence layer.
  * All state lives in <userData>/store/*.json and is written atomically.
  */
 const fs = require('fs');
@@ -61,7 +61,7 @@ const DEFAULT_SETTINGS = {
   subtitleColor: '#FFFFFF',
   jsdelivrProxy: false,
   checkUpdatesOnLaunch: false,
-  // Third-party discovery & tracking (ported from akashdh11's Skystream).
+  // Third-party discovery & tracking (ported from akashdh11's Cinelab).
   tmdbApiKey: '', // user-supplied free key from themoviedb.org — never baked in
   animeSkipClientId: '', // optional client id for AnimeSkip (https://anime-skip.com)
   skipIntroOutro: true, // fetch crowdsourced intro/outro segments while playing

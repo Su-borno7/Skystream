@@ -1,4 +1,4 @@
-name: Release Desktop (Skystream)
+name: Release Desktop (Cinelab)
 
 # Tag-triggered desktop packaging. Builds the JVM bridge from upstream sources,
 # bundles it into the Electron app via electron-builder, and publishes the
@@ -62,8 +62,8 @@ jobs:
       - name: Upload bridge distribution
         uses: actions/upload-artifact@v4
         with:
-          name: skystream-bridge-dist
-          path: bridge/app/build/install/skystream-bridge/
+          name: cinelab-bridge-dist
+          path: bridge/app/build/install/cinelab-bridge/
           if-no-files-found: error
 
   package:
@@ -90,8 +90,8 @@ jobs:
       - name: Download bridge distribution
         uses: actions/download-artifact@v4
         with:
-          name: skystream-bridge-dist
-          path: bridge/app/build/install/skystream-bridge
+          name: cinelab-bridge-dist
+          path: bridge/app/build/install/cinelab-bridge
 
       # Keep the app's version (About screen, electron-builder artifact names)
       # in sync with the release tag — otherwise every desktop release would
@@ -194,7 +194,7 @@ jobs:
       - name: Upload package artifact
         uses: actions/upload-artifact@v4
         with:
-          name: skystream-desktop-${{ matrix.name }}
+          name: cinelab-desktop-${{ matrix.name }}
           path: ${{ matrix.artifactGlob }}
           if-no-files-found: error
 

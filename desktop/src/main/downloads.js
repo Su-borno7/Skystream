@@ -1,6 +1,6 @@
 'use strict';
 /**
- * Skystream — download manager.
+ * Cinelab — download manager.
  * Direct media files (mp4/mkv/webm/mp3/…) are downloaded through the media proxy
  * (so hosts that require Referer headers still work) straight to disk with progress.
  * HLS playlists are not remuxed; they are marked 'hls' and can be played in-app instead.

@@ -1,6 +1,6 @@
 'use strict';
 /**
- * Skystream — Electron entry point.
+ * Cinelab — Electron entry point.
  *
  * Wires the main-process modules (store, extensions, bridge, proxy, downloads)
  * to the renderer over a narrow, explicit IPC surface. The renderer never gets
@@ -41,7 +41,7 @@ function getPluginsDir() {
 
 function getDownloadDir() {
   const configured = state && state.getSettings().downloadDir;
-  return configured || path.join(app.getPath('downloads'), 'Skystream');
+  return configured || path.join(app.getPath('downloads'), 'Cinelab');
 }
 
 function createWindow() {
@@ -55,7 +55,7 @@ function createWindow() {
     minHeight: 640,
     backgroundColor: '#68A7DE',
     frame: false,
-    title: 'Skystream',
+    title: 'Cinelab',
     show: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
@@ -109,7 +109,7 @@ function registerIpc() {
     const platformExt = process.platform === 'win32' ? '.exe' : '.AppImage';
     try {
       const res = await fetch('https://api.github.com/repos/Su-borno7/Skystream/releases?per_page=30', {
-        headers: { Accept: 'application/vnd.github+json', 'User-Agent': 'Skystream-Desktop' },
+        headers: { Accept: 'application/vnd.github+json', 'User-Agent': 'Cinelab-Desktop' },
       });
       if (!res.ok) return { status: 'error', message: `GitHub returned HTTP ${res.status}` };
       const releases = await res.json();
@@ -300,7 +300,7 @@ app.whenReady().then(async () => {
 
   bridge = new Bridge({
     resourcesPath: isDev ? __dirname : process.resourcesPath,
-    devBridgeDir: isDev ? process.env.SKYSTREAM_BRIDGE_DIR || null : null,
+    devBridgeDir: isDev ? process.env.CINELAB_BRIDGE_DIR || null : null,
     userDataDir: getUserData(),
     onLog: (line) => console.log('[bridge]', line),
   });

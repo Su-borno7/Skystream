@@ -1,4 +1,4 @@
-name: Release Android (Skystream)
+name: Release Android (Cinelab)
 
 # Tag-triggered APK packaging. Builds the signed stable APK (public keystore
 # committed at android/keystore/) and publishes it to a GitHub release.
@@ -38,10 +38,10 @@ jobs:
       - name: Load public keystore credentials
         working-directory: android
         run: |
-          echo "SKYSTREAM_KEYSTORE=$GITHUB_WORKSPACE/android/keystore/skystream-release.keystore" >> "$GITHUB_ENV"
-          echo "SKYSTREAM_KEYSTORE_PASSWORD=$(cat keystore/PASSWORD.txt)" >> "$GITHUB_ENV"
-          echo "SKYSTREAM_KEY_PASSWORD=$(cat keystore/PASSWORD.txt)" >> "$GITHUB_ENV"
-          echo "SKYSTREAM_KEY_ALIAS=skystream" >> "$GITHUB_ENV"
+          echo "CINELAB_KEYSTORE=$GITHUB_WORKSPACE/android/keystore/cinelab-release.keystore" >> "$GITHUB_ENV"
+          echo "CINELAB_KEYSTORE_PASSWORD=$(cat keystore/PASSWORD.txt)" >> "$GITHUB_ENV"
+          echo "CINELAB_KEY_PASSWORD=$(cat keystore/PASSWORD.txt)" >> "$GITHUB_ENV"
+          echo "CINELAB_KEY_ALIAS=skystream" >> "$GITHUB_ENV"
 
       - name: Make gradlew executable
         working-directory: android
@@ -94,7 +94,7 @@ jobs:
           SRC=$(find android/app/build/outputs/apk -name '*.apk' | head -n1)
           VERSION="${GITHUB_REF_NAME#android-v}"
           if [ "$VERSION" = "$GITHUB_REF_NAME" ]; then VERSION="dev"; fi
-          DEST="$RUNNER_TEMP/Skystream-${VERSION}-android.apk"
+          DEST="$RUNNER_TEMP/Cinelab-${VERSION}-android.apk"
           cp "$SRC" "$DEST"
           echo "apk=$DEST" >> "$GITHUB_OUTPUT"
           ls -la "$DEST"
@@ -102,7 +102,7 @@ jobs:
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: skystream-android-apk
+          name: cinelab-android-apk
           path: ${{ steps.apk.outputs.apk }}
           if-no-files-found: error
 

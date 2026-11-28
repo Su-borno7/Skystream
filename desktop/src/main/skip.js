@@ -1,7 +1,7 @@
 'use strict';
 /**
  * Intro / outro / recap skip segments — desktop port of the design in
- * akashdh11's Skystream (lib/features/skip), re-implemented against the
+ * akashdh11's Cinelab (lib/features/skip), re-implemented against the
  * public HTTP APIs; no upstream code is copied.
  *
  * Two crowdsourced sources, both opt-in and both treated as "best effort":

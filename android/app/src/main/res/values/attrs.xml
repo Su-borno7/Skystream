@@ -74,7 +74,7 @@
         <attr name="isLightTheme" format="boolean" />
     </declare-styleable>
 
-    <declare-styleable name="SkystreamShapes">
+    <declare-styleable name="CinelabShapes">
         <attr name="chipCornerRadius" format="dimension" />
     </declare-styleable>
 

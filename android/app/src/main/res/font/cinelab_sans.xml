@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Skystream default typeface: Inter (OFL-1.1). Regular/Italic/Medium/SemiBold/Bold/Black. -->
+<!-- Cinelab default typeface: Inter (OFL-1.1). Regular/Italic/Medium/SemiBold/Bold/Black. -->
 <font-family
         xmlns:app="http://schemas.android.com/apk/res-auto">
     <font app:fontStyle="normal" app:fontWeight="400" app:font="@font/inter_regular" />

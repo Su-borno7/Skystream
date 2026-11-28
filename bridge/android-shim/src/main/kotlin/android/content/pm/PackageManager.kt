@@ -9,10 +9,10 @@ class PackageInfo {
 }
 
 class ApplicationInfo {
-    var packageName: String = "com.skystream.app"
+    var packageName: String = "com.cinelab.app"
     var flags: Int = 0
     var sourceDir: String = ""
-    fun loadLabel(pm: PackageManager): String = "Skystream"
+    fun loadLabel(pm: PackageManager): String = "Cinelab"
 }
 
 open class PackageManager {

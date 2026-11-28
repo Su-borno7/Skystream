@@ -1,4 +1,4 @@
-Skystream third-party licenses
+Cinelab third-party licenses
 ==============================
 
 This file bundles the license text for third-party assets shipped inside
